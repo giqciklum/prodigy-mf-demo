@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#344E45">
+  <title>Prodigy · Consola por industria</title>
+  <meta name="description" content="Consola de Prodigy configurada por industria: maquinaria industrial, banca, retail y cervecera. Demostración con datos sintéticos preparada por Ciklum.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect width='26' height='26' rx='6' fill='%23344E45'/%3E%3Cpath d='M8.5 8.5 17.5 13 8.5 17.5' fill='none' stroke='%23EEF3F1' stroke-width='1.6'/%3E%3Ccircle cx='8.5' cy='8.5' r='2.6' fill='%23EEF3F1'/%3E%3Ccircle cx='17.5' cy='13' r='2.6' fill='%23EEF3F1'/%3E%3Ccircle cx='8.5' cy='17.5' r='2.6' fill='%23EEF3F1'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/scene-cuestionario.css">
+  <link rel="stylesheet" href="assets/css/opsmap.css">
+  <link rel="stylesheet" href="assets/css/scene-alarma.css">
+  <link rel="stylesheet" href="assets/css/scene-plataforma.css">
+  <link rel="stylesheet" href="assets/css/scene-procedimientos.css">
+  <link rel="stylesheet" href="assets/css/scene-retirada.css">
+  <link rel="stylesheet" href="assets/css/scene-workflow.css">
+  <link rel="stylesheet" href="assets/css/scene-reclamacion.css">
+  <link rel="stylesheet" href="assets/css/industrias.css">
+  <script src="assets/js/industries/_register.js"></script>
+  <script src="assets/js/industries/maquinaria/meta.js"></script>
+  <script src="assets/js/industries/maquinaria/turno.js"></script>
+  <script src="assets/js/industries/maquinaria/trace.js"></script>
+  <script src="assets/js/industries/maquinaria/workflow.js"></script>
+  <script src="assets/js/industries/maquinaria/alarma.js"></script>
+  <script src="assets/js/industries/maquinaria/reclamacion.js"></script>
+  <script src="assets/js/industries/maquinaria/retirada.js"></script>
+  <script src="assets/js/industries/maquinaria/cuestionario.js"></script>
+  <script src="assets/js/industries/maquinaria/procedimientos.js"></script>
+  <script src="assets/js/industries/maquinaria/plataforma.js"></script>
+  <script src="assets/js/industries/banca/meta.js"></script>
+  <script src="assets/js/industries/banca/turno.js"></script>
+  <script src="assets/js/industries/banca/trace.js"></script>
+  <script src="assets/js/industries/banca/workflow.js"></script>
+  <script src="assets/js/industries/banca/alarma.js"></script>
+  <script src="assets/js/industries/banca/reclamacion.js"></script>
+  <script src="assets/js/industries/banca/retirada.js"></script>
+  <script src="assets/js/industries/banca/cuestionario.js"></script>
+  <script src="assets/js/industries/banca/procedimientos.js"></script>
+  <script src="assets/js/industries/banca/plataforma.js"></script>
+  <script src="assets/js/industries/retail/meta.js"></script>
+  <script src="assets/js/industries/retail/turno.js"></script>
+  <script src="assets/js/industries/retail/trace.js"></script>
+  <script src="assets/js/industries/retail/workflow.js"></script>
+  <script src="assets/js/industries/retail/alarma.js"></script>
+  <script src="assets/js/industries/retail/reclamacion.js"></script>
+  <script src="assets/js/industries/retail/retirada.js"></script>
+  <script src="assets/js/industries/retail/cuestionario.js"></script>
+  <script src="assets/js/industries/retail/procedimientos.js"></script>
+  <script src="assets/js/industries/retail/plataforma.js"></script>
+  <script src="assets/js/industries/cerveceria/meta.js"></script>
+  <script src="assets/js/industries/cerveceria/turno.js"></script>
+  <script src="assets/js/industries/cerveceria/trace.js"></script>
+  <script src="assets/js/industries/cerveceria/workflow.js"></script>
+  <script src="assets/js/industries/cerveceria/alarma.js"></script>
+  <script src="assets/js/industries/cerveceria/reclamacion.js"></script>
+  <script src="assets/js/industries/cerveceria/retirada.js"></script>
+  <script src="assets/js/industries/cerveceria/cuestionario.js"></script>
+  <script src="assets/js/industries/cerveceria/procedimientos.js"></script>
+  <script src="assets/js/industries/cerveceria/plataforma.js"></script>
+  <script src="assets/js/industries/maquinaria/en/meta.js"></script>
+  <script src="assets/js/industries/maquinaria/en/turno.js"></script>
+  <script src="assets/js/industries/maquinaria/en/trace.js"></script>
+  <script src="assets/js/industries/maquinaria/en/workflow.js"></script>
+  <script src="assets/js/industries/maquinaria/en/alarma.js"></script>
+  <script src="assets/js/industries/maquinaria/en/reclamacion.js"></script>
+  <script src="assets/js/industries/maquinaria/en/retirada.js"></script>
+  <script src="assets/js/industries/maquinaria/en/cuestionario.js"></script>
+  <script src="assets/js/industries/maquinaria/en/procedimientos.js"></script>
+  <script src="assets/js/industries/maquinaria/en/plataforma.js"></script>
+  <script src="assets/js/industries/banca/en/meta.js"></script>
+  <script src="assets/js/industries/banca/en/turno.js"></script>
+  <script src="assets/js/industries/banca/en/trace.js"></script>
+  <script src="assets/js/industries/banca/en/workflow.js"></script>
+  <script src="assets/js/industries/banca/en/alarma.js"></script>
+  <script src="assets/js/industries/banca/en/reclamacion.js"></script>
+  <script src="assets/js/industries/banca/en/retirada.js"></script>
+  <script src="assets/js/industries/banca/en/cuestionario.js"></script>
+  <script src="assets/js/industries/banca/en/procedimientos.js"></script>
+  <script src="assets/js/industries/banca/en/plataforma.js"></script>
+  <script src="assets/js/industries/retail/en/meta.js"></script>
+  <script src="assets/js/industries/retail/en/turno.js"></script>
+  <script src="assets/js/industries/retail/en/trace.js"></script>
+  <script src="assets/js/industries/retail/en/workflow.js"></script>
+  <script src="assets/js/industries/retail/en/alarma.js"></script>
+  <script src="assets/js/industries/retail/en/reclamacion.js"></script>
+  <script src="assets/js/industries/retail/en/retirada.js"></script>
+  <script src="assets/js/industries/retail/en/cuestionario.js"></script>
+  <script src="assets/js/industries/retail/en/procedimientos.js"></script>
+  <script src="assets/js/industries/retail/en/plataforma.js"></script>
+  <script src="assets/js/industries/cerveceria/en/meta.js"></script>
+  <script src="assets/js/industries/cerveceria/en/turno.js"></script>
+  <script src="assets/js/industries/cerveceria/en/trace.js"></script>
+  <script src="assets/js/industries/cerveceria/en/workflow.js"></script>
+  <script src="assets/js/industries/cerveceria/en/alarma.js"></script>
+  <script src="assets/js/industries/cerveceria/en/reclamacion.js"></script>
+  <script src="assets/js/industries/cerveceria/en/retirada.js"></script>
+  <script src="assets/js/industries/cerveceria/en/cuestionario.js"></script>
+  <script src="assets/js/industries/cerveceria/en/procedimientos.js"></script>
+  <script src="assets/js/industries/cerveceria/en/plataforma.js"></script>
+  <script src="assets/i18n/en.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/boot.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#view">Saltar al contenido</a>
+
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
+      <div class="sidebar-inner">
+        <a class="brand" href="#turno" aria-label="Prodigy · inicio">
+          <svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" focusable="false">
+            <rect class="bm-bg" width="26" height="26" rx="6"/>
+            <path class="bm-line" d="M8.5 8.5 17.5 13 8.5 17.5"/>
+            <circle class="bm-dot" cx="8.5" cy="8.5" r="2.6"/>
+            <circle class="bm-dot" cx="17.5" cy="13" r="2.6"/>
+            <circle class="bm-dot" cx="8.5" cy="17.5" r="2.6"/>
+          </svg>
+          <span class="brand-name">Prodigy</span>
+        </a>
+
+        <details class="ws ws-switch" id="ws-switch">
+          <summary title="Cambiar de industria">
+            <span class="ws-avatar" aria-hidden="true" id="ws-avatar"></span>
+            <div class="ws-text">
+              <div class="ws-name" id="ws-name"></div>
+              <div class="ws-sub" id="ws-sub"></div>
+            </div>
+            <span data-icon="chevron-down" data-size="16"></span>
+          </summary>
+          <div class="ws-menu" id="ws-menu" role="list"></div>
+        </details>
+
+        <nav class="nav" id="nav" aria-label="Secciones"></nav>
+
+        <div class="sidebar-foot">
+          <button type="button" class="side-link" id="audit-link"><span data-icon="history" data-size="18"></span><span>Registro de auditoría</span><span class="side-count" id="audit-count">0</span></button>
+          <div class="me">
+            <span class="me-avatar" aria-hidden="true" id="me-avatar"></span>
+            <div>
+              <div class="me-name" id="me-name"></div>
+              <div class="me-sub" id="me-sub"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <div class="scrim" id="scrim"></div>
+
+    <div class="workspace">
+      <header class="topbar">
+        <button type="button" class="icon-btn menu-btn" id="menu-btn" aria-label="Abrir la navegación" aria-controls="sidebar" aria-expanded="false"><span data-icon="menu"></span></button>
+        <nav class="crumbs" aria-label="Ruta">
+          <span class="crumb crumb-root" id="crumb-root"></span><span data-icon="chevron-right" data-size="14"></span>
+          <span class="crumb" id="crumb-section">Operación</span><span data-icon="chevron-right" data-size="14"></span>
+          <span class="crumb cur" id="crumb-title" aria-current="page">Resumen del turno</span>
+        </nav>
+        <div class="topbar-right">
+          <div class="language-switch model-switch" role="group" aria-label="Modelo de la demo">
+            <button type="button" data-model="frontier" aria-pressed="true" title="Respuestas simuladas, sin modelo de lenguaje">Frontera</button>
+            <button type="button" data-model="local" aria-pressed="false" title="Modelo servido por LiteLLM">Local</button>
+          </div>
+          <button type="button" class="model-name" id="model-name" hidden title="Cambiar la conexión del modelo local"></button>
+          <div class="language-switch" role="group" aria-label="Idioma / Language">
+            <button type="button" data-language="es" lang="es" aria-label="Mostrar en español" aria-pressed="true">ESP</button>
+            <button type="button" data-language="en" lang="en" aria-label="Show in English" aria-pressed="false">ENG</button>
+          </div>
+          <span class="clock" id="clock" title="Hora local"><span data-icon="clock" data-size="15"></span><span id="clock-text">29/09/2026 · 07:05</span></span>
+          <button type="button" class="env-chip" id="env-chip" title="Datos sintéticos · acciones simuladas"><span class="dot"></span><span class="env-text">Demostración</span><span class="env-short">Demo</span></button>
+          <button type="button" class="btn btn-ghost btn-sm" id="presenter-btn" aria-pressed="false" title="Modo presentador (P)"><span data-icon="presentation" data-size="16"></span><span class="lbl">Presentador</span><kbd>P</kbd></button>
+          <button type="button" class="btn btn-ghost btn-sm" id="reset-btn" title="Reiniciar demo"><span data-icon="rotate-ccw" data-size="16"></span><span class="lbl">Reiniciar demo</span></button>
+        </div>
+      </header>
+
+      <main class="main" id="view" tabindex="-1"></main>
+
+      <footer class="footer">
+        <div class="footer-inner">
+          <span>Demostración con datos sintéticos · acciones simuladas · preparado por Ciklum</span>
+          <button type="button" class="link-btn" id="about-btn">Acerca de esta demo</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <aside class="presenter" id="presenter" aria-label="Modo presentador" aria-hidden="true">
+    <div class="presenter-head">
+      <div>
+        <div class="presenter-kicker"><span data-icon="presentation" data-size="14"></span>Modo presentador</div>
+        <div class="presenter-scene" id="presenter-scene"></div>
+      </div>
+      <button type="button" class="icon-btn" id="presenter-close" aria-label="Cerrar el modo presentador"><span data-icon="x"></span></button>
+    </div>
+    <div class="presenter-body">
+      <h3 class="presenter-h">Qué decir</h3>
+      <ul class="presenter-say" id="presenter-say"></ul>
+      <h3 class="presenter-h">Siguiente clic</h3>
+      <div class="presenter-next"><span data-icon="arrow-right" data-size="18"></span><span id="presenter-next"></span></div>
+    </div>
+    <div class="presenter-foot">
+      <div class="presenter-nav">
+        <button type="button" class="btn btn-secondary btn-sm" id="presenter-prev"></button>
+        <button type="button" class="btn btn-secondary btn-sm" id="presenter-fwd"></button>
+      </div>
+      <div class="presenter-meta">
+        <span data-icon="clock" data-size="14"></span><span>Tiempo</span><span class="timer" id="presenter-timer">00:00</span>
+        <button type="button" class="link-btn" id="presenter-timer-reset">Poner a cero</button>
+      </div>
+      <div class="presenter-meta">
+        <span data-icon="fast-forward" data-size="14"></span><span>Animaciones</span>
+        <div class="seg" role="group" aria-label="Ritmo de las animaciones">
+          <button type="button" class="seg-btn" data-speed="1" aria-pressed="true">Normal</button>
+          <button type="button" class="seg-btn" data-speed="3" aria-pressed="false">Rápidas</button>
+        </div>
+      </div>
+      <div class="presenter-keys">
+        <span><kbd>P</kbd> mostrar u ocultar</span>
+        <span><kbd><span data-icon="chevron-left" data-size="11"></span></kbd> <kbd><span data-icon="chevron-right" data-size="11"></span></kbd> cambiar de escena</span>
+        <a href="index.html">Cambiar de industria</a>
+      </div>
+    </div>
+  </aside>
+
+  <dialog class="modal" id="modal" aria-labelledby="modal-title"></dialog>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <noscript><p style="padding:24px">Esta demostración necesita JavaScript activado.</p></noscript>
+
+  <script src="assets/js/core.js"></script>
+  <!-- Configure the optional model connection through the Local button. -->
+  <script src="assets/js/llm.js"></script>
+  <script src="assets/js/opsmap.js"></script>
+  <script src="assets/js/scenes/turno.js"></script>
+  <script src="assets/js/scenes/workflow.js"></script>
+  <script src="assets/js/scenes/alarma.js"></script>
+  <script src="assets/js/scenes/reclamacion.js"></script>
+  <script src="assets/js/scenes/retirada.js"></script>
+  <script src="assets/js/scenes/cuestionario.js"></script>
+  <script src="assets/js/scenes/procedimientos.js"></script>
+  <script src="assets/js/scenes/plataforma.js"></script>
+</body>
+</html>

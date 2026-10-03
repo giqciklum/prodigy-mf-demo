@@ -1,0 +1,64 @@
+/*
+ * Consola por industria: selector de industria en la barra lateral y piezas comunes de las escenas
+ * genéricas que no estaban en la demo de referencia. Solo tokens de tokens.css.
+ */
+
+/* ---------------------------------------------------------------- Selector de industria (barra lateral) */
+.ws-switch { display: block; padding: 0; }
+.ws-switch > summary { display: flex; align-items: center; gap: 10px; padding: 10px; cursor: pointer; list-style: none; border-radius: var(--r-lg); }
+.ws-switch > summary::-webkit-details-marker { display: none; }
+.ws-switch > summary:hover { background: var(--dark-hover); }
+.ws-switch > summary:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.ws-switch > summary .icon { margin-left: auto; color: var(--on-dark-3); transition: transform .2s var(--ease); }
+.ws-switch[open] > summary .icon { transform: rotate(180deg); }
+.ws-text { min-width: 0; display: flex; flex-direction: column; }
+.ws-menu { display: flex; flex-direction: column; gap: 2px; padding: 4px 6px 8px; border-top: 1px solid var(--dark-line); }
+.ws-opt { display: flex; align-items: center; gap: 10px; padding: 7px 6px; border-radius: var(--r); color: var(--on-dark); text-decoration: none; }
+.ws-opt:hover { background: var(--dark-hover); }
+.ws-opt.is-current { background: var(--dark-active); }
+.ws-opt .ws-avatar { width: 26px; height: 26px; font-size: 10.5px; }
+.ws-opt .ws-name { font-size: 12.5px; }
+.ws-opt .ws-sub { margin-top: 1px; }
+.ws-all { padding-left: 8px; }
+.ws-all .ws-sub { text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---------------------------------------------------------------- Piezas comunes de las escenas genéricas */
+.gx-note { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; color: var(--muted); }
+.gx-note .icon { flex: none; margin-top: 1px; }
+.gx-quote { margin: 4px 0 0; padding: 2px 0 2px 10px; border-left: 2px solid var(--line-strong); color: var(--slate); font-size: 12.5px; }
+.gx-steps { list-style: none; margin: 0; padding: 0; }
+.gx-step { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; padding: 12px 16px; border-top: 1px solid var(--line-soft); }
+.gx-step:first-child { border-top: 0; }
+.gx-step-n { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line-strong); font: 600 12px/1 var(--font-head); color: var(--slate); background: var(--card); }
+.gx-step.is-trigger { background: color-mix(in srgb, var(--bg) 55%, var(--card)); }
+.gx-step.is-trigger .gx-step-n, .gx-step.is-approval .gx-step-n { border-color: transparent; }
+.gx-step.is-trigger .gx-step-n { background: var(--cn-green-100); color: var(--cn-green-dark); }
+.gx-step.is-approval .gx-step-n { background: var(--amber-50); color: var(--amber); }
+.gx-step-title { font: 600 14px/1.35 var(--font-head); color: var(--cn-green-900); }
+.gx-step-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 6px; font-size: 12px; color: var(--muted); }
+.gx-outputs { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.gx-output { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-lg); background: color-mix(in srgb, var(--bg) 40%, var(--card)); font-size: 13px; color: var(--slate); }
+.gx-output .icon { flex: none; margin-top: 1px; color: var(--cn-green); }
+.gx-wf-text { font-size: 14.5px; line-height: 1.95; color: var(--ink); }
+.gx-wf-text mark.hl { line-height: 1.5; }
+.gx-checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--slate); }
+.gx-checks li { display: flex; gap: 8px; align-items: flex-start; }
+.gx-checks .icon { flex: none; margin-top: 2px; color: var(--ok); }
+.gx-checks .is-warn .icon { color: var(--amber); }
+.gx-label { font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.gx-trial { display: flex; gap: 8px; }
+.gx-trial .input { flex: 1; min-width: 0; }
+.gx-match { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; }
+.gx-phrases { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: var(--slate); }
+.gx-phrases li { display: flex; gap: 8px; align-items: flex-start; }
+.gx-phrases .icon { flex: none; margin-top: 2px; color: var(--muted); }
+.gx-cmp td:first-child { font-weight: 600; color: var(--ink); }
+.gx-map-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--slate); }
+.gx-hidden { display: none !important; }
+
+/* ---------------------------------------------------------------- Selector de modelo (Frontera / Local) */
+.model-switch button { padding: 0 8px; }
+.model-name { max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 4px 8px; border: 1px solid var(--line-strong); border-radius: 6px; background: var(--cn-green-50); color: var(--cn-green-900); font: 600 11px/1.2 var(--font-mono); cursor: pointer; }
+.model-name:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.llm-badge { display: inline-flex; align-items: center; gap: 4px; padding: 1px 6px; border-radius: 999px; background: var(--cn-green-50); color: var(--cn-green-900); font: 600 11px/1.5 var(--font-mono); }
+@media (max-width: 720px) { .model-name { display: none; } }
