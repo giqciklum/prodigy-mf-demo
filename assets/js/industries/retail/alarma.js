@@ -1,5 +1,5 @@
 /* Mercados Moncayo · alarma con aprobación: mural de lácteos MR-3 de la tienda T-027 por encima de 5 °C.
- * Empresa ficticia; datos sintéticos de demostración (Ciklum). Las funciones reciben el contexto H de la escena
+ * Empresa ficticia; datos sintéticos de demostración (MFM). Las funciones reciben el contexto H de la escena
  * (W workflow, C condición evaluada, sc alcance vigente, ids generados al aprobar, fmt, fv, pl…). */
 (function () {
   'use strict';
@@ -35,7 +35,7 @@
   };
   const TEAMS = 'Tiendas · Zona Huesca';
 
-  prodigyPack('retail', {
+  agenticPack('retail', {
     alarma: {
       nav: 'Alarma T-027',
       title: 'Alarma T-027 en ejecución',
@@ -113,7 +113,7 @@
           const a = H.all;
           return [
             { lane: 'mon', system: 'Sensores de frío', verb: 'Consultando', action: 'Lee la sonda TS-T027-MR3 de 03:00 a 07:00, una lectura cada 5 min', result: `${SERIES.length} lecturas, sin huecos · ahora 9,4 °C (07:00)`, ms: 1800, set: { volume: `${SERIES.length} lecturas de temperatura` } },
-            { lane: 'mon', system: 'Prodigy', eval: true, ms: 90 },
+            { lane: 'mon', system: 'Agentic Platform', eval: true, ms: 90 },
             { lane: 'mon', system: 'Sensores de frío', verb: 'Consultando', action: 'Cruza la excursión con el consumo del ventilador y la central CF-T027', result: 'Ventilador VF-2 a 0 A desde las 03:40; central y compresor en marcha: hipótesis para Mantenimiento de frío', tone: 'warn', ms: 1400, set: { volume: `${SERIES.length} lecturas · consumos`, result: `Excursión confirmada: ${H.C.above} min por encima · pico 9,8 °C` } },
             { lane: 'traz', system: 'SAP S/4 Retail', verb: 'Consultando', action: 'Lista el surtido del planograma de MR-3 y el stock por tramo', result: `${a.count} envases de ${UNITS.length} referencias en ${a.items.length} tramos`, ms: 2100, set: { volume: `${UNITS.length} referencias` } },
             { lane: 'traz', system: 'SAP S/4 Retail', verb: 'Consultando', action: 'Resuelve lote y fecha de caducidad de cada referencia', result: `${new Set(UNITS.map((u) => u.lot)).size} lotes de marca Moncayo · ${H.fmt.eur(a.value)} a PVP`, ms: 2300, set: { volume: `${a.count} envases · ${UNITS.length} referencias` }, reveal: 'lots' },
@@ -121,7 +121,7 @@
             { lane: 'traz', system: 'TPV tiendas', verb: 'Consultando', action: 'Consulta las ventas y pedidos en línea previstos con esas referencias', result: `${a.holds.length} canales de venta; el primero, ${H.first.id}, a las ${H.first.time}`, tone: 'warn', ms: 1900, set: { volume: `${a.count} envases · ${a.holds.length} canales`, result: `Primera venta posible a las ${H.first.time}` }, milestone: 'traz', audit: { action: 'Productos y ventas identificados', detail: `${a.count} envases de ${UNITS.length} referencias en ${a.items.length} tramos de MR-3 · ${a.holds.length} canales de venta · ${a.elseTotal} envases fuera del mural` } },
             { lane: 'cal', node: 'apr', system: 'Procedimientos', verb: 'Analizando', action: 'Aplica APPCC-TIE-01 y PR-CAL-010 a esta excursión', result: 'Refrigerado más de 2 h por encima de 5 °C: bloquear la venta, retirar y destruir como merma; solo Calidad decide excepciones', ms: 1300 },
             { lane: 'cal', node: 'apr', system: 'Modelo de lenguaje', verb: 'Redactando', action: 'Redacta la propuesta y su motivo con las evidencias', result: `Propuesta: bloquear la venta de ${a.count} envases, retirarlos a la cámara de merma y abrir incidencia urgente de frío`, ms: 6400, set: { volume: `${a.count} envases · ${a.holds.length} canales` } },
-            { lane: 'cal', node: 'apr', system: 'Prodigy', verb: 'Evaluando', action: `Pide la aprobación de ${H.W.approver} antes de escribir en TPV, SAP y ServiceNow`, result: 'Esperando la decisión de Calidad', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Propuesta enviada a Calidad' }, milestone: 'prop', audit: { action: 'Propuesta de bloqueo de venta enviada a aprobación', detail: `${a.count} envases en ${a.items.length} tramos de MR-3 · aprueba ${H.W.approver}` } }
+            { lane: 'cal', node: 'apr', system: 'Agentic Platform', verb: 'Evaluando', action: `Pide la aprobación de ${H.W.approver} antes de escribir en TPV, SAP y ServiceNow`, result: 'Esperando la decisión de Calidad', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Propuesta enviada a Calidad' }, milestone: 'prop', audit: { action: 'Propuesta de bloqueo de venta enviada a aprobación', detail: `${a.count} envases en ${a.items.length} tramos de MR-3 · aprueba ${H.W.approver}` } }
           ];
         },
         p2: (H) => {
@@ -292,7 +292,7 @@
           {
             icon: 'send', title: 'Aviso a la tienda', systems: ['Microsoft Teams'], note: H.run.endAt ? `enviado a las ${H.fmt.time(H.run.endAt)}` : '',
             message: {
-              from: 'Prodigy · agente Tienda', channel: `canal «${TEAMS}»`, at: H.run.endAt ? H.fmt.time(H.run.endAt) : '',
+              from: 'Agentic Platform · agente Tienda', channel: `canal «${TEAMS}»`, at: H.run.endAt ? H.fmt.time(H.run.endAt) : '',
               paras: [
                 { to: ROLE.store_manager, text: `Antes de abrir, retira del mural MR-3 lo siguiente (venta ya bloqueada en caja, ${H.ids.blq}, aprobado por ${H.decision.by}):` },
                 { to: ROLE.store_ops, text: `Incidencia ${H.ids.ot} al frigorista, llegada 08:15. Reposición desde CF-1; pedido urgente en el reparto de las 11:00. Detalle en ${H.ids.nc}.` }

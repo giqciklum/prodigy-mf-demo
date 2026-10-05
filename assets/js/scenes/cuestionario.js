@@ -1,7 +1,7 @@
 /*
  * Escena «cuestionario» · Cuestionario de cliente, común a todas las industrias.
  * Misma estructura que la demo de Congelados de Navarra:
- *  - 15 preguntas del cliente. Prodigy redacta cada respuesta solo con fragmentos de las fuentes indexadas
+ *  - 15 preguntas del cliente. Agentic Platform redacta cada respuesta solo con fragmentos de las fuentes indexadas
  *    (documentos controlados y registros de sistemas) y marca con [n] la fuente de cada afirmación.
  *    Si el cliente escribe en inglés (CN_DATA.cuestionario.lang = 'en'), la respuesta va en inglés con
  *    traducción de revisión en español. Con la interfaz en inglés (CN_I18N.english) la vista es monolingüe en
@@ -12,7 +12,7 @@
  *  - Las preguntas sin evidencia suficiente no se responden: quedan para revisión humana.
  *  - Revisión humana por respuesta (editar, descartar con motivo, aprobar); en bloque solo las de confianza alta.
  *  - Exporta Excel (.csv) y un documento controlado imprimible (App.printableReport).
- *  - Termina con la comparativa «Hoy / Con Prodigy» y la revisión medida en la sesión.
+ *  - Termina con la comparativa «Hoy / Con Agentic Platform» y la revisión medida en la sesión.
  * Todo el contenido sale de CN_DATA.cuestionario; render() reconstruye la vista desde ctx.local.
  */
 (function () {
@@ -24,7 +24,7 @@
   if (!QD) { console.warn('[cuestionario] Falta CN_DATA.cuestionario'); return; }
   const META = D.meta;
   const AGENT = QD.agent || 'Cuestionarios de cliente';
-  const AGENT_ACTOR = `Prodigy · agente ${AGENT}`;
+  const AGENT_ACTOR = `Agentic Platform · agente ${AGENT}`;
   const DEFAULT_SEL = QD.default_sel;
   const EN_UI = !!(window.CN_I18N && window.CN_I18N.english);
   /** Bilingüe: cliente en inglés con la interfaz en español (respuesta en inglés y traducción de revisión). */
@@ -158,7 +158,7 @@
 
   /* ---------------------------------------------------------------- Registro del agente */
 
-  const INTERNAL = { Prodigy: true, Procedimientos: true, 'Modelo de lenguaje': true };
+  const INTERNAL = { 'Agentic Platform': true, Procedimientos: true, 'Modelo de lenguaje': true };
   /** Texto nuevo del modo Local: se da ya en los dos idiomas (no pasa por el catálogo de la interfaz). */
   const LT = (es, en) => (EN_UI ? en : es);
   /** Paso del modelo en modo Local. llm: {system, model, ms, total, generated, fallback} (sin ms mientras corre). */
@@ -180,15 +180,15 @@
     const t = tokens();
     const head = [
       { agent: AGENT, system: 'Outlook', action: `Lee el correo de ${QN.via} y el adjunto ${QN.file}`, result: `${QS.length} preguntas en ${SECS.length} bloques · plazo ${fmt.date(QN.due)}`, ms: 420 },
-      { agent: AGENT, system: 'Prodigy', action: QD.identify_action || 'Identifica el cliente y el alcance del cuestionario', result: fill(QD.identify_result), ms: 180 },
+      { agent: AGENT, system: 'Agentic Platform', action: QD.identify_action || 'Identifica el cliente y el alcance del cuestionario', result: fill(QD.identify_result), ms: 180 },
       { agent: AGENT, system: 'Procedimientos', action: `Busca en los ${DOC_COUNT} documentos indexados: ${QD.search_scope}`, result: `Fragmentos citables para ${DRAFTED} de ${QS.length} preguntas`, ms: 860 }
     ];
     const lookups = (QD.lookups || []).map((s) => Object.assign({ agent: AGENT, ms: 420 }, s, { action: fill(s.action), result: fill(s.result) }));
     const tail = [
       llm ? llmStep(llm) : { agent: AGENT, system: 'Modelo de lenguaje', action: `Redacta${BI ? ' en inglés, con traducción,' : ''} solo con los fragmentos encontrados (${DRAFTED} llamadas)`, result: `${DRAFTED} borradores con referencias a sus fuentes`, ms: 11200 },
-      { agent: AGENT, system: 'Prodigy', action: 'Comprueba que cada cita aparece literalmente en su fuente', result: `${CITES_OK} de ${CITES_TOTAL} citas verificadas`, ms: 140, tone: CITES_OK === CITES_TOTAL ? 'ok' : 'crit' },
-      { agent: AGENT, system: 'Prodigy', action: 'Asigna el nivel de confianza de cada respuesta', result: `${t.alta} de confianza alta · ${t.media} de confianza media: falta un dato que pide el cliente`, ms: 90 },
-      { agent: AGENT, system: 'Prodigy', action: 'Marca las preguntas sin evidencia suficiente', result: `${t.flagged_ids}: requieren revisión de ${TEAM}; no se redacta respuesta`, ms: 70, tone: 'warn' },
+      { agent: AGENT, system: 'Agentic Platform', action: 'Comprueba que cada cita aparece literalmente en su fuente', result: `${CITES_OK} de ${CITES_TOTAL} citas verificadas`, ms: 140, tone: CITES_OK === CITES_TOTAL ? 'ok' : 'crit' },
+      { agent: AGENT, system: 'Agentic Platform', action: 'Asigna el nivel de confianza de cada respuesta', result: `${t.alta} de confianza alta · ${t.media} de confianza media: falta un dato que pide el cliente`, ms: 90 },
+      { agent: AGENT, system: 'Agentic Platform', action: 'Marca las preguntas sin evidencia suficiente', result: `${t.flagged_ids}: requieren revisión de ${TEAM}; no se redacta respuesta`, ms: 70, tone: 'warn' },
       { agent: AGENT, system: QD.save_system, action: `Guarda el borrador ${QN.code} para su revisión`, result: `Pendiente de ${REVIEWER}`, ms: 260, tone: 'ok' }
     ];
     return head.concat(lookups, tail);
@@ -349,10 +349,10 @@
     </div>`;
   }
 
-  /** Etiqueta discreta con el modelo local que redactó la respuesta (solo si el texto mostrado es suyo). */
+  /** Etiqueta discreta con el modelo que redactó la respuesta (solo si el texto mostrado es suyo). */
   function llmBadge(a) {
     if (!a || !a.llm) return '';
-    return html`<span class="llm-badge" title="${EN_UI ? 'Drafted by the local model' : 'Redactada por el modelo local'}" data-no-translate>${icon('cpu', 12)}${a.llm}</span>`;
+    return html`<span class="llm-badge" title="${EN_UI ? 'Drafted by the model' : 'Redactada por el modelo'}" data-no-translate>${icon('cpu', 12)}${a.llm}</span>`;
   }
 
   function editBlock(q, a) {
@@ -407,7 +407,7 @@
 
   function flagBlocks(q) {
     const f = q.flag;
-    return html`${App.callout({ tone: 'warn', icon: 'search', title: 'No hay evidencia suficiente en los documentos indexados', body: html`<p>${fill(f.reason)}</p><p class="mt-1">Prodigy no redacta una respuesta sin fuente.</p>` })}
+    return html`${App.callout({ tone: 'warn', icon: 'search', title: 'No hay evidencia suficiente en los documentos indexados', body: html`<p>${fill(f.reason)}</p><p class="mt-1">Agentic Platform no redacta una respuesta sin fuente.</p>` })}
       ${f.partial && f.partial.length ? html`<div class="cq-block"><div class="cq-label"><span>Evidencia parcial encontrada · ${f.partial.length}</span><span>No basta para responder</span></div><ol class="cq-srcs">${f.partial.map((c, i) => srcItem(c, i + 1, `p${i + 1}`, c.why))}</ol></div>` : ''}
       ${f.context ? App.callout({ tone: 'brand', icon: 'info', title: 'Contexto', body: f.context }) : ''}
       <div class="cq-block"><div class="cq-label"><span>Qué falta para responder</span></div><ul class="cq-missing">${f.missing.map((m) => html`<li>${m}</li>`)}</ul></div>`;
@@ -549,26 +549,26 @@
     if (c.assigned) appr.push(`${c.assigned} ${c.assigned === 1 ? 'pregunta asignada' : 'preguntas asignadas'} a ${ASSIGNEE_SHORT}`);
     const rows = [
       { k: 'Personas', hoy: H.people, con: `1 revisor (${REVIEWER}); ${ASSIGNEE} completa las ${FLAGGED.length} preguntas sin fuente` },
-      { k: 'Sistemas y documentos abiertos', hoy: H.systems, con: `Ninguno por parte del revisor: Prodigy consultó ${DOC_COUNT} documentos y ${SYSTEMS.length} sistemas, y cada respuesta enlaza su fuente` },
+      { k: 'Sistemas y documentos abiertos', hoy: H.systems, con: `Ninguno por parte del revisor: Agentic Platform consultó ${DOC_COUNT} documentos y ${SYSTEMS.length} sistemas, y cada respuesta enlaza su fuente` },
       { k: 'Pasos', hoy: H.steps, con: `${run.steps} pasos automáticos${appr.length ? ` · ${fmt.list(appr)}` : ` · aprobación de ${TEAM} pendiente`}` },
       { k: 'Tiempo', hoy: H.time, con: done ? `Borrador del agente en ${fmt.ms(run.ms)} · revisión de ${TEAM} de ${fmt.dur(review)}, medida en esta sesión` : `Borrador del agente en ${fmt.ms(run.ms)} · revisión en curso (${c.decided} de ${QS.length} decididas)`, time: true }
     ];
     return App.card({
       id: 'cq-compare',
-      title: 'Hoy y con Prodigy · este cuestionario',
-      sub: '«Hoy»: supuesto ilustrativo, a validar con vuestra línea base en el piloto · «Con Prodigy»: duración de la simulación, no rendimiento de producción',
+      title: 'Hoy y con Agentic Platform · este cuestionario',
+      sub: '«Hoy»: supuesto ilustrativo, a validar con vuestra línea base en el piloto · «Con Agentic Platform»: duración de la simulación, no rendimiento de producción',
       icon: 'bar-chart',
       flush: true,
       body: App.table({
         cols: [
           { label: '', width: '20%', render: (r) => html`<span class="strong">${r.k}</span>` },
           { label: 'Hoy (estimación)', width: '38%', render: (r) => (r.time ? html`<span class="strong">${r.hoy}</span>` : r.hoy) },
-          { label: 'Con Prodigy (simulación)', render: (r) => (r.time ? html`<span class="strong${done ? ' t-ok' : ''}">${r.con}</span>` : r.con) }
+          { label: 'Con Agentic Platform (simulación)', render: (r) => (r.time ? html`<span class="strong${done ? ' t-ok' : ''}">${r.con}</span>` : r.con) }
         ],
         rows,
         rowAttrs: (r) => ({ 'data-row': r.k })
       }),
-      footer: html`<span class="muted small">«Hoy» se sustituye por la línea base medida en las semanas 1–2 del piloto. «Con Prodigy» incluye la revisión humana, no solo el agente.</span><span class="spacer"></span>${done ? html`<button type="button" class="btn btn-primary btn-sm" data-action="pdf">${icon('printer', 15)}<span>Descargar cuestionario (PDF)</span></button>` : ''}`
+      footer: html`<span class="muted small">«Hoy» se sustituye por la línea base medida en las semanas 1–2 del piloto. «Con Agentic Platform» incluye la revisión humana, no solo el agente.</span><span class="spacer"></span>${done ? html`<button type="button" class="btn btn-primary btn-sm" data-action="pdf">${icon('printer', 15)}<span>Descargar cuestionario (PDF)</span></button>` : ''}`
     });
   }
 
@@ -659,8 +659,8 @@
     });
     const org = QD.responder || (META && META.company) || '';
     const system = en
-      ? `You are the ${AGENT} agent of Prodigy, drafting the answers of ${org} to the ${QN.title} sent by ${QN.customer}. Answer the customer's question in the first person plural on behalf of ${org}, using ONLY the numbered passages from its documents and system records. Every sentence must end with the citation of the passage(s) it comes from, written as [n]. Do not invent figures, dates, roles or commitments that are not in the passages, and keep codes, figures and names exactly as written. If the passages do not answer the question, reply exactly NO_EVIDENCE. Write in English, as one paragraph of at most 5 sentences, without a title or preamble.`
-      : `Eres el agente ${AGENT} de Prodigy y redactas las respuestas de ${org} al ${QN.title} de ${QN.customer}. Responde a la pregunta del cliente en primera persona del plural en nombre de ${org}, usando SOLO los pasajes numerados de sus documentos y registros. Cada frase debe terminar con la cita del pasaje o pasajes de los que sale, escrita como [n]. No inventes cifras, fechas, responsables ni compromisos que no estén en los pasajes, y conserva los códigos, cifras y nombres tal como aparecen. Si los pasajes no responden a la pregunta, responde exactamente NO_EVIDENCE. Escribe en español, en un solo párrafo de 5 frases como máximo, sin título ni preámbulo.`;
+      ? `You are the ${AGENT} agent of Agentic Platform, drafting the answers of ${org} to the ${QN.title} sent by ${QN.customer}. Answer the customer's question in the first person plural on behalf of ${org}, using ONLY the numbered passages from its documents and system records. Every sentence must end with the citation of the passage(s) it comes from, written as [n]. Do not invent figures, dates, roles or commitments that are not in the passages, and keep codes, figures and names exactly as written. If the passages do not answer the question, reply exactly NO_EVIDENCE. Write in English, as one paragraph of at most 5 sentences, without a title or preamble.`
+      : `Eres el agente ${AGENT} de Agentic Platform y redactas las respuestas de ${org} al ${QN.title} de ${QN.customer}. Responde a la pregunta del cliente en primera persona del plural en nombre de ${org}, usando SOLO los pasajes numerados de sus documentos y registros. Cada frase debe terminar con la cita del pasaje o pasajes de los que sale, escrita como [n]. No inventes cifras, fechas, responsables ni compromisos que no estén en los pasajes, y conserva los códigos, cifras y nombres tal como aparecen. Si los pasajes no responden a la pregunta, responde exactamente NO_EVIDENCE. Escribe en español, en un solo párrafo de 5 frases como máximo, sin título ni preámbulo.`;
     const user = `${en ? 'Question' : 'Pregunta'} ${q.id}${q.ref ? ` (${q.ref})` : ''}: ${qText(q, lang)}\n\n${en ? 'Passages' : 'Pasajes'}:\n${passages.join('\n')}`;
     const r = await App.llm.chat({ system, user, maxTokens: 600, temperature: 0.1, signal });
     if (/NO_EVIDENCE/.test(r.text)) return { ok: false, reason: LT('el modelo no encuentra la respuesta en los pasajes', 'the model cannot find the answer in the passages') };
@@ -670,7 +670,7 @@
   }
 
   /**
-   * Redacta con el modelo local las preguntas con fuentes (las de confianza «none» no se envían), 3 a la vez.
+   * Redacta con el modelo las preguntas con fuentes (las de confianza «none» no se envían), 3 a la vez.
    * onProgress(hechas, total). Devuelve {results: {id: {ok, text, model, reason}}, ms, generated, fallback, errors}.
    */
   async function draftAll(signal, onProgress) {
@@ -761,7 +761,7 @@
         const r = dr.results[q.id];
         if (r && r.ok) {
           ans[q.id] = Object.assign({ st: 'draft', llm: r.model, [CL]: r.text }, BI ? { es: '' } : {});
-          App.audit(LT('Respuesta redactada por el modelo local', 'Answer drafted by the local model'), `${QN.code} · ${q.id} · ${r.model} · ${fmt.ms(r.ms)}`, AGENT_ACTOR);
+          App.audit(LT('Respuesta redactada por el modelo', 'Answer drafted by the model'), `${QN.code} · ${q.id} · ${r.model} · ${fmt.ms(r.ms)}`, AGENT_ACTOR);
         } else failed.push({ q, r: r || { error: true, reason: LT('sin respuesta', 'no answer') } });
       });
       if (failed.length) {
@@ -770,8 +770,8 @@
         const ids = failed.map((f) => f.q.id);
         App.audit(LT('Respuestas con el texto preparado', 'Answers with the prepared text'), `${QN.code} · ${ids.join(', ')} · ${first}`, AGENT_ACTOR);
         App.toast(failed.length === dr.list.length
-          ? LT(`El modelo local no ha redactado ninguna respuesta (${first}). Se usan las respuestas preparadas.`, `The local model did not draft any answer (${first}). Using the prepared answers.`)
-          : LT(`${fmt.list(ids)}: el modelo local no ha dado una respuesta válida (${first}). Se usa el texto preparado.`, `${ids.join(', ')}: the local model did not give a valid answer (${first}). Using the prepared text.`), { tone: 'warn', icon: 'alert-triangle', duration: 9000 });
+          ? LT(`El modelo no ha redactado ninguna respuesta (${first}). Se usan las respuestas preparadas.`, `The model did not draft any answer (${first}). Using the prepared answers.`)
+          : LT(`${fmt.list(ids)}: el modelo no ha dado una respuesta válida (${first}). Se usa el texto preparado.`, `${ids.join(', ')}: the model did not give a valid answer (${first}). Using the prepared text.`), { tone: 'warn', icon: 'alert-triangle', duration: 9000 });
       }
     }
     ctx.setLocal({ run: Object.assign({ startedAt, at: App.nowISO(), ms: res.ms, steps: res.steps }, llm ? { llm: Object.assign({}, llm) } : {}), ans, sel: DEFAULT_SEL, filter: 'all', completedAt: null });
@@ -987,7 +987,7 @@
 @page{
 @top-left{content:${cssString(META.report_org || META.company)};${box}}
 @top-right{content:${cssString(`${QN.code} · revisión ${rev} · ${status}`)};${box}}
-@bottom-left{content:${cssString('Documento generado por Prodigy · demostración con datos sintéticos')};${box}}
+@bottom-left{content:${cssString('Documento generado por Agentic Platform · demostración con datos sintéticos')};${box}}
 @bottom-right{content:"Página " counter(page) " de " counter(pages);${box}}
 }
 </style>`;
@@ -1085,7 +1085,7 @@ ${ev}
         ['Plazo de respuesta', fmt.date(QN.due)], ['Idioma de respuesta', BI ? 'Inglés, con traducción de revisión' : EN_UI ? 'Inglés' : 'Español']
       ],
       sections,
-      footer: `Documento generado por Prodigy · demostración con datos sintéticos · ${QN.code} · revisión ${rev}`
+      footer: `Documento generado por Agentic Platform · demostración con datos sintéticos · ${QN.code} · revisión ${rev}`
     });
   }
 

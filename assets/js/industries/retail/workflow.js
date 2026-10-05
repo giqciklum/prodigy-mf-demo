@@ -1,6 +1,6 @@
-/* Mercados Moncayo · De palabras a workflow. Empresa ficticia; datos sintéticos de demostración (Ciklum).
+/* Mercados Moncayo · De palabras a workflow. Empresa ficticia; datos sintéticos de demostración (MFM).
  * Esquema documentado en la cabecera de assets/js/scenes/workflow.js. Regex sobre texto plegado (minúsculas, sin tildes). */
-prodigyPack('retail', {
+agenticPack('retail', {
   workflow: {
     space: 'Calidad · Tiendas y plataforma',
     author: 'quality',
@@ -30,7 +30,7 @@ prodigyPack('retail', {
         id: 'finanzas',
         re: '\\b(?:compr(?:a|ar|e|en|as)|vend(?:e|er|a|an)|invert(?:ir)?|inviert(?:e|a|an))\\b[^.;]{0,50}\\b(?:acciones (?:de|en)\\b|bolsa|bitcoins?|criptomonedas?|divisas|fondos de inversion)|\\btransferencias? bancarias?\\b|\\btransferir dinero\\b',
         title: 'Operación financiera',
-        body: 'El texto pide comprar o vender acciones o mover dinero. Ningún agente del espacio Calidad · Tiendas y plataforma opera en mercados ni hace pagos, y Prodigy no crea pasos que no correspondan a un agente habilitado.'
+        body: 'El texto pide comprar o vender acciones o mover dinero. Ningún agente del espacio Calidad · Tiendas y plataforma opera en mercados ni hace pagos, y Agentic Platform no crea pasos que no correspondan a un agente habilitado.'
       },
       {
         id: 'personas',
@@ -55,8 +55,8 @@ prodigyPack('retail', {
     presenter: {
       idle: [
         'Así escribe Calidad un procedimiento: en castellano, como en su APPCC. No hay que dibujar ni programar nada.',
-        'Prodigy lo convierte en un workflow de la plataforma: disparador, agentes en orden, aprobación humana y salidas, cada uno enlazado a su frase.',
-        'Honestidad: el generador desde texto se simula aquí y su integración en Prodigy se valida en el piloto; los workflows (Routines), el editor, la aprobación y la auditoría son de serie.'
+        'Agentic Platform lo convierte en un workflow de la plataforma: disparador, agentes en orden, aprobación humana y salidas, cada uno enlazado a su frase.',
+        'Honestidad: el generador desde texto se simula aquí y su integración en Agentic Platform se valida en el piloto; los workflows (Routines), el editor, la aprobación y la auditoría son de serie.'
       ],
       outOfScopeExample: 'Baja el precio de los yogures que caduquen mañana en todas las tiendas'
     },

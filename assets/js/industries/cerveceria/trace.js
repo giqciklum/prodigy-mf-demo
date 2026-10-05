@@ -1,6 +1,6 @@
 /* Cervecera Bardenas · registros de trazabilidad (lotes de barril, de fermentación y de materias primas).
- * Los lee App.traceModal desde CN_DATA.trace[código]. Datos sintéticos de demostración (Ciklum). */
-prodigyPack('cerveceria', {
+ * Los lee App.traceModal desde CN_DATA.trace[código]. Datos sintéticos de demostración (MFM). */
+agenticPack('cerveceria', {
   trace: (function () {
     'use strict';
 

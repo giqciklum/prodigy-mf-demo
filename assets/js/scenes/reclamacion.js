@@ -2,7 +2,7 @@
  * Escena «reclamacion» · Reclamación de cliente, común a todas las industrias.
  * Misma estructura que la demo de Congelados de Navarra: correo entrante, extracción resaltada y ficha
  * comprobada en los sistemas, traza del lote o expediente afectado, histórico de casos parecidos, borrador 8D
- * (o el plan equivalente del sector), respuesta al cliente con aprobación humana, comparación «hoy / con Prodigy»,
+ * (o el plan equivalente del sector), respuesta al cliente con aprobación humana, comparación «hoy / con Agentic Platform»,
  * auditoría e informe controlado.
  *  - Todo el contenido sale de CN_DATA.reclamacion; el modal de traza lee CN_DATA.trace (App.traceModal).
  *  - La causa se presenta siempre como hipótesis; nada se envía ni se aplica sin aprobación.
@@ -18,7 +18,7 @@
   if (!R) return;
   const ROLE = D.roles || {};
   const AGENT = R.agent;
-  const AGENT_ACTOR = `Prodigy · agente ${AGENT}`;
+  const AGENT_ACTOR = `Agentic Platform · agente ${AGENT}`;
   const NC = R.nc;
   const FORM = R.form || { code: '—', rev: '1' };
   const LOT = R.lot || {};
@@ -87,7 +87,7 @@
   const GRAPH_AT = RUN.graph_at || {};
   const STEPS = R.steps.map((s) => Object.assign({ agent: AGENT }, s));
   const STEP_SYSTEMS = Array.from(new Set(STEPS.map((s) => s.system)));
-  const EXTERNAL_SYSTEMS = STEP_SYSTEMS.filter((s) => !['Prodigy', 'Modelo de lenguaje', 'Procedimientos'].includes(s));
+  const EXTERNAL_SYSTEMS = STEP_SYSTEMS.filter((s) => !['Agentic Platform', 'Modelo de lenguaje', 'Procedimientos'].includes(s));
   const LLM_CALLS = STEPS.filter((s) => s.system === 'Modelo de lenguaje').length;
   const NODE_IDS = NODES.map((n) => n.id);
   const APPROVAL_NODE = (NODES.find((n) => n.kind === 'approval') || {}).id;
@@ -121,7 +121,7 @@
   /* ---------------------------------------------------------------- Respuesta */
 
   const REPLY = R.reply;
-  /* Texto que se envía: el editado por la persona, si no el redactado por el modelo local, si no el preparado. */
+  /* Texto que se envía: el editado por la persona, si no el redactado por el modelo, si no el preparado. */
   function replyText(st) { const r = st.reply || {}; return r.text || r.draft || REPLY.text; }
 
   /* ---------------------------------------------------------------- Plan (8D o equivalente) */
@@ -149,7 +149,7 @@
     const noun = LOT.noun || 'lote';
     if (res.kind === 'empty') return App.callout({ tone: 'warn', icon: 'search', title: `Escribe un código de ${noun}`, body: `Formato ${LOT.code}.` });
     if (res.kind === 'same') return App.callout({ tone: 'ok', icon: 'check-circle', title: `${res.code} es el ${noun} de la ficha`, body: LOT.same_body || 'Existe en los sistemas y corresponde al producto reclamado. Sin cambios.' });
-    if (res.kind === 'unknown') return App.callout({ tone: 'warn', icon: 'search', title: `No encuentro «${res.code}» en ${LOT.systems}`, body: `No se cambia la ficha ni se muestra ninguna traza: Prodigy no genera datos que no estén en los sistemas. ${LOT.unknown_hint || ''}` });
+    if (res.kind === 'unknown') return App.callout({ tone: 'warn', icon: 'search', title: `No encuentro «${res.code}» en ${LOT.systems}`, body: `No se cambia la ficha ni se muestra ninguna traza: Agentic Platform no genera datos que no estén en los sistemas. ${LOT.unknown_hint || ''}` });
     return App.callout({ tone: 'warn', icon: 'alert-triangle', title: res.title, body: res.body });
   }
 
@@ -230,7 +230,7 @@
     const X = R.mail_extra;
     const body = st.analysis
       ? App.tabs({ id: 'rc-mail', flush: true, label: 'Correo del cliente', tabs: [
-        { id: 'orig', label: R.mail_tab_label || 'Correo recibido', body: html`<p class="muted small mb-2">Resaltado: lo que Prodigy ha extraído (${MAIL_HIGHLIGHTS.length} datos). El texto no se modifica.</p>${original}` },
+        { id: 'orig', label: R.mail_tab_label || 'Correo recibido', body: html`<p class="muted small mb-2">Resaltado: lo que Agentic Platform ha extraído (${MAIL_HIGHLIGHTS.length} datos). El texto no se modifica.</p>${original}` },
         X ? { id: 'extra', label: X.label, body: html`<p class="muted small mb-2">${X.note}</p>${App.emailView({ headers: X.headers || {}, text: X.text, highlights: X.highlights || [] })}` } : null
       ].filter(Boolean) })
       : html`<div class="card-body">${original}</div>`;
@@ -414,9 +414,9 @@
     const edited = !!r.text;
     const K = REPLY.control;
     const ctlNote = edited
-      ? html`<p class="small mb-2 t-warn">${K.edited_note || `Corresponde al borrador de Prodigy; la versión ${r.version} incluye cambios en el texto que se envía.`}</p>`
+      ? html`<p class="small mb-2 t-warn">${K.edited_note || `Corresponde al borrador de Agentic Platform; la versión ${r.version} incluye cambios en el texto que se envía.`}</p>`
       : html`<p class="muted small mb-2">${K.note}</p>`;
-    const badge = r.draft && r.model ? html`<span class="llm-badge" title="${L('Borrador redactado por el modelo local', 'Draft written by the local model')}">${icon('cpu', 12)}${r.model}</span>` : '';
+    const badge = r.draft && r.model ? html`<span class="llm-badge" title="${L('Borrador redactado por el modelo', 'Draft written by the model')}">${icon('cpu', 12)}${r.model}</span>` : '';
     const title = sent ? `Respuesta enviada · ${fmt.time(r.decidedAt)}` : r.status === 'rejected' ? `Respuesta rechazada · versión ${r.version}` : `Respuesta ${REPLY.to_label || 'al cliente'} · borrador v${r.version || 1}`;
     return App.card({
       id: 'rc-reply-card',
@@ -492,8 +492,8 @@
       ]);
     return App.card({
       id: 'rc-compare',
-      title: 'Esta reclamación: hoy y con Prodigy',
-      sub: '«Hoy»: supuesto ilustrativo que se valida con la línea base del piloto · «Con Prodigy»: duración de la simulación, no rendimiento de producción',
+      title: 'Esta reclamación: hoy y con Agentic Platform',
+      sub: '«Hoy»: supuesto ilustrativo que se valida con la línea base del piloto · «Con Agentic Platform»: duración de la simulación, no rendimiento de producción',
       icon: 'bar-chart',
       flush: true,
       body: App.table({
@@ -502,7 +502,7 @@
         cols: [
           { label: '', width: '26%', render: (r) => html`<span class="strong">${r.k}</span>` },
           { label: 'Hoy · estimación', width: '37%', render: (r) => html`<span class="slate">${r.hoy}</span>` },
-          { label: 'Con Prodigy · simulación', render: (r) => r.pro }
+          { label: 'Con Agentic Platform · simulación', render: (r) => r.pro }
         ]
       }),
       footer: html`<span class="row row-nowrap muted small" style="align-items:flex-start">${icon('list-checks', 16)}<span>${M.footer}</span></span>`
@@ -526,7 +526,7 @@
     const li = document.createElement('li');
     li.className = 'rs-line is-new is-running';
     li.innerHTML = String(html`<span class="rs-time">${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())}</span>
-      <span class="rs-who"><span class="rs-agent">${AGENT}</span>${App.sys(App.llm.systemName(), { icon: 'cpu', title: L('Modelo local vía LiteLLM', 'Local model via LiteLLM') })}</span>
+      <span class="rs-who"><span class="rs-agent">${AGENT}</span>${App.sys(App.llm.systemName(), { icon: 'cpu', title: L(App.llm.via().es, App.llm.via().en) })}</span>
       <span class="rs-text"><span class="rs-action">${s.action}</span><span class="rs-result">${App.raw('<span class="typing" aria-hidden="true"><i></i><i></i><i></i></span>')}</span></span>
       <span class="rs-ms">${App.raw('<span class="spinner" aria-hidden="true"></span>')}</span>`);
     list.appendChild(li);
@@ -593,15 +593,15 @@
       const text = cleanDraft(out.text);
       if (!text) throw new Error(L('El modelo ha devuelto una respuesta vacía', 'The model returned an empty answer'));
       const words = text.split(/\s+/).filter(Boolean).length;
-      App.audit(L('Respuesta al cliente redactada por el modelo local', 'Customer reply drafted by the local model'), `${R.code} · ${out.model} · ${fmt.ms(out.ms)} · ${words} ${L('palabras', 'words')}`, AGENT_ACTOR);
+      App.audit(L('Respuesta al cliente redactada por el modelo', 'Customer reply drafted by the model'), `${R.code} · ${out.model} · ${fmt.ms(out.ms)} · ${words} ${L('palabras', 'words')}`, AGENT_ACTOR);
       return {
         draft: { text, model: out.model },
         log: { idx: DRAFT_AT, system, model: out.model, ms: out.ms, ok: true, result: L(`Borrador redactado por ${out.model} · ${words} palabras · pendiente de aprobación`, `Draft written by ${out.model} · ${words} words · pending approval`) }
       };
     } catch (e) {
       const ms = Math.round(performance.now() - t0);
-      if (ctx.alive()) toast(L(`No se ha podido usar el modelo local (${e.message}). Se usa el borrador preparado.`, `The local model could not be used (${e.message}). The prepared draft is used instead.`), { tone: 'warn', icon: 'alert-triangle' });
-      App.audit(L('Modelo local sin respuesta', 'Local model unavailable'), `${R.code} · ${e.message} · ${L('se usa el borrador preparado', 'prepared draft used')}`, AGENT_ACTOR);
+      if (ctx.alive()) toast(L(`No se ha podido usar el modelo (${e.message}). Se usa el borrador preparado.`, `The model could not be used (${e.message}). The prepared draft is used instead.`), { tone: 'warn', icon: 'alert-triangle' });
+      App.audit(L('Modelo sin respuesta', 'Model unavailable'), `${R.code} · ${e.message} · ${L('se usa el borrador preparado', 'prepared draft used')}`, AGENT_ACTOR);
       return { draft: null, log: { idx: DRAFT_AT, system, model: App.llm.model, ms, ok: false, result: L(`Sin respuesta del modelo (${e.message}) · se usa el borrador preparado`, `No answer from the model (${e.message}) · prepared draft used`) } };
     }
   }
@@ -803,7 +803,7 @@
       'MIME-Version: 1.0',
       'Content-Type: text/plain; charset=UTF-8',
       'Content-Transfer-Encoding: 8bit',
-      sent ? `X-Prodigy-Approval: ${R.approval.approver}; ${fmt.date(when, { time: true })}` : `X-Prodigy-Status: draft v${r.version || 1}, pending approval`,
+      sent ? `X-Agentic Platform-Approval: ${R.approval.approver}; ${fmt.date(when, { time: true })}` : `X-Agentic Platform-Status: draft v${r.version || 1}, pending approval`,
       '',
       replyText(st)
     ].filter((x) => x != null);
@@ -823,7 +823,7 @@
     const rejected = r.status === 'rejected';
     const esc = App.esc;
     const tag = (s) => App.raw(`<span class="tag ${s.tone === 'warn' ? 'warn' : s.tone === 'ok' ? 'ok' : s.tone === 'crit' ? 'crit' : ''}">${esc(s.text)}</span>`);
-    const pageCss = `<style>@page{@bottom-left{content:"${FORM.code} rev. ${FORM.rev} · ${NC}";font:8.5px Inter,system-ui,sans-serif;color:var(--muted)}@bottom-center{content:"Documento generado por Prodigy · demostración con datos sintéticos";font:8.5px Inter,system-ui,sans-serif;color:var(--muted)}@bottom-right{content:"Página " counter(page) " de " counter(pages);font:8.5px Inter,system-ui,sans-serif;color:var(--muted)}}</style>`;
+    const pageCss = `<style>@page{@bottom-left{content:"${FORM.code} rev. ${FORM.rev} · ${NC}";font:8.5px Inter,system-ui,sans-serif;color:var(--muted)}@bottom-center{content:"Documento generado por Agentic Platform · demostración con datos sintéticos";font:8.5px Inter,system-ui,sans-serif;color:var(--muted)}@bottom-right{content:"Página " counter(page) " de " counter(pages);font:8.5px Inter,system-ui,sans-serif;color:var(--muted)}}</style>`;
     const dSections = planRows(st).map((x) => ({
       heading: `${x.d} · ${x.title}`,
       html: App.raw(`${x.lead ? `<p>${esc(x.lead)}</p>` : ''}${x.items && x.items.length ? `<ul>${x.items.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}${x.note ? `<p class="muted">${esc(x.note)}</p>` : ''}<p class="muted" style="margin-top:6px">Responsable: ${esc(x.owner.join(' · '))} · Fecha objetivo: ${esc(fmt.date(x.date))} · Estado: ${String(tag(x.status))}</p>`)
@@ -850,14 +850,14 @@
         { heading: P.trace_heading, table: { cols: [{ label: 'Etapa', key: 'etapa' }, { label: 'Fecha', key: 'fecha' }, { label: 'Detalle', key: 'detalle' }, { label: 'Referencia', render: (x) => mono(x.ref) }], rows: P.trace_rows } },
         { heading: U.heading, table: { cols: U.cols.map((c) => (c.mono ? { label: c.label, render: (x) => mono(x[c.key]) } : c.status ? { label: c.label, render: (x) => (approved && x[`${c.key}_after`]) || x[c.key] } : { label: c.label, key: c.key, num: c.num })), rows: U.rows } },
         { heading: P.history_heading, table: { cols: [{ label: H.col_id || 'Reclamación', render: (h) => App.raw(`<span class="code" style="white-space:nowrap">${esc(h.id)}</span><br><span class="muted">${esc(fmt.date(h.date))}</span>`) }, { label: H.col_product || 'Producto y lote', render: (h) => App.raw(`${esc(h.product)}<br><span class="code muted" style="white-space:nowrap">${esc(h.lot)}</span>`) }, { label: 'Motivo', key: 'description' }, { label: H.col_cause || 'Causa raíz', key: 'root_cause' }, { label: 'Registro', render: (h) => `${h.nc} · ${h.status}` }, { label: 'Relación', render: (h) => (h.similar ? App.raw('<span class="tag warn">Parecida</span>') : 'Distinta') }], rows: H.rows } },
-        ...(r.draft ? [{ heading: L('Respuesta al cliente', 'Reply to the customer'), html: App.raw(`<p class="muted">${esc(L(`Versión ${r.version || 1} · borrador redactado por ${r.model || App.llm.model} (modelo local)${r.text ? ' y editado por la persona que aprueba' : ''}`, `Version ${r.version || 1} · draft written by ${r.model || App.llm.model} (local model)${r.text ? ' and edited by the approver' : ''}`))}</p><div style="white-space:pre-wrap">${esc(replyText(st))}</div>`) }] : []),
+        ...(r.draft ? [{ heading: L('Respuesta al cliente', 'Reply to the customer'), html: App.raw(`<p class="muted">${esc(L(`Versión ${r.version || 1} · borrador redactado por ${r.model || App.llm.model}${r.text ? ' y editado por la persona que aprueba' : ''}`, `Version ${r.version || 1} · draft written by ${r.model || App.llm.model}${r.text ? ' and edited by the approver' : ''}`))}</p><div style="white-space:pre-wrap">${esc(replyText(st))}</div>`) }] : []),
         { heading: 'Aprobaciones', table: { cols: [{ label: 'Paso', key: 'paso' }, { label: 'Rol', key: 'rol' }, { label: 'Fecha y hora', key: 'fecha' }, { label: 'Estado', render: (x) => tag(x.estado) }], rows: approvals } }
       ],
       signatures: [
         { role: R.approval.approver, note: approved ? `Aprobado el ${fmt.date(r.decidedAt, { time: true })}` : rejected ? `Rechazado el ${fmt.date(r.decidedAt, { time: true })}` : 'Pendiente de aprobación' },
         { role: P.second_signer.role, note: P.second_signer.note }
       ],
-      footer: `Documento generado por Prodigy el ${fmt.date(App.nowISO(), { time: true })} · demostración con datos sintéticos · preparado por Ciklum`
+      footer: `Documento generado por Agentic Platform el ${fmt.date(App.nowISO(), { time: true })} · demostración con datos sintéticos · preparado por MFM`
     });
   }
 

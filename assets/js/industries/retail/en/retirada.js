@@ -3,7 +3,7 @@
  * 4,800 jars received at the Plaza distribution centre → 4,320 shipped to 41 stores and 480 at the DC → 1,920
  * sold and 2,400 on shelf → 612 loyalty customers bought the lot. Notification of the Aragón and La Rioja
  * authorities, AESAN and the manufacturer. Same stores and figures as CN_DATA.trace['L26214'].
- * Synthetic demo data (Ciklum).
+ * Synthetic demo data (MFM).
  */
 (function () {
   'use strict';
@@ -266,7 +266,7 @@
       { agent: 'trace', system: 'CRM Fidelización', action: 'Buyers identified by loyalty card', result: `612 customers bought 1,047 jars · ${n0(appN)} with the app · ${smsN} SMS only · ${mailN} email only`, ms: 470, reveal: 5, mark: 'Loyalty customers identified' },
       { agent: 'trace', system: 'SAP S/4 Retail', action: 'Other lots with the same packaging or raw material', result: 'TAR-2607-55 also in L26215, L26216 and L26217; TOM-2607-18 in L26213 and L26215: out of scope until the manufacturer confirms the source of the glass', ms: 390, tone: 'warn' },
       { agent: 'bal', system: 'WMS Manhattan', action: 'Lot movements at the DC and in stores', result: '4,800 received · 4,320 shipped · 480 at the DC · 0 store write-offs recorded', ms: 410 },
-      { agent: 'bal', system: 'Prodigy', action: 'Unit reconciliation: received, shipped, sold and on shelf', result: 'Reconciled 100.0 % · 0 jars unaccounted for · 41 of 41 stores located', ms: 90, tone: 'ok', mark: 'Unit reconciliation closed' },
+      { agent: 'bal', system: 'Agentic Platform', action: 'Unit reconciliation: received, shipped, sold and on shelf', result: 'Reconciled 100.0 % · 0 jars unaccounted for · 41 of 41 stores located', ms: 90, tone: 'ok', mark: 'Unit reconciliation closed' },
       { agent: 'rec', system: 'ServiceNow', action: 'Opens the recall incident and one task per store', result: 'INC-RET-2026-0031 in draft · 41 store tasks not released', ms: 360 },
       { agent: 'rec', system: 'Outlook', action: 'Prepares the notices without sending them', result: '7 drafts: stores, 612 customers, public notice, Aragón, La Rioja, AESAN and manufacturer', ms: 640, mark: 'Record and notices prepared' }
     ],
@@ -421,7 +421,7 @@
     ]
   };
 
-  prodigyPackEn('retail', {
+  agenticPackEn('retail', {
     retirada: {
       title: 'Mock recall',
       nav: 'Mock recall',
@@ -465,17 +465,17 @@
       report: { subtitle: 'Record of the traceability and recall exercise · Regulation (EC) No 178/2002 · IFS Logistics', approvedText: 'Notices saved as drafts marked MOCK RECALL; none has been sent and no sale has been blocked.' },
       compare: {
         rows: [
-          { k: 'People involved', today: '4–5: Quality, DC, area managers, Consumer Care and Communications', prodigy: '1: {approver} reviews and approves' },
-          { k: 'Systems consulted', today: '5–6 opened by hand: SAP, WMS, POS reports, CRM, spreadsheets and email', prodigy: '6 connectors queried by the agents: SAP S/4 Retail, WMS Manhattan, POS, loyalty CRM, ServiceNow and Outlook' },
-          { k: 'Steps', today: '15–20 queries, per-store extracts and member lists', prodigy: '{steps} automatic steps and 1 approval' },
-          { k: 'Unit balance', today: 'Spreadsheet with receipts, shipments and sales', prodigy: 'Calculated by flow: {reconciled} reconciled' }
+          { k: 'People involved', today: '4–5: Quality, DC, area managers, Consumer Care and Communications', agentic: '1: {approver} reviews and approves' },
+          { k: 'Systems consulted', today: '5–6 opened by hand: SAP, WMS, POS reports, CRM, spreadsheets and email', agentic: '6 connectors queried by the agents: SAP S/4 Retail, WMS Manhattan, POS, loyalty CRM, ServiceNow and Outlook' },
+          { k: 'Steps', today: '15–20 queries, per-store extracts and member lists', agentic: '{steps} automatic steps and 1 approval' },
+          { k: 'Unit balance', today: 'Spreadsheet with receipts, shipments and sales', agentic: 'Calculated by flow: {reconciled} reconciled' }
         ]
       },
       presenter: {
         idle: [
           'Mock recall of the tomato sauce lot with the glass: from raw material to every store and every member.',
           'Choose the starting point: lot L26214 or the goods receipt at the distribution centre.',
-          'Prodigy works through SAP, the WMS, the POS and the CRM: DC, 41 stores, sales, shelf stock and the 612 loyalty customers, and reconciles the 4,800 jars.'
+          'Agentic Platform works through SAP, the WMS, the POS and the CRM: DC, 41 stores, sales, shelf stock and the 612 loyalty customers, and reconciles the 4,800 jars.'
         ],
         nextIdle: 'Click “Start exercise” with lot L26214 (or choose “Goods receipt REC-PLZ-26-08-0311”).',
         nextRun: 'Click “View notification” for the 612 customers or the Government of Aragón, then “Approve and close mock recall”.',

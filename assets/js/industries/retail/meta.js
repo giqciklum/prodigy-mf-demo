@@ -1,5 +1,5 @@
-/* Mercados Moncayo · datos generales. Empresa ficticia; datos sintéticos de demostración (Ciklum). */
-prodigyPack('retail', {
+/* Mercados Moncayo · datos generales. Empresa ficticia; datos sintéticos de demostración (MFM). */
+agenticPack('retail', {
   meta: {
     id: 'retail',
     industry: 'Gran consumo y retail',

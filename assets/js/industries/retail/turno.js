@@ -1,5 +1,5 @@
-/* Mercados Moncayo · resumen del turno (escena «turno»). Datos sintéticos de demostración (Ciklum). */
-prodigyPack('retail', {
+/* Mercados Moncayo · resumen del turno (escena «turno»). Datos sintéticos de demostración (MFM). */
+agenticPack('retail', {
   turno: (function () {
     'use strict';
     const hhmm = (i) => `${String(Math.floor((i * 5) / 60)).padStart(2, '0')}:${String((i * 5) % 60).padStart(2, '0')}`;
@@ -64,7 +64,7 @@ prodigyPack('retail', {
         title: 'Mapa de la operación · plataforma y 64 tiendas',
         sub: 'Lecturas del parte de las 06:00 y de los Sensores de frío a las 05:50 · pulsa un elemento para ver su ficha',
         icon: 'warehouse',
-        readonly: 'Prodigy lee Sensores de frío, WMS Manhattan, SAP S/4 Retail y TPV de tiendas; no cambia consignas ni bloquea ventas sin aprobación',
+        readonly: 'Agentic Platform lee Sensores de frío, WMS Manhattan, SAP S/4 Retail y TPV de tiendas; no cambia consignas ni bloquea ventas sin aprobación',
         zones: [
           { id: 'rec', title: 'Recepción', sub: 'Plataforma de Plaza', items: [
             { code: 'REC-VID', name: 'Control de vidrio', reading: '0,42 % roturas', status: 'crit', tags: ['L26214'], go: 'reclamacion', goLabel: 'Abrir la reclamación',
@@ -83,7 +83,7 @@ prodigyPack('retail', {
           ] },
           { id: 'hu', title: 'Tiendas Huesca', sub: '9 tiendas', items: [
             { code: 'T027-MR3', name: 'T-027 · mural MR-3', reading: '9,4 °C', status: 'crit', go: 'alarma', goLabel: 'Abrir la alarma',
-              note: 'Ventilador del evaporador parado desde las 03:10. Prodigy propone retirar y trasladar el producto a la cámara, OT urgente y bloquear en TPV lo expuesto más de 2 h.',
+              note: 'Ventilador del evaporador parado desde las 03:10. Agentic Platform propone retirar y trasladar el producto a la cámara, OT urgente y bloquear en TPV lo expuesto más de 2 h.',
               kv: [['Unidades dentro', '318'], ['Por encima de 5 °C', 'desde las 03:55'], ['Pico', '9,8 °C a las 05:30'], ['Apertura de la tienda', '09:00']] },
             { code: 'T027-CL', name: 'T-027 · cámara', reading: '2,9 °C', status: 'ok', note: 'Hueco para unos 400 envases: destino propuesto del traslado.', kv: [['Capacidad libre', '≈ 1,2 m³']] },
             { code: 'T031', name: 'T-031 Monzón', reading: '3,0 °C', status: 'ok' }
@@ -166,7 +166,7 @@ prodigyPack('retail', {
           { agent: AGENT, system: 'Sensores de frío', action: 'Lee las 1.284 sondas de murales y cámaras de las 64 tiendas y de la plataforma', result: '1.279 lecturas recibidas; 5 sondas sin dato (T-019 y T-044)', ms: 680 },
           { agent: AGENT, system: 'WMS Manhattan', action: 'Consulta recepción, preparación y muelles de expedición de la plataforma', result: '46 palés pendientes de cargar; 3 palés con tarros rotos en 7 días', ms: 520, tone: 'warn' },
           { agent: AGENT, system: 'TPV tiendas', action: 'Revisa el estado de los TPV y las ventas de ayer', result: '3 tiendas con TPV fuera de línea; ventas −1,2 % sobre la previsión', ms: 410 },
-          { agent: AGENT, system: 'Prodigy', action: 'Compara cada lectura con sus umbrales APPCC y de servicio (12 indicadores)', result: '2 críticos · 4 avisos · 8 sin incidencias', ms: 60, tone: 'crit' },
+          { agent: AGENT, system: 'Agentic Platform', action: 'Compara cada lectura con sus umbrales APPCC y de servicio (12 indicadores)', result: '2 críticos · 4 avisos · 8 sin incidencias', ms: 60, tone: 'crit' },
           { agent: AGENT, system: 'SAP S/4 Retail', action: 'Lista el surtido del mural MR-3 de T-027 con sus lotes', result: '318 unidades de 12 referencias (yogures, postres, leche fresca, nata y mantequilla)', ms: 450, tone: 'crit' },
           { agent: AGENT, system: 'SAP S/4 Retail', action: 'Cruza las roturas de vidrio con proveedores y lotes', result: 'Conservas del Jalón: 3 palés esta semana; en L26214 ya hubo 14 tarros rotos en la recepción del 05/08', ms: 430, tone: 'warn' },
           { agent: AGENT, system: 'CRM Fidelización', action: 'Cruza las alertas con las reclamaciones abiertas de consumidores', result: 'ATC-2026-0412: vidrio en Tomate frito Moncayo 400 g, lote L26214', ms: 360, tone: 'warn' },
@@ -210,12 +210,12 @@ prodigyPack('retail', {
         say: [
           'Así empieza el turno la Directora de Operaciones de Mercados Moncayo: lo que pide una decisión, en una sola bandeja.',
           'Los datos llegan de sus sistemas: temperaturas de los Sensores de frío, palés del WMS Manhattan, lotes y surtido de SAP, ventas de los TPV y reclamaciones del CRM. Aquí son sintéticos, pero coherentes entre sí.',
-          'El mapa resume la plataforma y las tiendas de un vistazo: gris lo normal, color lo que pide atención. El mural MR-3 de Huesca está en rojo; al pulsarlo se ve qué hay dentro y qué propone Prodigy.',
+          'El mapa resume la plataforma y las tiendas de un vistazo: gris lo normal, color lo que pide atención. El mural MR-3 de Huesca está en rojo; al pulsarlo se ve qué hay dentro y qué propone Agentic Platform.',
           'Tres asuntos: el mural de lácteos de T-027 de las 05:50 (318 unidades, la tienda abre a las 09:00), la reclamación de vidrio en tomate frito Moncayo y el parte con 2 críticos.'
         ],
         sayBefore: ['Generar parte diario: revisa 14 elementos, no duplica incidencias abiertas y crea los tickets. Fijaos en el tiempo.'],
         sayAfter: [
-          'Relación que encuentra Prodigy: el fabricante del tomate frito de la reclamación acumula roturas de vidrio en la recepción, y el mismo lote ya llegó con tarros rotos. Nadie ha tenido que cruzar el WMS, SAP y el CRM.',
+          'Relación que encuentra Agentic Platform: el fabricante del tomate frito de la reclamación acumula roturas de vidrio en la recepción, y el mismo lote ya llegó con tarros rotos. Nadie ha tenido que cruzar el WMS, SAP y el CRM.',
           'Y no duplica: dos incidencias ya abiertas se actualizan en lugar de abrir tickets nuevos.'
         ],
         next: 'Pulsar «Generar parte diario» y comentar el registro mientras se ejecuta.',

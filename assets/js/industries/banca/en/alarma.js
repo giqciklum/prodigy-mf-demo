@@ -1,5 +1,5 @@
 /* Banco Cierzo · approval alarm (English): card-not-present fraud spike on BIN 454812.
- * Fictitious bank; synthetic demo data (Ciklum). The functions receive the scene context H
+ * Fictitious bank; synthetic demo data (MFM). The functions receive the scene context H
  * (W workflow, C evaluated condition, sc current scope, ids generated on approval, fmt, fv, pl…). */
 (function () {
   'use strict';
@@ -52,7 +52,7 @@
   const clients = (sc) => sc.items.reduce((s, x) => s + x.clients, 0);
   const ops = (sc) => sc.items.reduce((s, x) => s + x.ops, 0);
 
-  prodigyPackEn('banca', {
+  agenticPackEn('banca', {
     alarma: {
       nav: 'BIN 454812 alarm',
       title: 'BIN 454812 alarm in progress',
@@ -130,7 +130,7 @@
           const a = H.all;
           return [
             { lane: 'mon', system: 'Falcon Fraud', verb: 'Querying', action: 'Reads the CNP fraud rate of BIN 454812 from 02:00 to 07:00, one reading every 5 min', result: `${SERIES.length} readings, no gaps · now 2.2% (07:00), attack ongoing`, ms: 1700, set: { volume: `${SERIES.length} rate readings` } },
-            { lane: 'mon', system: 'Prodigy', eval: true, ms: 90 },
+            { lane: 'mon', system: 'Agentic Platform', eval: true, ms: 90 },
             { lane: 'mon', system: 'Falcon Fraud', verb: 'Querying', action: 'Cross-checks the anomaly with score reasons and merchants', result: 'Enumeration pattern: 1–2 € charges followed by high-value purchases using the SCA exemption: hypothesis for Fraud Prevention', tone: 'warn', ms: 1500, set: { volume: `${SERIES.length} readings · score reasons`, result: `Anomaly confirmed: ${H.C.above} min above · peak 3.6%` } },
             { lane: 'traz', system: 'Falcon Fraud', verb: 'Querying', action: 'Lists the suspicious transactions on the BIN since 02:10', result: `${ops(a)} transactions · ${H.fmt.eur(a.qty)} · ${a.count} cards`, ms: 2300, set: { volume: `${ops(a)} transactions` } },
             { lane: 'traz', system: 'Core bancario T24', verb: 'Querying', action: 'Resolves cardholder, product and status of each card', result: `${a.count} cards of ${clients(a)} customers in ${a.items.length} merchant segments`, ms: 2600, set: { volume: `${ops(a)} transactions · ${a.count} cards` }, reveal: 'lots' },
@@ -138,7 +138,7 @@
             { lane: 'traz', system: 'Redsys', verb: 'Querying', action: 'Checks which transactions are pending clearing', result: `${a.holds.length} clearing sessions; the first, ${H.first.id}, at ${H.first.time}`, tone: 'warn', ms: 2000, set: { volume: `${ops(a)} transactions · ${a.count} cards · ${a.holds.length} sessions`, result: `First clearing at ${H.first.time}` }, milestone: 'traz', audit: { action: 'Transactions, cards and customers identified', detail: `${ops(a)} transactions totalling ${H.fmt.eur(a.qty)} · ${a.count} cards of ${clients(a)} customers · ${a.holds.length} clearing sessions` } },
             { lane: 'fra', node: 'apr', system: 'Procedimientos', verb: 'Analysing', action: 'Applies POL-FRA-003 and PR-TAR-007 to this anomaly', result: 'Preventive rule on the BIN, block and reissue of compromised cards, chargeback and cardholder notification', ms: 1300 },
             { lane: 'fra', node: 'apr', system: 'Modelo de lenguaje', verb: 'Drafting', action: 'Drafts the proposal and its rationale with the evidence', result: `Proposal: Falcon rule, block and reissue of ${a.count} cards, chargeback of ${ops(a)} transactions and notice to ${clients(a)} customers`, ms: 6600, set: { volume: `${a.count} cards · ${ops(a)} transactions` } },
-            { lane: 'fra', node: 'apr', system: 'Prodigy', verb: 'Evaluating', action: `Requests approval from the ${H.W.approver} before writing to Falcon, T24 and Redsys`, result: 'Awaiting the Fraud Prevention decision', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Proposal sent to Fraud Prevention' }, milestone: 'prop', audit: { action: 'Block and reissue proposal sent for approval', detail: `Preventive rule on BIN 454812 · ${a.count} cards · approver: ${H.W.approver}` } }
+            { lane: 'fra', node: 'apr', system: 'Agentic Platform', verb: 'Evaluating', action: `Requests approval from the ${H.W.approver} before writing to Falcon, T24 and Redsys`, result: 'Awaiting the Fraud Prevention decision', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Proposal sent to Fraud Prevention' }, milestone: 'prop', audit: { action: 'Block and reissue proposal sent for approval', detail: `Preventive rule on BIN 454812 · ${a.count} cards · approver: ${H.W.approver}` } }
           ];
         },
         p2: (H) => {

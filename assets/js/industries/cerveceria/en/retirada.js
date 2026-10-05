@@ -3,7 +3,7 @@
  * Backwards: malt MAL-2607-05, hops LUP-2606-11, CO₂ CO2-2608-02 → fermentation batch L2607-FV05 → BBT-2.
  * Forwards: 1,040 kegs filled on LLB-1 on 18/08/2026 → 912 dispatched to 14 customers, 96 in cold store CB-03
  * and 32 on quality hold (RET-Q). Same customers, delivery notes and references as CN_DATA.trace and complaint
- * REC-2026-0093. Synthetic demo data (Ciklum).
+ * REC-2026-0093. Synthetic demo data (MFM).
  */
 (function () {
   'use strict';
@@ -239,7 +239,7 @@
       { agent: 'trace', system: 'SAP S/4HANA', action: 'Dispatches and customers', result: `${CUSTOMERS.length} customers (${regionText}) · ${CUSTOMERS.length} delivery notes from 20/08 to 02/09 · ${distN} on-trade distributors`, ms: 590, reveal: 4, mark: 'Dispatches identified' },
       { agent: 'trace', system: 'SAP S/4HANA', action: 'Quality contacts and open complaints', result: `${CUSTOMERS.length} contacts verified · complaint REC-2026-0093 from Distribuciones Hosteleras Ribera (124 kegs in 37 bars and 44 in its warehouse)`, ms: 480, reveal: 5, mark: 'Customers and contacts identified' },
       { agent: 'bal', system: 'Brewmaxx (MES)', action: 'Fermentation volume and losses', result: '480 hl from L2607-FV05 → 312 hl to keg, 158 hl to bottle and 10 hl of tank bottoms and filtration', ms: 420 },
-      { agent: 'bal', system: 'Prodigy', action: 'Batch reconciliation: filled vs dispatched, in warehouse and on hold', result: `Reconciled 100.0% · 0 kegs unaccounted for · ${n0(FILLED)} of ${n0(FILLED)} located`, ms: 95, tone: 'ok', mark: 'Batch reconciliation closed' },
+      { agent: 'bal', system: 'Agentic Platform', action: 'Batch reconciliation: filled vs dispatched, in warehouse and on hold', result: `Reconciled 100.0% · 0 kegs unaccounted for · ${n0(FILLED)} of ${n0(FILLED)} located`, ms: 95, tone: 'ok', mark: 'Batch reconciliation closed' },
       { agent: 'rec', system: 'SAP S/4HANA', action: 'Opens the recall record with one notice per customer', result: `Recall in draft · ${CUSTOMERS.length} collection and replacement orders not released`, ms: 360 },
       { agent: 'rec', system: 'Outlook', action: 'Prepares the notices without sending them', result: `${CUSTOMERS.length} customer notices pending approval · maintenance work order proposed`, ms: 720, mark: 'Record and notices prepared' }
     ],
@@ -383,7 +383,7 @@
     ]
   };
 
-  prodigyPackEn('cerveceria', {
+  agenticPackEn('cerveceria', {
     retirada: {
       title: 'Recall drill',
       nav: 'Traceability drill',
@@ -427,17 +427,17 @@
       report: { subtitle: 'Record of the traceability and recall exercise · Regulation (EC) No 178/2002 · PR-CAL-006' },
       compare: {
         rows: [
-          { k: 'People involved', today: '3–4: Quality, Logistics, Production and Sales', prodigy: '1: {approver} reviews and approves' },
-          { k: 'Systems queried', today: '5–6 opened by hand: SAP, Brewmaxx, LIMS, WMS, spreadsheets and email', prodigy: '5 connectors queried by the agents: SAP S/4HANA, Brewmaxx, LIMS LabWare, WMS Mecalux and Outlook' },
-          { k: 'Steps', today: '15–20 queries, matching SSCCs to delivery notes and manual calculations', prodigy: '{steps} automatic steps and 1 approval' },
-          { k: 'Mass balance', today: 'Spreadsheet with filling, dispatches and stock', prodigy: 'Calculated by pallet and delivery note: {reconciled} reconciled' }
+          { k: 'People involved', today: '3–4: Quality, Logistics, Production and Sales', agentic: '1: {approver} reviews and approves' },
+          { k: 'Systems queried', today: '5–6 opened by hand: SAP, Brewmaxx, LIMS, WMS, spreadsheets and email', agentic: '5 connectors queried by the agents: SAP S/4HANA, Brewmaxx, LIMS LabWare, WMS Mecalux and Outlook' },
+          { k: 'Steps', today: '15–20 queries, matching SSCCs to delivery notes and manual calculations', agentic: '{steps} automatic steps and 1 approval' },
+          { k: 'Mass balance', today: 'Spreadsheet with filling, dispatches and stock', agentic: 'Calculated by pallet and delivery note: {reconciled} reconciled' }
         ]
       },
       presenter: {
         idle: [
           'Recall drill with traceability and mass balance; in the pilot, Quality confirms the protocol and we measure the real time.',
           'Choose the starting point: keg batch L2608-K14 or the delivery note of the dispatch under complaint.',
-          'Prodigy works through SAP, Brewmaxx, LIMS and WMS backwards to the malt, hops and CO₂, and forwards to every pallet and customer, and reconciles the batch keg by keg.'
+          'Agentic Platform works through SAP, Brewmaxx, LIMS and WMS backwards to the malt, hops and CO₂, and forwards to every pallet and customer, and reconciles the batch keg by keg.'
         ],
         nextIdle: 'Click «Start drill» with batch L2608-K14 (or choose «Delivery note ALB-26-08-2211»).',
         nextRun: 'Click «View notice» for Distribuciones Hosteleras Ribera and then «Approve and close drill».',

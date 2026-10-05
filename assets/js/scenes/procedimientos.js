@@ -18,7 +18,7 @@
   const P = D.procedimientos;
   if (!P) return;
   const AGENT = P.agent || 'Procedimientos';
-  const AGENT_ACTOR = `Prodigy · agente ${AGENT}`;
+  const AGENT_ACTOR = `Agentic Platform · agente ${AGENT}`;
   const NONE_TITLE = 'No hay evidencia suficiente en los procedimientos indexados';
   const UI = P.ui || {};
   const DOC_SYS = P.system || 'Procedimientos';
@@ -240,7 +240,7 @@
         context: base ? base.context : null,
         kind: 'answer',
         blocks: turn.llm.blocks.map((b) => (b.list ? { intro: b.intro || null, list: b.list } : b)),
-        note: LT(`Redactada por ${turn.llm.model} (modelo local vía LiteLLM) solo con los ${turn.llm.passages} fragmentos recuperados; cada cita se ha comprobado contra el texto original.`, `Written by ${turn.llm.model} (local model via LiteLLM) using only the ${turn.llm.passages} retrieved passages; every citation has been checked against the original text.`),
+        note: LT(`Redactada por ${turn.llm.model} (${App.llm.via().es}) solo con los ${turn.llm.passages} fragmentos recuperados; cada cita se ha comprobado contra el texto original.`, `Written by ${turn.llm.model} (${App.llm.via().en}) using only the ${turn.llm.passages} retrieved passages; every citation has been checked against the original text.`),
         followups: []
       });
     }
@@ -259,7 +259,7 @@
     return null;
   }
   function gapOf(turn) {
-    if (turn.type === 'llm') return { topic: LT('Consulta al modelo local', 'Local model query'), reason: turn.llmReason || LT('El modelo no encuentra la respuesta en los fragmentos recuperados de los documentos indexados.', 'The model cannot find the answer in the passages retrieved from the indexed documents.') };
+    if (turn.type === 'llm') return { topic: LT('Consulta al modelo', 'Model query'), reason: turn.llmReason || LT('El modelo no encuentra la respuesta en los fragmentos recuperados de los documentos indexados.', 'The model cannot find the answer in the passages retrieved from the indexed documents.') };
     if (turn.type === 'gap' && turn.ref === 'otro-ambito') {
       return { topic: OTHER.topic || 'Otro ámbito', reason: String(OTHER.reason || 'No hay evidencia para {x}.').replace('{x}', fmt.cap(turn.scopeWord || '')) };
     }
@@ -267,7 +267,7 @@
     return { topic: 'Sin tema reconocido', reason: `Ningún fragmento de los ${K().order.length} documentos indexados responde a esta pregunta.` };
   }
   function topicOf(turn) {
-    if (turn.type === 'llm') return LT('Consulta al modelo local', 'Local model query');
+    if (turn.type === 'llm') return LT('Consulta al modelo', 'Model query');
     if (turn.type === 'intent') return (INTENT[turn.ref] || {}).topic || 'Consulta';
     if (turn.type === 'generic') return 'Consulta libre';
     const g = gapOf(turn);
@@ -294,21 +294,21 @@
     const s = turn.stats || statsFor(turn.q, turn.kind !== 'none' ? answerOf(turn) : null);
     const ans = turn.kind !== 'none';
     const steps = [
-      { agent: AGENT, system: 'Prodigy', action: 'Interpreta la pregunta', result: `Tema: ${topicOf(turn)}`, ms: 42, wait: 300 },
+      { agent: AGENT, system: 'Agentic Platform', action: 'Interpreta la pregunta', result: `Tema: ${topicOf(turn)}`, ms: 42, wait: 300 },
       { agent: AGENT, system: 'Procedimientos', action: `Busca en ${s.docs} documentos vigentes, por texto y por significado`, result: `${s.total} fragmentos revisados · ${s.cands} candidatos`, ms: 214, wait: 560 },
-      { agent: AGENT, system: 'Prodigy', action: 'Filtra por los permisos del usuario', result: `${UI.permission || 'Usuario'}: ${s.cands} de ${s.cands} accesibles`, ms: 26, wait: 280 },
-      { agent: AGENT, system: 'Prodigy', action: 'Ordena los candidatos por pertinencia', result: ans ? `${fmt.plural(s.k, 'fragmento', 'fragmentos')} de ${fmt.plural(s.nd, 'documento', 'documentos')}` : 'Ningún fragmento por encima del umbral', ms: 131, wait: 380 },
+      { agent: AGENT, system: 'Agentic Platform', action: 'Filtra por los permisos del usuario', result: `${UI.permission || 'Usuario'}: ${s.cands} de ${s.cands} accesibles`, ms: 26, wait: 280 },
+      { agent: AGENT, system: 'Agentic Platform', action: 'Ordena los candidatos por pertinencia', result: ans ? `${fmt.plural(s.k, 'fragmento', 'fragmentos')} de ${fmt.plural(s.nd, 'documento', 'documentos')}` : 'Ningún fragmento por encima del umbral', ms: 131, wait: 380 },
       { agent: AGENT, system: 'Modelo de lenguaje', action: '¿Responden las fuentes a la pregunta?', result: turn.kind === 'answer' ? 'Sí: la respuesta está en las fuentes' : turn.kind === 'partial' ? 'En parte: remiten a un documento no indexado' : 'No: ningún fragmento responde', ms: 690, wait: 620, tone: turn.kind === 'answer' ? 'ok' : 'warn' }
     ];
     if (turn.llm) {
-      const sysName = `LiteLLM · ${turn.llm.model}`;
+      const sysName = App.llm.systemName();
       steps[4] = Object.assign({}, steps[4], { system: sysName, ms: Math.round(turn.llm.ms * 0.35) });
       if (ans) steps.push({ agent: AGENT, system: sysName, action: 'Redacta la respuesta citando solo esos fragmentos', result: `${fmt.plural(s.k, 'cita comprobada', 'citas comprobadas')} contra el texto original`, ms: Math.round(turn.llm.ms * 0.65), wait: 500, tone: 'ok' });
-      else steps.push({ agent: AGENT, system: 'Prodigy', action: 'Responde sin fuente', result: NONE_TITLE, ms: 14, wait: 320, tone: 'warn' });
+      else steps.push({ agent: AGENT, system: 'Agentic Platform', action: 'Responde sin fuente', result: NONE_TITLE, ms: 14, wait: 320, tone: 'warn' });
       return steps;
     }
     if (ans) steps.push({ agent: AGENT, system: 'Modelo de lenguaje', action: 'Redacta la respuesta citando solo esos fragmentos', result: `${fmt.plural(s.k, 'cita comprobada', 'citas comprobadas')} contra el texto original`, ms: 1180 + s.k * 40, wait: 700, tone: 'ok' });
-    else steps.push({ agent: AGENT, system: 'Prodigy', action: 'Responde sin fuente', result: NONE_TITLE, ms: 14, wait: 320, tone: 'warn' });
+    else steps.push({ agent: AGENT, system: 'Agentic Platform', action: 'Responde sin fuente', result: NONE_TITLE, ms: 14, wait: 320, tone: 'warn' });
     return steps;
   }
 
@@ -415,7 +415,7 @@
     return html`<li class="pr-turn" id="pr-${turn.id}" data-turn-id="${turn.id}">
       ${questionRow(turn)}
       <div class="pr-a${turn.kind === 'none' ? ' is-none' : turn.kind === 'partial' ? ' is-partial' : ''}">
-        <div class="pr-a-head">${icon('workflow', 16)}<span class="strong">Prodigy</span><span class="muted">· agente ${AGENT}</span>${ans || turn.kind === 'none' ? kindChip(turn, ans) : ''}${turn.llm ? html`<span class="llm-badge" title="LiteLLM">${icon('cpu', 12)}${turn.llm.model}</span>` : ''}<span class="spacer"></span><span class="muted xs nowrap">Respondida en ${fmt.ms(turn.ms)}</span></div>
+        <div class="pr-a-head">${icon('workflow', 16)}<span class="strong">Agentic Platform</span><span class="muted">· agente ${AGENT}</span>${ans || turn.kind === 'none' ? kindChip(turn, ans) : ''}${turn.llm ? html`<span class="llm-badge" title="LiteLLM">${icon('cpu', 12)}${turn.llm.model}</span>` : ''}<span class="spacer"></span><span class="muted xs nowrap">Respondida en ${fmt.ms(turn.ms)}</span></div>
         ${ans ? answerBody(turn, ans, active) : noneBlock(turn)}
         ${ans && ans.note ? html`<div class="pr-note">${icon('info', 15)}<span>${ans.note}</span></div>` : ''}
         ${ans ? contextBlock(ans) : ''}
@@ -681,8 +681,8 @@
     if (!passages.length) return { type: 'llm', kind: 'none', ref: turn.ref, llm: null, llmReason: LT(`Ningún fragmento de los ${K().order.length} documentos indexados se parece a la pregunta; no se consulta al modelo.`, `No passage in the ${K().order.length} indexed documents resembles the question; the model is not called.`) };
     const org = (D.meta && (D.meta.doc_org || D.meta.company)) || '';
     const system = EN
-      ? `You are the ${AGENT} agent of Prodigy for ${org}. Answer the user's question using ONLY the numbered passages from the company's current procedures. Every sentence must end with the citation of the passage(s) it comes from, written as [n]. Do not invent figures, deadlines, roles or steps that are not in the passages. If the passages do not answer the question, reply exactly NO_EVIDENCE. Answer in English, in at most 6 short sentences or a short bulleted list, without a title.`
-      : `Eres el agente ${AGENT} de Prodigy para ${org}. Responde a la pregunta del usuario usando SOLO los pasajes numerados de los procedimientos vigentes de la empresa. Cada frase debe terminar con la cita del pasaje o pasajes de los que sale, escrita como [n]. No inventes cifras, plazos, roles ni pasos que no estén en los pasajes. Si los pasajes no responden a la pregunta, responde exactamente NO_EVIDENCE. Responde en español, en 6 frases cortas como máximo o una lista breve, sin título.`;
+      ? `You are the ${AGENT} agent of Agentic Platform for ${org}. Answer the user's question using ONLY the numbered passages from the company's current procedures. Every sentence must end with the citation of the passage(s) it comes from, written as [n]. Do not invent figures, deadlines, roles or steps that are not in the passages. If the passages do not answer the question, reply exactly NO_EVIDENCE. Answer in English, in at most 6 short sentences or a short bulleted list, without a title.`
+      : `Eres el agente ${AGENT} de Agentic Platform para ${org}. Responde a la pregunta del usuario usando SOLO los pasajes numerados de los procedimientos vigentes de la empresa. Cada frase debe terminar con la cita del pasaje o pasajes de los que sale, escrita como [n]. No inventes cifras, plazos, roles ni pasos que no estén en los pasajes. Si los pasajes no responden a la pregunta, responde exactamente NO_EVIDENCE. Responde en español, en 6 frases cortas como máximo o una lista breve, sin título.`;
     const user = `${EN ? 'Question' : 'Pregunta'}: ${q}\n\n${EN ? 'Passages' : 'Pasajes'}:\n${passages.map((p, i) => { const s = section(p.doc, p.sec); return `[${i + 1}] ${p.doc} §${p.sec}${s ? ` (${s.heading.replace(/^\d+\.\s*/, '')})` : ''}: ${p.text}`; }).join('\n')}`;
     const r = await App.llm.chat({ system, user, maxTokens: 700, signal });
     if (/NO_EVIDENCE/.test(r.text)) return { type: 'llm', kind: 'none', ref: turn.ref, llm: null, llmModel: r.model, llmReason: LT(`${r.model} no encuentra la respuesta en los ${passages.length} fragmentos recuperados.`, `${r.model} cannot find the answer in the ${passages.length} retrieved passages.`) };
@@ -724,7 +724,7 @@
       if (intro) intro.replaceWith(thread); else ctx.$('#pr-consulta .card-body').prepend(thread);
     }
     thread.insertAdjacentHTML('beforeend', String(html`<li class="pr-turn is-pending" id="pr-${turn.id}">${questionRow(turn)}
-      <div class="pr-a"><div class="pr-a-head">${icon('workflow', 16)}<span class="strong">Prodigy</span><span class="muted">· agente ${AGENT}</span>${chip('running', 'Consultando')}</div><div class="pr-run mt-2" id="pr-run-${turn.id}"></div></div></li>`));
+      <div class="pr-a"><div class="pr-a-head">${icon('workflow', 16)}<span class="strong">Agentic Platform</span><span class="muted">· agente ${AGENT}</span>${chip('running', 'Consultando')}</div><div class="pr-run mt-2" id="pr-run-${turn.id}"></div></div></li>`));
     const li = ctx.$(`#pr-${turn.id}`);
     if (li) li.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     ctx.presenter({ next: 'Mientras responde: busca en los documentos, filtra por permisos, comprueba que las fuentes responden y solo entonces redacta.' });
@@ -736,7 +736,7 @@
         Object.assign(turn, got);
       } catch (e) {
         if (!ctx.alive()) return;
-        App.toast(LT(`El modelo local no ha respondido (${e.message}). Se muestra la respuesta preparada.`, `The local model did not answer (${e.message}). Showing the prepared answer.`), { tone: 'warn', icon: 'alert-triangle', duration: 7000 });
+        App.toast(LT(`El modelo no ha respondido (${e.message}). Se muestra la respuesta preparada.`, `The model did not answer (${e.message}). Showing the prepared answer.`), { tone: 'warn', icon: 'alert-triangle', duration: 7000 });
       }
     }
     ans = turn.kind !== 'none' ? answerOf(turn) : null;

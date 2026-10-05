@@ -1,5 +1,5 @@
-/* Cervecera Bardenas · shift summary (scene «turno»), English. Synthetic demo data (Ciklum). */
-prodigyPackEn('cerveceria', {
+/* Cervecera Bardenas · shift summary (scene «turno»), English. Synthetic demo data (MFM). */
+agenticPackEn('cerveceria', {
   turno: (function () {
     'use strict';
     const hhmm = (i) => `${String(Math.floor((i * 5) / 60)).padStart(2, '0')}:${String((i * 5) % 60).padStart(2, '0')}`;
@@ -65,7 +65,7 @@ prodigyPackEn('cerveceria', {
         title: 'Brewery map · Arguedas',
         sub: 'Readings from the 06:00 report and the cellar SCADA at 05:50 · click an item to see its details',
         icon: 'factory',
-        readonly: 'Prodigy reads the cellar SCADA, Brewmaxx, LIMS LabWare and WMS Mecalux; it does not act on valves or set points',
+        readonly: 'Agentic Platform reads the cellar SCADA, Brewmaxx, LIMS LabWare and WMS Mecalux; it does not act on valves or set points',
         zones: [
           { id: 'coc', title: 'Brewing', sub: 'Brewhouse', items: [
             { code: 'SC-1', name: 'Brewhouse', reading: '97.8%', status: 'ok', kv: [['Brews yesterday', '6 × 120 hl'], ['Next', 'C-2609-071 · 07:30']] },
@@ -74,7 +74,7 @@ prodigyPackEn('cerveceria', {
           ] },
           { id: 'bod', title: 'Cellar', sub: 'Fermentation and lagering', items: [
             { code: 'FV-12', name: 'Lager · day 3', reading: '16.8 °C', status: 'crit', tags: ['L2609-FV12'], go: 'alarma', goLabel: 'Open the alarm',
-              note: 'Glycol valve VG-12 stuck closed. Prodigy proposes a work order for the valve, holding the batch with diacetyl and acetaldehyde analyses, and rescheduling the racking.',
+              note: 'Glycol valve VG-12 stuck closed. Agentic Platform proposes a work order for the valve, holding the batch with diacetyl and acetaldehyde analyses, and rescheduling the racking.',
               kv: [['Batch', 'L2609-FV12 · 480 hl'], ['Above 13.5 °C', 'since 02:30'], ['Peak', '17.1 °C at 05:20'], ['Planned racking', '06/10/2026']] },
             { code: 'FV-10', name: 'Tostada', reading: '13.9 °C', status: 'ok' },
             { code: 'FV-11', name: 'Lager · day 6', reading: '12.1 °C', status: 'ok', note: 'Twin of FV-12 on the same glycol loop: rules out a general fault in the loop.' },
@@ -167,7 +167,7 @@ prodigyPackEn('cerveceria', {
         steps: [
           { agent: AGENT, system: 'Brewmaxx (MES)', action: 'Reads the 06:00 readings for 14 items of equipment (brewhouse, cellar, packaging, warehouse and utilities)', result: '14 readings received, no gaps', ms: 600 },
           { agent: AGENT, system: 'SCADA bodega', action: 'Queries fermentation vessel temperatures, glycol valves and the refrigeration plant', result: 'FV-12 at 16.8 °C with VG-12 not opening since 23:40; FV-11 on set point', ms: 540, tone: 'crit' },
-          { agent: AGENT, system: 'Prodigy', action: 'Compares each reading with its process thresholds (11 indicators)', result: '2 critical · 4 warnings · 8 with no issues', ms: 60, tone: 'crit' },
+          { agent: AGENT, system: 'Agentic Platform', action: 'Compares each reading with its process thresholds (11 indicators)', result: '2 critical · 4 warnings · 8 with no issues', ms: 60, tone: 'crit' },
           { agent: AGENT, system: 'LIMS LabWare', action: 'Reviews packaging analyses from the last 24 h', result: 'LLB-1: dissolved O₂ of 78 ppb on filling head 3 (specification ≤ 50 ppb)', ms: 450, tone: 'crit' },
           { agent: AGENT, system: 'LIMS LabWare', action: 'Looks up LLB-1 O₂ history for keg batches with complaints', result: 'L2608-K14 (18/08): 64 ppb, out of specification, released under deviation', ms: 470, tone: 'warn' },
           { agent: AGENT, system: 'SAP S/4HANA', action: 'Cross-checks the alerts against open customer complaints', result: 'REC-2026-0093: oxidised flavour in kegs from batch L2608-K14', ms: 360, tone: 'warn' },
@@ -212,12 +212,12 @@ prodigyPackEn('cerveceria', {
         say: [
           'This is how the Production Manager starts the shift in Arguedas: everything that needs a decision, in a single inbox.',
           'The data comes from her systems: temperatures from the cellar SCADA, batches from Brewmaxx and SAP, analyses from the LIMS, kegs from the WMS and orders from Maximo. Here it is synthetic, but consistent throughout.',
-          'The map sums up the brewery at a glance: grey is normal, colour needs attention. FV-12 is red; click it to see the batch, the glycol valve and what Prodigy proposes.',
+          'The map sums up the brewery at a glance: grey is normal, colour needs attention. FV-12 is red; click it to see the batch, the glycol valve and what Agentic Platform proposes.',
           'Three items: the FV-12 temperature at 05:50 (480 hl of Bardenas Lager on day 3), the complaint about oxidised-tasting kegs and the report with 2 critical items.'
         ],
         sayBefore: ['Generate daily report: it reviews 14 items of equipment, does not duplicate open orders and creates the tickets. Watch the time it takes.'],
         sayAfter: [
-          'The link Prodigy finds: the keg filler is picking up too much oxygen, and the batch under complaint was filled there at 64 ppb. Nobody had to cross-check the LIMS, SAP and the WMS.',
+          'The link Agentic Platform finds: the keg filler is picking up too much oxygen, and the batch under complaint was filled there at 64 ppb. Nobody had to cross-check the LIMS, SAP and the WMS.',
           'And no duplicates: two orders already open are updated instead of opening new tickets.'
         ],
         next: 'Click «Generate daily report» and talk through the log while it runs.',

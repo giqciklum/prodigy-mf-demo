@@ -1,6 +1,6 @@
 /* Banco Cierzo · reclamación SAC-2026-04187 (tres cargos con tarjeta no reconocidos).
- * Entidad, clientes y personas ficticios; datos sintéticos de demostración (Ciklum). */
-prodigyPack('banca', {
+ * Entidad, clientes y personas ficticios; datos sintéticos de demostración (MFM). */
+agenticPack('banca', {
   reclamacion: {
     code: 'SAC-2026-04187',
     nav: 'Reclamación SAC-2026-04187',
@@ -61,7 +61,7 @@ prodigyPack('banca', {
     ].join('\n'),
     mail_extra: {
       label: 'Llamada al SAC (transcripción)',
-      note: 'Transcripción de la llamada del domingo, guardada en Salesforce FSC. Prodigy la usa para contrastar la hora del bloqueo y lo que se le dijo a la clienta.',
+      note: 'Transcripción de la llamada del domingo, guardada en Salesforce FSC. Agentic Platform la usa para contrastar la hora del bloqueo y lo que se le dijo a la clienta.',
       headers: { From: 'Salesforce FSC · llamada entrante 900 000 112', Subject: 'Llamada 27/09/2026 10:12 · Lucía Ferrer Gil · 6 min 40 s · agente SAC-T-031', Date: 'dom, 27 sep 2026 10:12' },
       text: [
         'Agente: Banco Cierzo, buenos días, le atiende Marta. ¿En qué puedo ayudarle?',
@@ -144,7 +144,7 @@ prodigyPack('banca', {
       fix_title: 'el comercio de los cargos',
       systems: 'Redsys y el core bancario T24',
       systems_short: 'Redsys y T24',
-      fix_text: 'Si la clienta ha escrito mal el nombre del comercio, escribe el correcto. Prodigy lo busca en Redsys y comprueba que tiene cargos en la tarjeta ····7731 en las fechas reclamadas antes de cambiar nada.',
+      fix_text: 'Si la clienta ha escrito mal el nombre del comercio, escribe el correcto. Agentic Platform lo busca en Redsys y comprueba que tiene cargos en la tarjeta ····7731 en las fechas reclamadas antes de cambiar nada.',
       same_body: 'Existe en Redsys (adquirente Pagos del Ebro, EP; MCC 5732) y tiene los tres cargos reclamados en la tarjeta ····7731. Sin cambios.',
       unknown_hint: 'Si el nombre es dudoso, compáralo con la captura de movimientos que adjunta la clienta.',
       mismatch_body: 'El código existe en los sistemas, pero no tiene cargos reclamados en la tarjeta ····7731: no se cambia la ficha.',
@@ -155,7 +155,7 @@ prodigyPack('banca', {
     },
     sheet: {
       sub: 'Datos extraídos del correo y comprobados en Salesforce FSC, T24 y Redsys',
-      empty_text: 'Prodigy extraerá del correo la tarjeta, los cargos, el comercio, los importes y las fechas, y los comprobará en el core bancario y en Redsys antes de preparar el expediente, el análisis PSD2 y la respuesta.',
+      empty_text: 'Agentic Platform extraerá del correo la tarjeta, los cargos, el comercio, los importes y las fechas, y los comprobará en el core bancario y en Redsys antes de preparar el expediente, el análisis PSD2 y la respuesta.',
       rows: [
         { k: 'Referencia', v: 'SAC-2026-04187', code: true, sub: 'Expediente del SAC · vinculado al caso 00418772 de la llamada del 27/09' },
         { k: 'Clienta', v: 'Lucía Ferrer Gil', ok: 'Identificada en Salesforce FSC · clienta desde 2014 · correo registrado' },
@@ -299,7 +299,7 @@ prodigyPack('banca', {
       control: {
         label: 'Análisis PSD2 para quien aprueba',
         note: 'Análisis interno que acompaña a la aprobación; no se envía a la clienta.',
-        edited_note: 'El análisis corresponde al borrador de Prodigy; la versión editada incluye cambios del SAC en el texto que se envía.',
+        edited_note: 'El análisis corresponde al borrador de Agentic Platform; la versión editada incluye cambios del SAC en el texto que se envía.',
         subject: 'Análisis interno · SAC-2026-04187 · DSP-2026-11842',
         text: [
           '1. ¿Operaciones autorizadas? No consta consentimiento: la clienta no las reconoce, conserva la tarjeta y no hubo SCA (exención TRA pedida por el adquirente, ECI 07).',
@@ -318,8 +318,8 @@ prodigyPack('banca', {
       approver: 'Servicio de Atención al Cliente (SAC)',
       policy: 'PR-SAC-001 · POL-FRA-003 · PR-TAR-007',
       summary: {
-        pending: 'Prodigy ha preparado la respuesta a la clienta, el abono provisional de 612,40 € con fecha valor 26/09, la reemisión de la tarjeta y el contracargo al adquirente. No se envía ni se abona nada hasta que el SAC lo apruebe.',
-        approved: 'El SAC ha aprobado la propuesta. Prodigy ha enviado la respuesta, ha abonado 612,40 € en T24, ha anulado y reemitido la tarjeta ····7731 y ha presentado el contracargo DSP-2026-11842 en Redsys.',
+        pending: 'Agentic Platform ha preparado la respuesta a la clienta, el abono provisional de 612,40 € con fecha valor 26/09, la reemisión de la tarjeta y el contracargo al adquirente. No se envía ni se abona nada hasta que el SAC lo apruebe.',
+        approved: 'El SAC ha aprobado la propuesta. Agentic Platform ha enviado la respuesta, ha abonado 612,40 € en T24, ha anulado y reemitido la tarjeta ····7731 y ha presentado el contracargo DSP-2026-11842 en Redsys.',
         rejected: 'El SAC ha rechazado la propuesta: no se ha enviado la respuesta, ni se ha abonado nada, ni se ha reemitido la tarjeta.'
       },
       scope: [
@@ -347,7 +347,7 @@ prodigyPack('banca', {
     compare: {
       rows: [
         { k: 'Personas que intervienen', hoy: '3–4: SAC, Fraude, Medios de Pago y Cumplimiento', pro_strong: '1', pro: ': el SAC revisa, corrige si hace falta y aprueba' },
-        { k: 'Sistemas que hay que abrir', hoy: '6: Outlook, Salesforce FSC, T24, Redsys, Falcon y ServiceNow', pro_strong: '1', pro: ': esta consola; Prodigy consulta los 6' }
+        { k: 'Sistemas que hay que abrir', hoy: '6: Outlook, Salesforce FSC, T24, Redsys, Falcon y ServiceNow', pro_strong: '1', pro: ': esta consola; Agentic Platform consulta los 6' }
       ],
       steps_today: '12–15 consultas, cruces y redacciones a mano',
       time_label: 'Análisis, expediente y respuesta',
@@ -412,7 +412,7 @@ prodigyPack('banca', {
       },
       history_heading: 'Anexo C · Reclamaciones de tarjeta resueltas (12 meses)',
       approvals: [
-        { paso: 'Expediente, análisis PSD2 y respuesta', rol: 'Prodigy · agente Reclamaciones de clientes', kind: 'agent' },
+        { paso: 'Expediente, análisis PSD2 y respuesta', rol: 'Agentic Platform · agente Reclamaciones de clientes', kind: 'agent' },
         { paso: 'Respuesta, abono provisional y reemisión (F3)', rol: 'Servicio de Atención al Cliente (SAC)', kind: 'reply' },
         { paso: 'Revisión del criterio PSD2 (F4)', rol: 'Responsable de Cumplimiento Normativo', kind: 'pending' },
         { paso: 'Resolución definitiva (F6)', rol: 'Servicio de Atención al Cliente (SAC)', kind: 'pending' }
@@ -423,10 +423,10 @@ prodigyPack('banca', {
       running: 'Mientras corre: señalar la línea de Redsys (exención del adquirente, sin SCA) y la de ServiceNow (la tarjeta está en el punto de compromiso CPP-2609-07). Si hace falta, «Acelerar».',
       idle: [
         'Correo de una clienta, Lucía Ferrer Gil: tres cargos de 612,40 € en total que no reconoce, en una tienda online, el sábado por la noche. Tiene la tarjeta, la bloqueó el domingo y el 1 de octubre le pasan la hipoteca.',
-        'PSD2 obliga a devolver el importe antes del fin del día hábil siguiente: hoy. En producción, Prodigy lo analiza en cuanto entra en el buzón del SAC. Aquí lo lanzamos a mano para ver qué consulta.'
+        'PSD2 obliga a devolver el importe antes del fin del día hábil siguiente: hoy. En producción, Agentic Platform lo analiza en cuanto entra en el buzón del SAC. Aquí lo lanzamos a mano para ver qué consulta.'
       ],
       pending: [
-        'Lo resaltado en el correo es lo que Prodigy ha extraído. Cada dato se comprueba: la clienta en Salesforce, la tarjeta y los cargos en T24, las autorizaciones en Redsys.',
+        'Lo resaltado en el correo es lo que Agentic Platform ha extraído. Cada dato se comprueba: la clienta en Salesforce, la tarjeta y los cargos en T24, las autorizaciones en Redsys.',
         'El dato clave para el abono: las tres compras se autorizaron sin autenticación reforzada, porque el adquirente pidió la exención de bajo riesgo. Sin SCA, la clienta no soporta pérdidas: franquicia cero.',
         'El dato que cambia la investigación: la tarjeta pasó el 14/09 por la gasolinera del punto de compromiso CPP-2609-07, el que ha abierto Fraude. Es una hipótesis de origen, no hace falta para abonar.',
         'Histórico: dos reclamaciones iguales en tres meses, abonadas y con contracargo al adquirente. El expediente propone revisar esas exenciones con Fraude.',

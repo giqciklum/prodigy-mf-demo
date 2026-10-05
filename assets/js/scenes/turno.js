@@ -12,7 +12,7 @@
   const T = D.turno;
   const P = T.parte;
   const AGENT = P.agent;
-  const AGENT_ACTOR = `Prodigy · agente ${AGENT}`;
+  const AGENT_ACTOR = `Agentic Platform · agente ${AGENT}`;
 
   const SEV = { critical: 0, warning: 1 };
   const machines = P.items.slice().sort((a, b) => {

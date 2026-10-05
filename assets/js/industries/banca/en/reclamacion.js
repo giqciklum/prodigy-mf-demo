@@ -1,6 +1,6 @@
 /* Banco Cierzo · complaint SAC-2026-04187 (three unrecognised card payments). English version.
- * Fictitious bank, customers and people; synthetic demo data (Ciklum). */
-prodigyPackEn('banca', {
+ * Fictitious bank, customers and people; synthetic demo data (MFM). */
+agenticPackEn('banca', {
   reclamacion: {
     code: 'SAC-2026-04187',
     nav: 'Complaint SAC-2026-04187',
@@ -61,7 +61,7 @@ prodigyPackEn('banca', {
     ].join('\n'),
     mail_extra: {
       label: 'Call to Customer Service (transcript)',
-      note: 'Transcript of Sunday’s call, stored in Salesforce FSC. Prodigy uses it to cross-check the time of the block and what the customer was told.',
+      note: 'Transcript of Sunday’s call, stored in Salesforce FSC. Agentic Platform uses it to cross-check the time of the block and what the customer was told.',
       headers: { From: 'Salesforce FSC · inbound call 900 000 112', Subject: 'Call 27/09/2026 10:12 · Lucía Ferrer Gil · 6 min 40 s · agent SAC-T-031', Date: 'Sun, 27 Sep 2026 10:12' },
       text: [
         'Agent: Banco Cierzo, good morning, Marta speaking. How can I help you?',
@@ -144,7 +144,7 @@ prodigyPackEn('banca', {
       fix_title: 'the merchant of the payments',
       systems: 'Redsys and the T24 core banking system',
       systems_short: 'Redsys and T24',
-      fix_text: 'If the customer has misspelt the merchant’s name, type the correct one. Prodigy looks it up in Redsys and checks that it has payments on card ····7731 on the disputed dates before changing anything.',
+      fix_text: 'If the customer has misspelt the merchant’s name, type the correct one. Agentic Platform looks it up in Redsys and checks that it has payments on card ····7731 on the disputed dates before changing anything.',
       same_body: 'It exists in Redsys (acquirer Pagos del Ebro, EP; MCC 5732) and has the three disputed payments on card ····7731. No changes.',
       unknown_hint: 'If the name is doubtful, compare it with the transaction screenshot attached by the customer.',
       mismatch_body: 'The code exists in the systems, but it has no disputed payments on card ····7731: the record is not changed.',
@@ -155,7 +155,7 @@ prodigyPackEn('banca', {
     },
     sheet: {
       sub: 'Data extracted from the email and checked in Salesforce FSC, T24 and Redsys',
-      empty_text: 'Prodigy will extract the card, payments, merchant, amounts and dates from the email, and check them in the core banking system and Redsys before preparing the case file, the PSD2 analysis and the reply.',
+      empty_text: 'Agentic Platform will extract the card, payments, merchant, amounts and dates from the email, and check them in the core banking system and Redsys before preparing the case file, the PSD2 analysis and the reply.',
       rows: [
         { k: 'Reference', v: 'SAC-2026-04187', code: true, sub: 'Customer Service case file · linked to case 00418772 from the call of 27/09' },
         { k: 'Customer', v: 'Lucía Ferrer Gil', ok: 'Identified in Salesforce FSC · customer since 2014 · email on file' },
@@ -299,7 +299,7 @@ prodigyPackEn('banca', {
       control: {
         label: 'PSD2 analysis for the approver',
         note: 'Internal analysis that accompanies the approval; it is not sent to the customer.',
-        edited_note: 'The analysis refers to Prodigy’s draft; the edited version includes Customer Service’s changes to the text being sent.',
+        edited_note: 'The analysis refers to Agentic Platform’s draft; the edited version includes Customer Service’s changes to the text being sent.',
         subject: 'Internal analysis · SAC-2026-04187 · DSP-2026-11842',
         text: [
           '1. Authorised transactions? There is no record of consent: the customer does not recognise them, still has the card and there was no SCA (TRA exemption requested by the acquirer, ECI 07).',
@@ -318,8 +318,8 @@ prodigyPackEn('banca', {
       approver: 'Customer Service (SAC)',
       policy: 'PR-SAC-001 · POL-FRA-003 · PR-TAR-007',
       summary: {
-        pending: 'Prodigy has prepared the reply to the customer, the provisional refund of 612.40 € value-dated 26/09, the card replacement and the chargeback to the acquirer. Nothing is sent or credited until Customer Service approves it.',
-        approved: 'Customer Service has approved the proposal. Prodigy has sent the reply, credited 612.40 € in T24, cancelled and replaced card ····7731 and submitted chargeback DSP-2026-11842 in Redsys.',
+        pending: 'Agentic Platform has prepared the reply to the customer, the provisional refund of 612.40 € value-dated 26/09, the card replacement and the chargeback to the acquirer. Nothing is sent or credited until Customer Service approves it.',
+        approved: 'Customer Service has approved the proposal. Agentic Platform has sent the reply, credited 612.40 € in T24, cancelled and replaced card ····7731 and submitted chargeback DSP-2026-11842 in Redsys.',
         rejected: 'Customer Service has rejected the proposal: the reply has not been sent, nothing has been credited and the card has not been replaced.'
       },
       scope: [
@@ -347,7 +347,7 @@ prodigyPackEn('banca', {
     compare: {
       rows: [
         { k: 'People involved', hoy: '3–4: Customer Service, Fraud, Payments and Compliance', pro_strong: '1', pro: ': Customer Service reviews, corrects if needed and approves' },
-        { k: 'Systems to open', hoy: '6: Outlook, Salesforce FSC, T24, Redsys, Falcon and ServiceNow', pro_strong: '1', pro: ': this console; Prodigy queries all 6' }
+        { k: 'Systems to open', hoy: '6: Outlook, Salesforce FSC, T24, Redsys, Falcon and ServiceNow', pro_strong: '1', pro: ': this console; Agentic Platform queries all 6' }
       ],
       steps_today: '12–15 manual queries, cross-checks and drafts',
       time_label: 'Analysis, case file and reply',
@@ -412,7 +412,7 @@ prodigyPackEn('banca', {
       },
       history_heading: 'Annex C · Resolved card complaints (12 months)',
       approvals: [
-        { paso: 'Case file, PSD2 analysis and reply', rol: 'Prodigy · Customer complaints agent', kind: 'agent' },
+        { paso: 'Case file, PSD2 analysis and reply', rol: 'Agentic Platform · Customer complaints agent', kind: 'agent' },
         { paso: 'Reply, provisional refund and replacement (F3)', rol: 'Customer Service (SAC)', kind: 'reply' },
         { paso: 'Review of the PSD2 criteria (F4)', rol: 'Head of Compliance', kind: 'pending' },
         { paso: 'Final resolution (F6)', rol: 'Customer Service (SAC)', kind: 'pending' }
@@ -423,10 +423,10 @@ prodigyPackEn('banca', {
       running: 'While it runs: point out the Redsys line (acquirer exemption, no SCA) and the ServiceNow line (the card is in point of compromise CPP-2609-07). If needed, “Speed up”.',
       idle: [
         'Email from a customer, Lucía Ferrer Gil: three payments totalling 612.40 € that she does not recognise, at an online shop, on Saturday night. She has the card, blocked it on Sunday and her mortgage goes out on 1 October.',
-        'PSD2 requires the amount to be refunded by the end of the following business day: today. In production, Prodigy analyses it as soon as it reaches the Customer Service mailbox. Here we launch it by hand to see what it queries.'
+        'PSD2 requires the amount to be refunded by the end of the following business day: today. In production, Agentic Platform analyses it as soon as it reaches the Customer Service mailbox. Here we launch it by hand to see what it queries.'
       ],
       pending: [
-        'What is highlighted in the email is what Prodigy has extracted. Each item is checked: the customer in Salesforce, the card and payments in T24, the authorisations in Redsys.',
+        'What is highlighted in the email is what Agentic Platform has extracted. Each item is checked: the customer in Salesforce, the card and payments in T24, the authorisations in Redsys.',
         'The key finding for the refund: the three purchases were authorised without strong authentication, because the acquirer requested the low-risk exemption. Without SCA, the customer bears no losses: zero excess.',
         'The finding that changes the investigation: on 14/09 the card was used at the petrol station of point of compromise CPP-2609-07, the one Fraud has opened. It is a hypothesis about the source; it is not needed to make the refund.',
         'History: two identical complaints in three months, refunded and charged back to the acquirer. The case file proposes reviewing those exemptions with Fraud.',

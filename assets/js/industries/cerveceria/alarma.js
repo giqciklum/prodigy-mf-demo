@@ -1,5 +1,5 @@
 /* Cervecera Bardenas · alarma con aprobación: temperatura del fermentador FV-12 fuera de consigna.
- * Empresa ficticia; datos sintéticos de demostración (Ciklum). Las funciones reciben el contexto H de la escena
+ * Empresa ficticia; datos sintéticos de demostración (MFM). Las funciones reciben el contexto H de la escena
  * (W workflow, C condición evaluada, sc alcance vigente, ids generados al aprobar, fmt, fv, pl…). */
 (function () {
   'use strict';
@@ -32,7 +32,7 @@
   };
   const TEAMS = 'Bodega · Arguedas';
 
-  prodigyPack('cerveceria', {
+  agenticPack('cerveceria', {
     alarma: {
       nav: 'Alarma FV-12',
       title: 'Alarma FV-12 en ejecución',
@@ -110,7 +110,7 @@
           const a = H.all;
           return [
             { lane: 'mon', system: 'SCADA bodega', verb: 'Consultando', action: 'Lee la sonda TT-FV12-02 de 01:00 a 07:00, una lectura cada 10 min', result: `${SERIES.length} lecturas, sin huecos · ahora 16,5 °C (07:00)`, ms: 1800, set: { volume: `${SERIES.length} lecturas de temperatura` } },
-            { lane: 'mon', system: 'Prodigy', eval: true, ms: 90 },
+            { lane: 'mon', system: 'Agentic Platform', eval: true, ms: 90 },
             { lane: 'mon', system: 'SCADA bodega', verb: 'Consultando', action: 'Cruza la excursión con la posición de la válvula VG-12 y el circuito de glicol B', result: 'VG-12 al 0 % con demanda del 100 % desde las 02:20; circuito B a −4 °C: hipótesis para Mantenimiento', tone: 'warn', ms: 1400, set: { volume: `${SERIES.length} lecturas · válvula y circuito`, result: `Excursión confirmada: ${H.C.above} min por encima · pico 17,1 °C` } },
             { lane: 'traz', system: 'Brewmaxx (MES)', verb: 'Consultando', action: 'Identifica el lote y los cocimientos que llenaron FV-12', result: `L2609-FV12 · Bardenas Lager · 4 cocimientos (C-2609-41 a 44) · ${H.pl(480)}`, ms: 2000, set: { volume: '1 lote · 4 cocimientos' } },
             { lane: 'traz', system: 'SAP S/4HANA', verb: 'Consultando', action: 'Resuelve materias primas, levadura y coste del lote', result: `Malta MAL-2609-02/03, lúpulo LUP-2606-11, levadura W-34/70 de 5.ª generación · ${H.fmt.eur(a.value)} a coste estándar`, ms: 2400, set: { volume: `${H.pl(a.count)} · ${a.items.length} partidas` }, reveal: 'lots' },
@@ -118,7 +118,7 @@
             { lane: 'traz', system: 'Brewmaxx (MES)', verb: 'Consultando', action: 'Consulta las operaciones planificadas que dependen de FV-12', result: `${a.holds.length} operaciones; la primera, ${H.first.id}, ${H.holdWhen(H.first).includes('/') ? 'el' : 'a las'} ${H.holdWhen(H.first)}`, tone: 'warn', ms: 1900, set: { volume: `${H.pl(a.count)} · ${a.holds.length} operaciones`, result: `Primera operación afectada: ${H.first.id}` }, milestone: 'traz', audit: { action: 'Lote y operaciones identificados', detail: `L2609-FV12 (480 hl) y levadura LEV-2609-12 (14 hl) · ${a.holds.length} operaciones planificadas · FV-11 y FV-14 a vigilar` } },
             { lane: 'cal', node: 'apr', system: 'Procedimientos', verb: 'Analizando', action: 'Aplica PR-FER-003 y APPCC-01 a esta excursión', result: 'Retener el lote, analizar diacetilo (VDK), acetaldehído y ésteres en LIMS y no reutilizar la levadura; decide el Maestro cervecero', ms: 1300 },
             { lane: 'cal', node: 'apr', system: 'Modelo de lenguaje', verb: 'Redactando', action: 'Redacta la propuesta y su motivo con las evidencias', result: `Propuesta: retener ${H.pl(a.count)} en ${a.items.length} partidas, muestra urgente a LIMS, OT de la válvula y reprogramar ${a.holds.length} operaciones`, ms: 6500, set: { volume: `${H.pl(a.count)} · ${a.holds.length} operaciones` } },
-            { lane: 'cal', node: 'apr', system: 'Prodigy', verb: 'Evaluando', action: `Pide la aprobación del ${H.W.approver} antes de escribir en SAP QM, LIMS, Maximo y Brewmaxx`, result: 'Esperando la decisión del Maestro cervecero', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Propuesta enviada al Maestro cervecero' }, milestone: 'prop', audit: { action: 'Propuesta de retención enviada a aprobación', detail: `L2609-FV12 y LEV-2609-12 · ${H.pl(a.count)} · aprueba ${H.W.approver}` } }
+            { lane: 'cal', node: 'apr', system: 'Agentic Platform', verb: 'Evaluando', action: `Pide la aprobación del ${H.W.approver} antes de escribir en SAP QM, LIMS, Maximo y Brewmaxx`, result: 'Esperando la decisión del Maestro cervecero', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Propuesta enviada al Maestro cervecero' }, milestone: 'prop', audit: { action: 'Propuesta de retención enviada a aprobación', detail: `L2609-FV12 y LEV-2609-12 · ${H.pl(a.count)} · aprueba ${H.W.approver}` } }
           ];
         },
         p2: (H) => {
@@ -287,7 +287,7 @@
           {
             icon: 'send', title: 'Aviso a bodega', systems: ['Microsoft Teams'], note: H.run.endAt ? `enviado a las ${H.fmt.time(H.run.endAt)}` : '',
             message: {
-              from: 'Prodigy · agente Mantenimiento', channel: `canal «${TEAMS}»`, at: H.run.endAt ? H.fmt.time(H.run.endAt) : '',
+              from: 'Agentic Platform · agente Mantenimiento', channel: `canal «${TEAMS}»`, at: H.run.endAt ? H.fmt.time(H.run.endAt) : '',
               paras: [
                 { to: ROLE.cellar, text: `Retención ${H.ids.ret} de FV-12 aprobada por el ${H.decision.by}. Mantener la refrigeración por el bypass y no recuperar la levadura del cono. Muestra ${H.ids.mu} a las 07:30.` },
                 { to: 'Mantenimiento', text: `${H.ids.ot}: válvula de glicol VG-12 sin abrir desde las 02:20 (actuador sin respuesta).` },

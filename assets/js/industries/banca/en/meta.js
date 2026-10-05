@@ -1,5 +1,5 @@
-/* Banco Cierzo · general data (English). Fictitious bank; synthetic demo data (Ciklum). */
-prodigyPackEn('banca', {
+/* Banco Cierzo · general data (English). Fictitious bank; synthetic demo data (MFM). */
+agenticPackEn('banca', {
   meta: {
     id: 'banca',
     industry: 'Banking and financial services',

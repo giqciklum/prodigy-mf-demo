@@ -1,6 +1,6 @@
-/* Banco Cierzo · "How Prodigy fits" (English): architecture, demo versus pilot, hours calculator, FAQ and
- * compliance (DORA, EBA outsourcing, GDPR, banking secrecy). Fictitious bank; synthetic data (Ciklum). */
-prodigyPackEn('banca', {
+/* Banco Cierzo · "How Agentic Platform fits" (English): architecture, demo versus pilot, hours calculator, FAQ and
+ * compliance (DORA, EBA outsourcing, GDPR, banking secrecy). Fictitious bank; synthetic data (MFM). */
+agenticPackEn('banca', {
   plataforma: {
     nav: 'How it fits at Banco Cierzo',
     title: 'How it fits at Banco Cierzo',
@@ -30,8 +30,8 @@ prodigyPackEn('banca', {
       cloud: { seg: 'Private cloud', label: 'The bank\'s cloud (Azure, AWS or GCP), EU region', zone: 'Banco Cierzo cloud subscription · EU region', text: 'The same installation in the bank\'s cloud subscription, in an EU region, with its own keys (BYOK) and its register of ICT third-party providers.' }
     },
     llm: {
-      azure: { seg: 'Azure OpenAI', name: 'Azure OpenAI', local: false, place: 'EU region (Data Zone EU), under Banco Cierzo\'s contract', exit: 'Only the pseudonymised text of each request leaves your network', note: 'Connected through the Prodigy LiteLLM gateway; no training on your data. Confirmed with ICT Risk in weeks 1–2.' },
-      gemini: { seg: 'Gemini', name: 'Google Gemini (Vertex AI)', local: false, place: 'Vertex AI EU region, with the account Banco Cierzo contracts', exit: 'Only the pseudonymised text of each request leaves your network', note: 'Provider included as standard in the Prodigy model catalogue.' },
+      azure: { seg: 'Azure OpenAI', name: 'Azure OpenAI', local: false, place: 'EU region (Data Zone EU), under Banco Cierzo\'s contract', exit: 'Only the pseudonymised text of each request leaves your network', note: 'Connected through the Agentic Platform LiteLLM gateway; no training on your data. Confirmed with ICT Risk in weeks 1–2.' },
+      gemini: { seg: 'Gemini', name: 'Google Gemini (Vertex AI)', local: false, place: 'Vertex AI EU region, with the account Banco Cierzo contracts', exit: 'Only the pseudonymised text of each request leaves your network', note: 'Provider included as standard in the Agentic Platform model catalogue.' },
       local: { seg: 'Local model', name: 'Local model', local: true, place: 'GPU server in the bank\'s data centre (Ollama, LM Studio or llama.cpp)', exit: 'Inference runs inside your network', note: 'Avoids adding a new ICT third-party provider for the model. Quality and speed depend on the sizing of your server.' }
     },
     people: ['fraud', 'fraud_shift', 'cards', 'customer_service', 'compliance', 'it_risk'],
@@ -56,7 +56,7 @@ prodigyPackEn('banca', {
       { name: 'Microsoft 365', icon: 'mail', text: 'Notices in Teams and drafts in Outlook. Sending to the customer requires approval.', write: true }
     ],
     decisions: {
-      deploy: ['It does not depend on Ciklum cloud services. Your Systems team or a managed service runs it, and it goes into the bank\'s register of information on ICT third-party providers (DORA, Art. 28).'],
+      deploy: ['It does not depend on MFM cloud services. Your Systems team or a managed service runs it, and it goes into the bank\'s register of information on ICT third-party providers (DORA, Art. 28).'],
       llm: 'The model is changed through configuration, without touching the workflows. The model provider is an ICT third party: it is assessed with ICT Risk and Compliance before being used with real data.',
       access: [
         'SSO with Microsoft Entra ID (OIDC) or SAML 2.0, with MFA. Permissions by role and by realm: the Fraud realm cannot see SAC cases and vice versa; every query is logged with the person\'s identity.',
@@ -75,19 +75,19 @@ prodigyPackEn('banca', {
     faqTitle: 'Common questions from Systems, Compliance and Risk',
     faqSub: 'Short answers for the conversation with Systems, Compliance, ICT Risk and the DPO',
     faq: [
-      { topic: 'Compliance', q: 'How does it fit with DORA?', a: 'Prodigy is an ICT service from a third party (Ciklum) and the model provider is another. Both go into the register of information (Art. 28), with a contract that includes the Art. 30 clauses (data location, service levels, audit, cooperation with the supervisor and exit strategy). Prodigy also helps with DORA compliance: it prepares the draft initial notification of a major incident (4 h after classification and 24 h from detection) for ICT Risk to review.' },
+      { topic: 'Compliance', q: 'How does it fit with DORA?', a: 'Agentic Platform is an ICT service from a third party (MFM) and the model provider is another. Both go into the register of information (Art. 28), with a contract that includes the Art. 30 clauses (data location, service levels, audit, cooperation with the supervisor and exit strategy). Agentic Platform also helps with DORA compliance: it prepares the draft initial notification of a major incident (4 h after classification and 24 h from detection) for ICT Risk to review.' },
       { topic: 'Compliance', q: 'Is it outsourcing under the EBA guidelines?', a: 'It is assessed against the EBA Guidelines on outsourcing arrangements (EBA/GL/2019/02). In the pilot, with anonymised data and no automated decisions, it does not support a critical or important function. If in production it is deemed critical (for example, in Fraud), their requirements apply: prior risk assessment, notification to the Banco de España, access and audit rights, and a tested exit plan. Installing it on the bank\'s infrastructure reduces the outsourced perimeter.' },
-      { topic: 'Compliance', q: 'And the GDPR?', a: 'The bank is the controller; Ciklum is the processor (Art. 28) under contract and with a list of sub-processors, including the model provider. Before using real data, a data protection impact assessment (Art. 35) is carried out with the DPO. Data minimisation: the agent only requests the fields it needs and the gateway pseudonymises; data is processed in the EU, with no international transfers. There are no decisions based solely on automated processing (Art. 22): a person always decides.' },
+      { topic: 'Compliance', q: 'And the GDPR?', a: 'The bank is the controller; MFM is the processor (Art. 28) under contract and with a list of sub-processors, including the model provider. Before using real data, a data protection impact assessment (Art. 35) is carried out with the DPO. Data minimisation: the agent only requests the fields it needs and the gateway pseudonymises; data is processed in the EU, with no international transfers. There are no decisions based solely on automated processing (Art. 22): a person always decides.' },
       { topic: 'Compliance', q: 'How is banking secrecy respected?', a: 'The duty of confidentiality over customer information (Art. 83 of Ley 10/2014, the Spanish Act on the regulation, supervision and solvency of credit institutions) is preserved: data does not leave the bank\'s infrastructure except for the pseudonymised text the model sees, the provider cannot use it for training, and per-realm permissions stop an area from querying customers it is not responsible for. Every access is recorded in the audit log.' },
       { topic: 'Compliance', q: 'Does the AI Act apply?', a: 'The use cases in the demo (fraud, complaints, cases, questionnaires) are not listed in Annex III; credit scoring is, and it is out of scope. The transparency obligations are met: people know they are working with an AI assistant and the drafts say so.' },
-      { topic: 'Security', q: 'What about card data (PCI DSS)?', a: 'Prodigy does not store the full PAN: the connectors read the truncated PAN or the token, and the gateway masks any card number before the model. The Prodigy environment stays outside the cardholder data environment (CDE).' },
+      { topic: 'Security', q: 'What about card data (PCI DSS)?', a: 'Agentic Platform does not store the full PAN: the connectors read the truncated PAN or the token, and the gateway masks any card number before the model. The Agentic Platform environment stays outside the cardholder data environment (CDE).' },
       { topic: 'Security', q: 'How do users sign in?', a: 'With Microsoft Entra ID SSO (OIDC) or SAML 2.0 and MFA. Permissions are by role and by realm (area). The connectors\' service accounts are read-only and their secrets live in the bank\'s secrets vault.' },
       { topic: 'Data', q: 'What data leaves our network?', a: 'With a local model, none. With an external one, only the pseudonymised text of each request, to an EU region and with no retention for training. Connector, telemetry and masking flows are validated with Systems and Security before the pilot.' },
       { topic: 'Language model', q: 'Which language model does it use, and can it be changed?', a: 'Whichever the bank chooses: Azure OpenAI, Gemini on Vertex AI, AWS Bedrock in the EU or a local model. It is set per realm and changed through configuration, without touching the workflows; that way the DORA exit strategy also covers the model.' },
       { topic: 'Language model', q: 'What if the model gets it wrong?', a: 'Every answer cites its source (policy, transaction, case) and, if it cannot find one, it says so. No action is applied without approval. In the pilot, accuracy is measured against historical cases before live use.' },
       { topic: 'Integration', q: 'Are there connectors for T24, Falcon or Redsys?', a: 'Not as standard. In the pilot they are built for 1–2 systems in read mode, via a query API or a database replica; nothing is ever written to the core. Writes (rule in Falcon, case in Salesforce, ticket in ServiceNow) come later and always with approval.' },
-      { topic: 'Integration', q: 'Where is it installed?', a: 'On a virtual machine in your data centre, on OpenShift or Kubernetes with Helm, or in your cloud subscription in an EU region. It does not depend on Ciklum cloud services.' },
-      { topic: 'Cost', q: 'How much does each query cost?', a: 'Prodigy measures the cost of each request in USD by realm, user and use case, with a daily and monthly budget and an alert at 80%. A complaint costs cents in model usage; the real cost is measured in the pilot.' },
+      { topic: 'Integration', q: 'Where is it installed?', a: 'On a virtual machine in your data centre, on OpenShift or Kubernetes with Helm, or in your cloud subscription in an EU region. It does not depend on MFM cloud services.' },
+      { topic: 'Cost', q: 'How much does each query cost?', a: 'Agentic Platform measures the cost of each request in USD by realm, user and use case, with a daily and monthly budget and an alert at 80%. A complaint costs cents in model usage; the real cost is measured in the pilot.' },
       { topic: 'Cost', q: 'Licence and price?', a: 'They are set out in the commercial proposal (SOW), with the contractual clauses DORA requires.' }
     ],
     seen: [
@@ -100,18 +100,18 @@ prodigyPackEn('banca', {
       { scene: 'procedimientos', label: 'Policies and procedures', icon: 'book-open', title: 'Questions with citations', text: 'Fraud, SAC, reissue, DORA and AML/CFT: every answer links the section in force and, if there is no source, says so.', agents: ['Procedures'] }
     ],
     honesty: [
-      { aspect: 'Console, workflows (Routines) and editor', demo: 'This console, in the browser, with the workflows published in the session', pilot: 'Prodigy installed on the bank\'s infrastructure; Routines with visual editor, versions and dry run', origin: 'serie' },
-      { aspect: 'Workflow from a written policy', demo: 'Simulated generator in the browser, with three templates', pilot: 'Integrated into Prodigy and validated with your policies; each workflow is reviewed by the owning area before publishing', origin: 'demo' },
+      { aspect: 'Console, workflows (Routines) and editor', demo: 'This console, in the browser, with the workflows published in the session', pilot: 'Agentic Platform installed on the bank\'s infrastructure; Routines with visual editor, versions and dry run', origin: 'serie' },
+      { aspect: 'Workflow from a written policy', demo: 'Simulated generator in the browser, with three templates', pilot: 'Integrated into Agentic Platform and validated with your policies; each workflow is reviewed by the owning area before publishing', origin: 'demo' },
       { aspect: 'Banco Cierzo agents', demo: 'Fraud, payments, SAC, cases, DORA and shift report, on synthetic data', pilot: 'Those for the chosen use case, adapted to your data and policies', origin: 'demo' },
       { aspect: 'Connectors (Core bancario T24, Falcon Fraud, Redsys, Salesforce FSC, ServiceNow and GRC Archer)', demo: 'Simulated in the browser', pilot: 'Read access to 1–2 systems via query API or read-only replica. There are no standard connectors for T24, Falcon or Redsys', origin: 'piloto' },
-      { aspect: 'Alert trigger', demo: 'When the BIN 454812 alert is opened', pilot: 'Webhook from Falcon or periodic polling (cron): Prodigy has no agent scheduler of its own', origin: 'piloto' },
-      { aspect: 'Language model', demo: 'No calls: the answers are pre-prepared', pilot: 'Whichever the bank chooses (Azure OpenAI, Gemini or local), through the Prodigy gateway and assessed as an ICT provider', origin: 'serie' },
+      { aspect: 'Alert trigger', demo: 'When the BIN 454812 alert is opened', pilot: 'Webhook from Falcon or periodic polling (cron): Agentic Platform has no agent scheduler of its own', origin: 'piloto' },
+      { aspect: 'Language model', demo: 'No calls: the answers are pre-prepared', pilot: 'Whichever the bank chooses (Azure OpenAI, Gemini or local), through the Agentic Platform gateway and assessed as an ICT provider', origin: 'serie' },
       { aspect: 'Human approval', demo: 'Approval cards; rejecting applies nothing', pilot: 'The same, with SSO, MFA and role-based permissions. In the pilot nothing is written to any system: drafts approved by a person', origin: 'serie' },
       { aspect: 'Policies with citations', demo: '5 synthetic documents (POL-FRA-003, PR-SAC-001, PR-TAR-007, PR-DORA-002 and MAN-PBC-001)', pilot: 'Your policies and procedures in force, with per-realm permissions; target ≥95% correct citations', origin: 'serie' },
-      { aspect: 'Audit log', demo: 'For this session, stored in the browser and exportable to JSON or CSV', pilot: 'In the Prodigy database, append-only, with each person\'s SSO identity; exportable for Internal Audit', origin: 'serie' },
+      { aspect: 'Audit log', demo: 'For this session, stored in the browser and exportable to JSON or CSV', pilot: 'In the Agentic Platform database, append-only, with each person\'s SSO identity; exportable for Internal Audit', origin: 'serie' },
       { aspect: 'Cost per request', demo: 'Estimate shown at the end of each run', pilot: 'Measured per request in USD, by realm and by use case, with daily and monthly budgets', origin: 'serie' },
       { aspect: 'Compliance (DORA, EBA, GDPR)', demo: 'Explained in the FAQ', pilot: 'Provider entry in the register of information, impact assessment with the DPO and outsourcing analysis before using real data', origin: 'piloto' },
-      { aspect: 'Data and actions', demo: 'Synthetic and mutually consistent, prepared by Ciklum; actions never leave the browser', pilot: 'Your data in read mode and 20–30 anonymised historical cases', origin: 'datos' }
+      { aspect: 'Data and actions', demo: 'Synthetic and mutually consistent, prepared by MFM; actions never leave the browser', pilot: 'Your data in read mode and 20–30 anonymised historical cases', origin: 'datos' }
     ],
     writes: 'None to the core or to Falcon during the pilot: drafts approved by a person',
     cases: {
@@ -143,14 +143,14 @@ prodigyPackEn('banca', {
     criteria: [
       { name: 'Time', target: 'Case summary and draft in under 10 min', how: 'Timed against the weeks 1–2 baseline' },
       { name: 'Usefulness', target: 'The area accepts the draft with minor edits in ≥70% of cases', how: 'Each draft reviewed by the owner' },
-      { name: 'Citations', target: '≥95% of 50 reference questions with the correct citation', how: 'Evaluation tool included in Prodigy' },
+      { name: 'Citations', target: '≥95% of 50 reference questions with the correct citation', how: 'Evaluation tool included in Agentic Platform' },
       { name: 'Control', target: 'No action without approval; 100% in the audit log', how: 'Review of the exported log by Internal Audit' },
       { name: 'Privacy', target: 'No full PAN, IBAN or national ID in clear text in requests to the model', how: 'Sampling of gateway requests by Security' },
       { name: 'Cost', target: 'Model cost per case measured and within the realm budget', how: 'Cost report by realm (USD, estimate)' }
     ],
     gives: {
       client: ['Business owner and contacts in Systems, Security and the DPO', 'Read access to 1–2 systems', '20–30 anonymised historical cases', 'Policies and procedures in force', 'ICT provider and impact (GDPR) assessments', '2–3 h a week from the business area'],
-      ciklum: ['Installation on your infrastructure', 'Read connectors', 'Agents and workflow for the use case', 'Documentation for the DORA register and the impact assessment', 'User training', 'Final report with the measured criteria']
+      mfm: ['Installation on your infrastructure', 'Read connectors', 'Agents and workflow for the use case', 'Documentation for the DORA register and the impact assessment', 'User training', 'Final report with the measured criteria']
     },
     pilot: {
       sub: 'One use case, the Operations Centre, one realm and 5–10 users, on the bank\'s infrastructure and with its model',
@@ -171,24 +171,24 @@ prodigyPackEn('banca', {
       ]
     },
     auditEmpty: 'Generate the shift summary, publish a workflow or approve the preventive rule for BIN 454812: each step will appear here with its time, actor and view.',
-    auditPilot: 'The log lives in the Prodigy database, identifies each person by their SSO, can be filtered by person, action and date, and is exported to CSV for Internal Audit and the supervisor. In this demo it lives in this browser and is cleared with "Reset demo".',
+    auditPilot: 'The log lives in the Agentic Platform database, identifies each person by their SSO, can be filtered by person, action and date, and is exported to CSV for Internal Audit and the supervisor. In this demo it lives in this browser and is cleared with "Reset demo".',
     proposal: {
       code: 'PIL-COP-2026-01',
-      filename: 'prodigy-pilot-proposal-banco-cierzo',
-      objective: 'To measure, with a real use case and signed-off criteria, how much Operations time Prodigy frees up and with what accuracy, without changing the T24 core, Falcon Fraud, Redsys, Salesforce FSC, ServiceNow or GRC Archer, and within the framework of DORA, the EBA guidelines, the GDPR and banking secrecy. Prodigy reads from those systems, reasons with the bank\'s policies and proposes; a person approves before anything is written.',
+      filename: 'agentic-pilot-proposal-banco-cierzo',
+      objective: 'To measure, with a real use case and signed-off criteria, how much Operations time Agentic Platform frees up and with what accuracy, without changing the T24 core, Falcon Fraud, Redsys, Salesforce FSC, ServiceNow or GRC Archer, and within the framework of DORA, the EBA guidelines, the GDPR and banking secrecy. Agentic Platform reads from those systems, reasons with the bank\'s policies and proposes; a person approves before anything is written.',
       extraArch: [['Pseudonymisation', 'PAN, IBAN, DNI/NIE and names masked before the model']],
       compliance: [
         ['DORA', 'Provider entered in the register of information (Art. 28) and contract with the Art. 30 clauses; exit strategy, including a change of model'],
         ['EBA/GL/2019/02', 'Outsourcing analysis: in the pilot it does not support a critical or important function; reassessed before production'],
-        ['GDPR', 'Ciklum as processor (Art. 28); impact assessment (Art. 35) with the DPO; data in the EU; no automated decisions (Art. 22)'],
+        ['GDPR', 'MFM as processor (Art. 28); impact assessment (Art. 35) with the DPO; data in the EU; no automated decisions (Art. 22)'],
         ['Banking secrecy', 'Duty of confidentiality (Art. 83 of Ley 10/2014): data on the bank\'s infrastructure, per-realm permissions and a log of every access'],
-        ['PCI DSS 4.0', 'No full PAN in Prodigy or in the model; outside the cardholder data environment']
+        ['PCI DSS 4.0', 'No full PAN in Agentic Platform or in the model; outside the cardholder data environment']
       ],
       signatures: [{ role: 'decider', note: 'Agrees with the scope and criteria' }, { role: 'compliance', note: 'Agrees with the regulatory fit' }, { role: 'it_risk', note: 'Agrees with the ICT provider and the deployment' }]
     },
     presenter: {
       arquitectura: [
-        'Prodigy replaces nothing: it sits on top of T24, Falcon, Redsys, Salesforce and Archer. It reads, reasons with your policies and proposes; before writing to a system, a person approves.',
+        'Agentic Platform replaces nothing: it sits on top of T24, Falcon, Redsys, Salesforce and Archer. It reads, reasons with your policies and proposes; before writing to a system, a person approves.',
         'It is installed on the bank\'s infrastructure, with your SSO and MFA and the model you choose. With a local model, inference stays in your network and there is no additional ICT provider.',
         'The T24 core is read-only. The dashed amber lines are the only writes, and always after approval. Open the compliance questions: DORA, EBA, GDPR and banking secrecy.'
       ],
@@ -199,7 +199,7 @@ prodigyPackEn('banca', {
       ],
       horas: [
         'Ask how many charge complaints, fraud alerts or correspondent questionnaires they handle a month and enter them: the calculator is theirs.',
-        '"With Prodigy" includes review and approval by a person. These are hours of repetitive work that the SAC and Fraud can devote to complex cases.',
+        '"With Agentic Platform" includes review and approval by a person. These are hours of repetitive work that the SAC and Fraud can devote to complex cases.',
         'These are assumptions for discussion: the real baseline is measured in weeks 1–2 of the pilot.'
       ],
       registro: [
@@ -215,7 +215,7 @@ prodigyPackEn('banca', {
       }
     },
     tour: [
-      'Prodigy sits on top of T24, Falcon, Redsys, Salesforce and Archer: it reads, prepares proposals and a person approves before anything is written. The core is read-only.',
+      'Agentic Platform sits on top of T24, Falcon, Redsys, Salesforce and Archer: it reads, prepares proposals and a person approves before anything is written. The core is read-only.',
       'With a local model, inference runs inside the bank\'s infrastructure; with an external one, only pseudonymised text leaves, to the EU.',
       'Today\'s use cases, from the BIN 454812 alert to case CPP-2609-07, and what is standard and what is built in the pilot.',
       '6–8 week pilot: one use case, one realm, criteria signed off in week 1 and the DORA and GDPR fit resolved before touching real data.',

@@ -5,7 +5,7 @@
  */
 (function () {
   'use strict';
-  const KEY = 'prodigy-ind-lang';
+  const KEY = 'agentic-ind-lang';
   const query = new URLSearchParams(location.search);
   let saved = null;
   try { saved = localStorage.getItem(KEY); } catch (_) { /* private browsing */ }
@@ -13,7 +13,7 @@
   const lang = /^(es|en)$/.test(requested || '') ? requested : (saved === 'en' ? 'en' : 'es');
   try { localStorage.setItem(KEY, lang); } catch (_) { /* preference is optional */ }
   document.documentElement.lang = lang;
-  if(lang==='en'){const meta=document.querySelector('meta[name="description"]');if(meta)meta.content='Prodigy console configured by industry: industrial machinery, banking, retail and brewing. Demonstration with synthetic data prepared by Ciklum.';}
+  if(lang==='en'){const meta=document.querySelector('meta[name="description"]');if(meta)meta.content='Agentic Platform console configured by industry: industrial machinery, banking, retail, brewing and a law firm. Demonstration with synthetic data prepared by MFM.';}
   const english = lang === 'en';
   const messages = window.CN_EN || {};
   const normalize = (s) => String(s).replace(/\u2212/g, '-').replace(/\s+/g, ' ').trim();

@@ -1,5 +1,5 @@
-/* Mercados Moncayo · general data (English). Fictitious company; synthetic demo data (Ciklum). */
-prodigyPackEn('retail', {
+/* Mercados Moncayo · general data (English). Fictitious company; synthetic demo data (MFM). */
+agenticPackEn('retail', {
   meta: {
     id: 'retail',
     industry: 'Grocery and retail',

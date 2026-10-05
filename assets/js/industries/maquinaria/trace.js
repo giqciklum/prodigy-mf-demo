@@ -1,6 +1,6 @@
 /* Hidromec Ebro · registros de trazabilidad (lotes de componente, lotes de montaje, números de serie y lotes de
- * fabricación). Los lee App.traceModal desde CN_DATA.trace[código]. Datos sintéticos de demostración (Ciklum). */
-prodigyPack('maquinaria', {
+ * fabricación). Los lee App.traceModal desde CN_DATA.trace[código]. Datos sintéticos de demostración (MFM). */
+agenticPack('maquinaria', {
   trace: (function () {
     'use strict';
 

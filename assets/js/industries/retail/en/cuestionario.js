@@ -1,5 +1,5 @@
-/* Mercados Moncayo · IFS Logistics v3 pre-audit questionnaire for the Plaza distribution centre (English). Fictitious companies; synthetic data (Ciklum). */
-prodigyPackEn('retail', {
+/* Mercados Moncayo · IFS Logistics v3 pre-audit questionnaire for the Plaza distribution centre (English). Fictitious companies; synthetic data (MFM). */
+agenticPackEn('retail', {
   cuestionario: {
     agent: 'Customer questionnaires',
     lang: 'en',
@@ -75,7 +75,7 @@ prodigyPackEn('retail', {
       before: [
         'The distribution centre is being certified to IFS Logistics v3 for the first time in November, and the certification body sends its pre-audit questionnaire first: preparing the evidence for each requirement is background work for Quality.',
         'There are {total} questions on HACCP, temperatures, warehouse, traceability and incidents, and product defence. Every answer must come with its procedure or record.',
-        'When you press the button, Prodigy searches the manual, the HACCP plan and the procedures, plus the records in the cold-chain sensors, the WMS, ServiceNow and the CRM, and drafts each answer with its source.'
+        'When you press the button, Agentic Platform searches the manual, the HACCP plan and the procedures, plus the records in the cold-chain sensors, the WMS, ServiceNow and the CRM, and drafts each answer with its source.'
       ],
       during: [
         '{drafted} of {total} have a cited draft, with document and section; every citation is checked against the source text. {flagged} are left unanswered: product defence, subcontractors and glass control. No document, nothing invented.',

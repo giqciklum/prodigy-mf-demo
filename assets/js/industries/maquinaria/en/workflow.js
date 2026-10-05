@@ -1,6 +1,6 @@
-/* Hidromec Ebro · From words to workflow (English). Fictitious company; synthetic demonstration data (Ciklum).
+/* Hidromec Ebro · From words to workflow (English). Fictitious company; synthetic demonstration data (MFM).
  * Same structure as ../workflow.js. Schema in the header of assets/js/scenes/workflow.js. Regex on folded text (lower case, no accents). */
-prodigyPackEn('maquinaria', {
+agenticPackEn('maquinaria', {
   workflow: {
     space: 'Quality and Maintenance · Zaragoza',
     author: 'quality',
@@ -28,7 +28,7 @@ prodigyPackEn('maquinaria', {
         id: 'finanzas',
         re: '\\b(?:buy\\w*|bought|sell\\w*|sold|invest\\w*|trad(?:e|es|ing))\\b[^.;]{0,50}\\b(?:shares?|stocks?|equities|bitcoins?|crypto\\w*|currenc(?:y|ies)|forex|investment funds?)\\b|\\bbank transfers?\\b|\\b(?:transfer|wire) (?:money|funds)\\b',
         title: 'Financial transaction',
-        body: 'The text asks to buy or sell shares or to move money. No agent in the Quality and Maintenance · Zaragoza space trades on markets or makes payments, and Prodigy does not create steps that no enabled agent can perform.'
+        body: 'The text asks to buy or sell shares or to move money. No agent in the Quality and Maintenance · Zaragoza space trades on markets or makes payments, and Agentic Platform does not create steps that no enabled agent can perform.'
       },
       {
         id: 'personas',
@@ -40,7 +40,7 @@ prodigyPackEn('maquinaria', {
         id: 'control',
         re: '\\b(?:chang\\w*|modif\\w*|adjust\\w*|lower\\w*|rais\\w*|increas\\w*|reduc\\w*)\\b[^.;]{0,30}\\b(?:cnc programs?|cnc parameters?|feed rates?|spindle speed|set ?points?|press pressure)\\b|\\b(?:start|restart|stop|shut down|switch (?:on|off)|turn (?:on|off))\\b[^.;]{0,25}\\b(?:machining cent(?:re|er)s?|spindles?|machines?|press(?:es)?|compressors?|robots?)\\b',
         title: 'Action on machine control',
-        body: 'The text asks to change CNC programs or parameters, or to start or stop machines. Prodigy reads IIoT Vibración and MES Opcenter but does not write to machine control: shop-floor staff make those changes from the CNC or the PLC, with the lockout procedure in PR-SEG-002.'
+        body: 'The text asks to change CNC programs or parameters, or to start or stop machines. Agentic Platform reads IIoT Vibración and MES Opcenter but does not write to machine control: shop-floor staff make those changes from the CNC or the PLC, with the lockout procedure in PR-SEG-002.'
       }
     ],
     idle: [
@@ -53,8 +53,8 @@ prodigyPackEn('maquinaria', {
     presenter: {
       idle: [
         'This is how Quality writes a procedure: in plain English, as in its procedure manual. Nothing to draw, nothing to program.',
-        'Prodigy turns it into a platform workflow: trigger, agents in order, human approval and outputs, each linked to its sentence.',
-        'To be clear: text-to-workflow generation is simulated here and its integration into Prodigy is validated in the pilot; workflows (Routines), the editor, approval and auditing are standard.'
+        'Agentic Platform turns it into a platform workflow: trigger, agents in order, human approval and outputs, each linked to its sentence.',
+        'To be clear: text-to-workflow generation is simulated here and its integration into Agentic Platform is validated in the pilot; workflows (Routines), the editor, approval and auditing are standard.'
       ],
       outOfScopeExample: 'Buy shares in a steel company when the price of steel falls'
     },

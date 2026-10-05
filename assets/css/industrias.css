@@ -62,3 +62,29 @@
 .model-name:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 .llm-badge { display: inline-flex; align-items: center; gap: 4px; padding: 1px 6px; border-radius: 999px; background: var(--cn-green-50); color: var(--cn-green-900); font: 600 11px/1.5 var(--font-mono); }
 @media (max-width: 720px) { .model-name { display: none; } }
+
+/* Public copy: keep all three model choices within narrow screens. */
+@media (max-width: 720px) {
+  .topbar { height: auto; min-height: var(--topbar-h); padding-block: 8px; }
+  .topbar-right { max-width: 100%; flex-wrap: wrap; justify-content: flex-end; }
+}
+@media (max-width: 420px) {
+  .model-switch button { padding-inline: 4px; }
+}
+
+/* Long document names wrap inside the email attachment badge. */
+.email-attach .sys {
+  display: inline-block; max-width: 100%; height: auto; min-height: 20px;
+  white-space: normal; overflow-wrap: anywhere;
+}
+.email-attach .sys .icon { margin-right: 5px; vertical-align: middle; }
+
+.card-sub { overflow-wrap: anywhere; }
+
+@media (max-width: 420px) {
+  .card-actions { max-width: 100%; }
+  .card-actions .seg { max-width: 100%; overflow-x: auto; }
+  .kpi-label, .tbl-stack td { overflow-wrap: anywhere; }
+  .tbl-stack td .nowrap { white-space: normal; }
+  .ret-preview { flex-wrap: wrap; }
+}

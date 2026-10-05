@@ -3,7 +3,7 @@
  * Hacia atrás: malta MAL-2607-05, lúpulo LUP-2606-11, CO₂ CO2-2608-02 → lote de fermentación L2607-FV05 → BBT-2.
  * Hacia delante: 1.040 barriles llenados en LLB-1 el 18/08/2026 → 912 expedidos a 14 clientes, 96 en la cámara CB-03
  * y 32 retenidos por Calidad (RET-Q). Mismos clientes, albaranes y referencias que CN_DATA.trace y la reclamación
- * REC-2026-0093. Datos sintéticos de demostración (Ciklum).
+ * REC-2026-0093. Datos sintéticos de demostración (MFM).
  */
 (function () {
   'use strict';
@@ -239,7 +239,7 @@
       { agent: 'trace', system: 'SAP S/4HANA', action: 'Expediciones y clientes', result: `${CUSTOMERS.length} clientes (${regionText}) · ${CUSTOMERS.length} albaranes del 20/08 al 02/09 · ${distN} distribuidores de hostelería`, ms: 590, reveal: 4, mark: 'Expediciones identificadas' },
       { agent: 'trace', system: 'SAP S/4HANA', action: 'Contactos de calidad y reclamaciones abiertas', result: `${CUSTOMERS.length} contactos verificados · reclamación REC-2026-0093 de Distribuciones Hosteleras Ribera (124 barriles en 37 bares y 44 en su almacén)`, ms: 480, reveal: 5, mark: 'Clientes y contactos identificados' },
       { agent: 'bal', system: 'Brewmaxx (MES)', action: 'Volumen de la fermentación y mermas', result: '480 hl de L2607-FV05 → 312 hl a barril, 158 hl a botella y 10 hl de fondos y filtración', ms: 420 },
-      { agent: 'bal', system: 'Prodigy', action: 'Cuadre del lote: llenado frente a expedido, en almacén y retenido', result: `Conciliado 100,0 % · 0 barriles sin justificar · ${n0(FILLED)} de ${n0(FILLED)} localizados`, ms: 95, tone: 'ok', mark: 'Cuadre del lote cerrado' },
+      { agent: 'bal', system: 'Agentic Platform', action: 'Cuadre del lote: llenado frente a expedido, en almacén y retenido', result: `Conciliado 100,0 % · 0 barriles sin justificar · ${n0(FILLED)} de ${n0(FILLED)} localizados`, ms: 95, tone: 'ok', mark: 'Cuadre del lote cerrado' },
       { agent: 'rec', system: 'SAP S/4HANA', action: 'Abre el registro de retirada con un aviso por cliente', result: `Retirada en borrador · ${CUSTOMERS.length} pedidos de recogida y reposición sin liberar`, ms: 360 },
       { agent: 'rec', system: 'Outlook', action: 'Prepara los avisos sin enviar', result: `${CUSTOMERS.length} avisos a clientes pendientes de aprobación · OT de mantenimiento propuesta`, ms: 720, mark: 'Registro y avisos preparados' }
     ],
@@ -383,7 +383,7 @@
     ]
   };
 
-  prodigyPack('cerveceria', {
+  agenticPack('cerveceria', {
     retirada: {
       title: 'Simulacro de retirada',
       nav: 'Simulacro de trazabilidad',
@@ -427,17 +427,17 @@
       report: { subtitle: 'Registro del ejercicio de trazabilidad y retirada · Reglamento (CE) 178/2002 · PR-CAL-006' },
       compare: {
         rows: [
-          { k: 'Personas implicadas', today: '3–4: Calidad, Logística, Producción y Comercial', prodigy: '1: {approver} revisa y aprueba' },
-          { k: 'Sistemas consultados', today: '5–6 abiertos a mano: SAP, Brewmaxx, LIMS, WMS, hojas de cálculo y correo', prodigy: '5 conectores consultados por los agentes: SAP S/4HANA, Brewmaxx, LIMS LabWare, WMS Mecalux y Outlook' },
-          { k: 'Pasos', today: '15–20 consultas, cruces de SSCC con albaranes y cálculos manuales', prodigy: '{steps} pasos automáticos y 1 aprobación' },
-          { k: 'Balance de masas', today: 'Hoja de cálculo con llenado, expediciones y existencias', prodigy: 'Calculado por palé y albarán: {reconciled} conciliado' }
+          { k: 'Personas implicadas', today: '3–4: Calidad, Logística, Producción y Comercial', agentic: '1: {approver} revisa y aprueba' },
+          { k: 'Sistemas consultados', today: '5–6 abiertos a mano: SAP, Brewmaxx, LIMS, WMS, hojas de cálculo y correo', agentic: '5 conectores consultados por los agentes: SAP S/4HANA, Brewmaxx, LIMS LabWare, WMS Mecalux y Outlook' },
+          { k: 'Pasos', today: '15–20 consultas, cruces de SSCC con albaranes y cálculos manuales', agentic: '{steps} pasos automáticos y 1 aprobación' },
+          { k: 'Balance de masas', today: 'Hoja de cálculo con llenado, expediciones y existencias', agentic: 'Calculado por palé y albarán: {reconciled} conciliado' }
         ]
       },
       presenter: {
         idle: [
           'Simulacro de retirada con trazabilidad y balance de masas; en el piloto Calidad confirma el protocolo y medimos el tiempo real.',
           'Se elige el punto de partida: el lote de barril L2608-K14 o el albarán de la expedición reclamada.',
-          'Prodigy recorre SAP, Brewmaxx, LIMS y WMS hacia atrás hasta la malta, el lúpulo y el CO₂, y hacia delante hasta cada palé y cliente, y cuadra el lote barril a barril.'
+          'Agentic Platform recorre SAP, Brewmaxx, LIMS y WMS hacia atrás hasta la malta, el lúpulo y el CO₂, y hacia delante hasta cada palé y cliente, y cuadra el lote barril a barril.'
         ],
         nextIdle: 'Pulsar «Iniciar simulacro» con el lote L2608-K14 (o elegir «Albarán ALB-26-08-2211»).',
         nextRun: 'Pulsar «Ver aviso» de Distribuciones Hosteleras Ribera y después «Aprobar y cerrar simulacro».',

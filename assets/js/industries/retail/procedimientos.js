@@ -1,5 +1,5 @@
 /* Mercados Moncayo · consulta de procedimientos con citas. Documentos ficticios, coherentes con HISTORIAS.md. */
-prodigyPack('retail', {
+agenticPack('retail', {
   procedimientos: {
     section: 'Calidad',
     nav: 'Procedimientos',
@@ -605,7 +605,7 @@ prodigyPack('retail', {
 /* Resumen canónico por código (CN_DATA.procedures): se completa sin pisar lo que ya hayan puesto otros ficheros. */
 (function (id) {
   'use strict';
-  const pack = window.PRODIGY_INDUSTRIES[id];
+  const pack = window.AGENTIC_INDUSTRIES[id];
   const procs = pack.procedures = pack.procedures || {};
   pack.procedimientos.docs.forEach((d) => {
     const cur = procs[d.code] = procs[d.code] || {};

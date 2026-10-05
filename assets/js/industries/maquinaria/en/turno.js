@@ -1,5 +1,5 @@
-/* Hidromec Ebro · shift summary («turno» scene), English. Synthetic demonstration data (Ciklum). */
-prodigyPackEn('maquinaria', {
+/* Hidromec Ebro · shift summary («turno» scene), English. Synthetic demonstration data (MFM). */
+agenticPackEn('maquinaria', {
   turno: (function () {
     'use strict';
     const hhmm = (i) => `${String(Math.floor((i * 5) / 60)).padStart(2, '0')}:${String((i * 5) % 60).padStart(2, '0')}`;
@@ -66,11 +66,11 @@ prodigyPackEn('maquinaria', {
         title: 'Plant map · Zaragoza',
         sub: '06:00 report readings and IIoT Vibración at 05:50 · click an item to see its details',
         icon: 'factory',
-        readonly: 'Prodigy reads IIoT Vibración, MES Opcenter, SAP S/4HANA and GMAO Maximo; it does not act on the CNCs or the test benches',
+        readonly: 'Agentic Platform reads IIoT Vibración, MES Opcenter, SAP S/4HANA and GMAO Maximo; it does not act on the CNCs or the test benches',
         zones: [
           { id: 'mec', title: 'Machining', sub: 'Bay 1 · 6 machines', items: [
             { code: 'MC-04', name: 'DMU 65 · cylinder heads', reading: '7.8 mm/s', status: 'crit', tags: ['CUL-2609-118'], go: 'alarma', goLabel: 'Open the alarm',
-              note: 'Spindle vibration in zone D (ISO 10816-3) since 03:40. Prodigy proposes stopping the machine, blocking the 42 cylinder heads in SAP QM and moving OF 4100872 to MC-02.',
+              note: 'Spindle vibration in zone D (ISO 10816-3) since 03:40. Agentic Platform proposes stopping the machine, blocking the 42 cylinder heads in SAP QM and moving OF 4100872 to MC-02.',
               kv: [['Production order', 'OF 4100872 · batch CUL-2609-118'], ['Parts in the window', '42 cylinder heads (03:40–05:50)'], ['Peak', '8.4 mm/s RMS at 05:32'], ['Spindle hours', '11,840 h since the last repair']] },
             { code: 'MC-02', name: 'DMU 65 · flanges', reading: '2.0 mm/s', status: 'ok', note: 'Twin of MC-04 (same CNC program and fixtures). Spare capacity from 08:00.', kv: [['Current order', 'OF 4100869 · BR-80 flanges (ends 07:55)'], ['Availability', '94% this week']] },
             { code: 'MC-01', name: 'Variaxis · bodies', reading: '1.8 mm/s', status: 'ok', kv: [['Current order', 'OF 4100866 · valve bodies']] },
@@ -169,7 +169,7 @@ prodigyPackEn('maquinaria', {
         steps: [
           { agent: AGENT, system: 'MES Opcenter', action: 'Reads the 06:00 readings for 14 assets (machining, assembly, testing, painting and utilities)', result: '14 readings received, no gaps', ms: 610 },
           { agent: AGENT, system: 'IIoT Vibración', action: 'Queries spindle and headstock vibration (MC-01 to MC-04 and TOR-01) over the last 6 h', result: 'MC-04 at 7.8 mm/s RMS (zone D since 03:40); the rest between 1.6 and 2.4 mm/s', ms: 540, tone: 'crit' },
-          { agent: AGENT, system: 'Prodigy', action: 'Compares each reading with its plant thresholds (8 indicators)', result: '2 critical · 4 warnings · 8 without incidents', ms: 60, tone: 'crit' },
+          { agent: AGENT, system: 'Agentic Platform', action: 'Compares each reading with its plant thresholds (8 indicators)', result: '2 critical · 4 warnings · 8 without incidents', ms: 60, tone: 'crit' },
           { agent: AGENT, system: 'MES Opcenter', action: 'Cross-checks the MC-04 vibration window against the production orders', result: 'OF 4100872: 42 cylinder heads from batch CUL-2609-118 machined between 03:40 and 05:50', ms: 420, tone: 'warn' },
           { agent: AGENT, system: 'SAP S/4HANA', action: 'Reviews the BP-1 and BP-2 test results in QM', result: 'BP-1: weeping on PH250-26-0476 and PH250-26-0478 (MON-2608-11)', ms: 380, tone: 'crit' },
           { agent: AGENT, system: 'PLM Windchill', action: 'Opens the bill of materials of the two weeping presses', result: 'Main cylinder seals from batch JNT-2607-031 · Sellados Ibéricos, S.A.', ms: 330 },
@@ -219,7 +219,7 @@ prodigyPackEn('maquinaria', {
         ],
         sayBefore: ['Generate daily report: it reviews 14 assets, does not duplicate open orders and creates the tickets. Watch the timing.'],
         sayAfter: [
-          'The link Prodigy finds: the two weeping presses on bench BP-1 carry seals from the same batch as the press in the complaint. Nobody had to cross-check SAP, Windchill and Salesforce.',
+          'The link Agentic Platform finds: the two weeping presses on bench BP-1 carry seals from the same batch as the press in the complaint. Nobody had to cross-check SAP, Windchill and Salesforce.',
           'And no duplicates: two orders that were already open are updated instead of opening new tickets.'
         ],
         next: 'Click “Generate daily report” and talk through the log while it runs.',

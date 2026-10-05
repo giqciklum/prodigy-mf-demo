@@ -22,6 +22,41 @@
   const L = S.labels;
   const TX = A.text;
 
+  /* Modo Local/Prodigy: el modelo redacta el análisis de la propuesta para quien aprueba. La condición, el alcance
+     y la aprobación siguen siendo deterministas; si el modelo falla, la propuesta preparada se mantiene. */
+  const EN_UI = !!(window.CN_I18N && window.CN_I18N.english);
+  const LTA = (es, en) => (EN_UI ? en : es);
+  const plainA = (v) => String(v == null ? '' : v).replace(/<[^>]+>/g, ' ').replace(/[ \t]+/g, ' ').trim();
+  let AI_PENDING = null;
+  const useModel = () => !!(App.llm && App.llm.isLocal());
+  async function askAnalysis(run, signal) {
+    const H = ctxH(run);
+    const AP = A.approval;
+    const C = run.cond;
+    const org = (D.meta && (D.meta.report_org || D.meta.company)) || '';
+    const system = EN_UI
+      ? `You are the agent that prepares alarm proposals in Agentic Platform for ${org}. With the facts given, write the analysis for the person who must approve: what happened, why it matters, what the agents propose and what happens if it is not approved. Use ONLY the facts given; do not invent figures, deadlines or names. A person makes the decision: do not say anything has already been applied. At most 5 sentences, in English, without a title.`
+      : `Eres el agente que prepara las propuestas de alarma en Agentic Platform para ${org}. Con los datos que te doy, escribe el análisis para la persona que debe aprobar: qué ha pasado, por qué importa, qué proponen los agentes y qué ocurre si no se aprueba. Usa SOLO los datos facilitados; no inventes cifras, plazos ni nombres. La decisión la toma una persona: no digas que ya se ha aplicado nada. Máximo 5 frases, en español, sin título.`;
+    const effects = (AP.effects(H) || []).map((e) => plainA(e && e.text != null ? e.text : e)).filter(Boolean);
+    const facts = [
+      `${LTA('Alarma', 'Alarm')}: ${A.alarm_id} · ${plainA(A.asset)} · ${A.alarm_time}`,
+      `${LTA('Medida', 'Measure')}: ${plainA(M.short || M.col || '')} · ${LTA('umbral', 'threshold')} ${C.threshold} ${M.unit || ''} · ${C.above} min ${LTA('por encima', 'above')} (${C.start || '-'}–${C.end || LTA('en curso', 'ongoing')}) · ${LTA('crítico', 'critical')} ${critOf(C)} ${M.unit || ''}`,
+      `Workflow: ${run.wf.name} ${run.wf.version || ''} · ${LTA('aprueba', 'approver')}: ${run.wf.approver}`,
+      `${LTA('Alcance', 'Scope')}: ${plainA(TX.scope_short(H))}`,
+      `${LTA('Propuesta', 'Proposal')}: ${plainA(AP.title(H))}. ${plainA(AP.summary(H))}`,
+      effects.length ? `${LTA('Efectos si se aprueba', 'Effects if approved')}: ${effects.join('; ')}` : ''
+    ].filter(Boolean);
+    const r = await App.llm.chat({ system, user: facts.join('\n'), maxTokens: 500, temperature: 0.2, signal });
+    return { text: plainA(r.text), model: r.model, ms: r.ms };
+  }
+  function analysisBlock(run) {
+    const via = App.llm && App.llm.via ? App.llm.via() : { es: 'modelo', en: 'model' };
+    if (run.llm && run.llm.error) return html`<div class="muted mt-4">${icon('alert-triangle', 15)} ${LTA(`El modelo no ha redactado el análisis (${run.llm.error}); se muestra la propuesta preparada.`, `The model did not write the analysis (${run.llm.error}); showing the prepared proposal.`)}</div>`;
+    if (run.llm) return html`<div class="mt-4"><div class="strong">${icon('cpu', 15)} ${LTA('Análisis del agente', 'Agent analysis')} · ${run.llm.model} (${LTA(via.es, via.en)})</div><p class="mt-1" style="white-space:pre-line">${run.llm.text}</p></div>`;
+    if (AI_PENDING === run.id) return html`<div class="al-wait mt-4"><span class="spinner"></span><span>${LTA('El modelo está redactando el análisis para quien aprueba…', 'The model is writing the analysis for the approver…')}</span></div>`;
+    return '';
+  }
+
   /* Hoja de estilos propia (enlazada en consola.html; si faltara, se añade aquí). */
   try {
     if (!document.querySelector('link[href$="scene-alarma.css"]')) {
@@ -167,8 +202,8 @@
   const PROPOSER = A.proposer || (P2[0] && P2[0].id);
   const MON = P1[0].id;
   const ORCH = 'Orquestador';
-  const ACTOR_ORCH = 'Prodigy · orquestador';
-  const actorOf = (s) => (s.lane ? `Prodigy · agente ${LANE[s.lane].name}` : ACTOR_ORCH);
+  const ACTOR_ORCH = 'Agentic Platform · orquestador';
+  const actorOf = (s) => (s.lane ? `Agentic Platform · agente ${LANE[s.lane].name}` : ACTOR_ORCH);
   const SYSTEMS_ALL = uniq(LANES.flatMap((l) => l.systems));
 
   function decorate(steps) {
@@ -177,7 +212,7 @@
 
   function triggerStep(H) {
     const W = H.W;
-    return { agent: ORCH, node: 't', system: 'Prodigy', action: `Recibe la alarma ${A.alarm_id} (${A.asset}, ${A.alarm_time}) y arranca el workflow «${W.name}» ${W.version}`, result: `Disparador: ${M.short} por encima de ${fv(W.threshold)} durante más de ${W.minutes} min · aprueba ${W.approver}`, ms: 180, wait: 1800 };
+    return { agent: ORCH, node: 't', system: 'Agentic Platform', action: `Recibe la alarma ${A.alarm_id} (${A.asset}, ${A.alarm_time}) y arranca el workflow «${W.name}» ${W.version}`, result: `Disparador: ${M.short} por encima de ${fv(W.threshold)} durante más de ${W.minutes} min · aprueba ${W.approver}`, ms: 180, wait: 1800 };
   }
   function evalStep(H, base, met) {
     const W = H.W;
@@ -214,24 +249,24 @@
     const raw = A.steps.p1(H);
     const k = raw.findIndex((s) => s.eval);
     const head = raw.slice(0, k).concat([evalStep(H, raw[k], false)]);
-    return decorate([triggerStep(H)].concat(head, [{ agent: ORCH, system: 'Prodigy', action: `Detiene la ejecución sin ${TX.stop_without}`, result: `Sin cambios en ${A.untouched}`, ms: 40, wait: 1400 }]));
+    return decorate([triggerStep(H)].concat(head, [{ agent: ORCH, system: 'Agentic Platform', action: `Detiene la ejecución sin ${TX.stop_without}`, result: `Sin cambios en ${A.untouched}`, ms: 40, wait: 1400 }]));
   }
   function decisionSteps(run) {
     const d = run.decision;
     if (!d) return [];
     const H = ctxH(run);
     if (d.status === 'approved') {
-      return [{ agent: d.by, human: true, system: 'Prodigy', action: `${run.excluded && run.excluded.length ? `${TX.approve_action} con el alcance editado` : TX.approve_action}: ${TX.scope_short(H)}`, result: `Aprobado a las ${fmt.time(d.at, true)}`, tone: 'ok', ms: d.waitMs }];
+      return [{ agent: d.by, human: true, system: 'Agentic Platform', action: `${run.excluded && run.excluded.length ? `${TX.approve_action} con el alcance editado` : TX.approve_action}: ${TX.scope_short(H)}`, result: `Aprobado a las ${fmt.time(d.at, true)}`, tone: 'ok', ms: d.waitMs }];
     }
     return [
-      { agent: d.by, human: true, system: 'Prodigy', action: `Rechaza la propuesta · motivo: «${d.reason}»`, result: 'No se aplica ninguna acción', ms: d.waitMs },
-      { agent: ORCH, system: 'Prodigy', action: 'Detiene la ejecución', result: `Sin cambios en ${A.untouched}`, ms: 40 }
+      { agent: d.by, human: true, system: 'Agentic Platform', action: `Rechaza la propuesta · motivo: «${d.reason}»`, result: 'No se aplica ninguna acción', ms: d.waitMs },
+      { agent: ORCH, system: 'Agentic Platform', action: 'Detiene la ejecución', result: `Sin cambios en ${A.untouched}`, ms: 40 }
     ];
   }
   function p2Steps(run, calls) {
     const H = ctxH(run);
     return decorate(A.steps.p2(H).concat([{
-      agent: ORCH, system: 'Prodigy', action: `Cierra la ejecución y guarda el ${A.report.noun}`,
+      agent: ORCH, system: 'Agentic Platform', action: `Cierra la ejecución y guarda el ${A.report.noun}`,
       result: `${calls != null ? calls : CALLS.total} llamadas a sistemas y al modelo de lenguaje · coste estimado ${fmt.usd(LLM_COST_USD)}`,
       ms: 120, wait: 1600, milestone: 'end',
       audit: { action: 'Ejecución del workflow completada', detail: `${run.id} · ${calls != null ? calls : CALLS.total} llamadas · coste estimado ${fmt.usd(LLM_COST_USD)}` }
@@ -249,7 +284,7 @@
   const CALLS = (() => {
     const fake = { id: 'EJE', wf: BACKUP, cond: condOf(BACKUP), excluded: [], ids: FAKE_IDS };
     const all = p1Steps(fake).concat(p2Steps(fake, 0));
-    return { total: all.filter((s) => s.system !== 'Prodigy').length, llm: all.filter((s) => s.system === 'Modelo de lenguaje').length, auto: all.length };
+    return { total: all.filter((s) => s.system !== 'Agentic Platform').length, llm: all.filter((s) => s.system === 'Modelo de lenguaje').length, auto: all.length };
   })();
 
   function logStep(ctx, s) {
@@ -311,7 +346,7 @@
     const states = laneState(run, steps, done, running);
     return html`${LANES.map((Ln, i) => {
       const st = states[i];
-      const used = uniq(Ln.systems.concat(steps.filter((s) => s.lane === Ln.id && s.system !== 'Prodigy').map((s) => s.system)));
+      const used = uniq(Ln.systems.concat(steps.filter((s) => s.lane === Ln.id && s.system !== 'Agentic Platform').map((s) => s.system)));
       const status = st.status === 'active' ? chip('running', st.verb || 'Consultando') : LANE_CHIP[st.status]();
       let result = st.result || (st.status === 'idle' ? Ln.idle : '');
       if (st.status === 'skipped') result = run && !run.cond.met ? 'No se ejecuta: la condición del workflow no se cumple' : 'No se ejecuta tras el rechazo';
@@ -397,7 +432,7 @@
           tone: 'brand',
           icon: 'workflow',
           title: run ? `Se ha ejecutado el workflow de respaldo «${wf.name}» ${wf.version}` : `Se ejecutará el workflow de respaldo «${wf.name}» ${wf.version}`,
-          body: html`No se ha publicado ningún workflow de ${A.workflow_topic} en esta sesión, así que Prodigy usa el de respaldo, configurado con los parámetros de ${A.policy_ref}: ${M.short} por encima de ${fv(LIMIT)} durante más de ${MIN_HOLD} min y aprobación de ${BACKUP.approver}.`,
+          body: html`No se ha publicado ningún workflow de ${A.workflow_topic} en esta sesión, así que Agentic Platform usa el de respaldo, configurado con los parámetros de ${A.policy_ref}: ${M.short} por encima de ${fv(LIMIT)} durante más de ${MIN_HOLD} min y aprobación de ${BACKUP.approver}.`,
           actions: html`<button type="button" class="btn btn-secondary btn-sm" data-go="workflow">${icon('workflow', 15)}<span>Crear el workflow desde el procedimiento</span></button>`
         })}
       </div>`;
@@ -619,7 +654,7 @@
       policy: AP.policy,
       scope,
       effects,
-      extra: applying ? html`<div class="al-wait mt-4"><span class="spinner"></span><span>Aplicando en ${A.apply_systems}…</span></div>` : '',
+      extra: html`${analysisBlock(run)}${applying ? html`<div class="al-wait mt-4"><span class="spinner"></span><span>Aplicando en ${A.apply_systems}…</span></div>` : ''}`,
       editable: ITEMS.length > 1,
       approveLabel: AP.approve_label,
       rejectLabel: 'Rechazar',
@@ -714,7 +749,7 @@
       body: App.table({ rows, cols: [
         { label: 'Aspecto', width: '22%', render: (r) => html`<span class="strong">${r.k}</span>` },
         { label: 'Hoy (estimación)', width: '36%', render: (r) => r.today },
-        { label: 'Con Prodigy (simulación)', render: (r) => r.now }
+        { label: 'Con Agentic Platform (simulación)', render: (r) => r.now }
       ] }),
       footer: html`<span class="al-cmp-foot">${icon('info', 15)}<span>«Hoy» usa supuestos ilustrativos. El tiempo de esta simulación no mide rendimiento real; ambos se validan con la línea base del piloto.</span></span>`
     });
@@ -811,6 +846,20 @@
       : 'Mirar la condición: con estos parámetros el workflow no se activa.' });
     const steps = cond.met ? p1Steps(run) : noTrigSteps(run);
     paint(ctx, run, steps, 0, 0);
+    const analysis = cond.met && useModel() ? askAnalysis(run, ctx.signal).catch((e) => ({ error: e.message })) : null;
+    if (analysis) {
+      AI_PENDING = run.id;
+      analysis.then((got) => {
+        if (AI_PENDING === run.id) AI_PENDING = null;
+        if (!ctx.alive()) return;
+        const cur = ctx.local.run;
+        if (!cur || cur.id !== run.id) return;
+        ctx.setLocal({ run: Object.assign({}, cur, { llm: got }) });
+        if (got.error) App.toast(LTA(`El modelo no ha redactado el análisis (${got.error}).`, `The model did not write the analysis (${got.error}).`), { tone: 'warn', icon: 'alert-triangle', duration: 7000 });
+        else App.audit(LTA('Análisis redactado por el modelo', 'Analysis written by the model'), `${A.alarm_id} · ${got.model} · ${fmt.ms(got.ms)}`, ACTOR_ORCH);
+        if (!ctx.vars.live) ctx.rerender();
+      });
+    }
     const stream = App.reasoningStream(ctx.$('#al-log'), steps, {
       title: `Registro · ${run.id}`, signal: ctx.signal, maxHeight: 400, start: iso(run.t0),
       minDelay: 0, maxDelay: 9000, speed: ctx.vars.fast ? 4 : 1,
@@ -958,7 +1007,7 @@
   /* ---------------------------------------------------------------- Documentos controlados */
 
   const PRINT_STYLE = (code, rev) => App.raw(`<style>
-@page{@top-right{content:"${code} · rev. ${rev}";font:500 8.5px Inter,system-ui,sans-serif;color:var(--muted)}@bottom-left{content:"${(D.meta.report_org || D.meta.company || '').replace(/"/g, '')} · Documento generado por Prodigy · demostración con datos sintéticos";font:8.5px Inter,system-ui,sans-serif;color:var(--muted)}@bottom-right{content:"Página " counter(page) " de " counter(pages);font:600 8.5px Inter,system-ui,sans-serif;color:var(--muted)}}
+@page{@top-right{content:"${code} · rev. ${rev}";font:500 8.5px Inter,system-ui,sans-serif;color:var(--muted)}@bottom-left{content:"${(D.meta.report_org || D.meta.company || '').replace(/"/g, '')} · Documento generado por Agentic Platform · demostración con datos sintéticos";font:8.5px Inter,system-ui,sans-serif;color:var(--muted)}@bottom-right{content:"Página " counter(page) " de " counter(pages);font:600 8.5px Inter,system-ui,sans-serif;color:var(--muted)}}
 .sec h2{break-after:avoid}
 td .code{white-space:nowrap}
 </style>`);
@@ -1018,7 +1067,7 @@ td .code{white-space:nowrap}
         { heading: '7. Acciones aplicadas tras la aprobación', list: RP.actions(H) },
         { heading: '8. Hipótesis de causa y acciones pendientes', text: fmt.text(A.probable_cause), list: RP.pending(H) },
         { heading: '9. Aprobaciones', table: approvalsTable([
-          { step: fmt.cap(TX.proposal_title), role: `Prodigy · agente ${LANE[PROPOSER].name}`, decision: 'Propuesto', tone: '', when: fmt.date(propAt, { time: true, seconds: true }) },
+          { step: fmt.cap(TX.proposal_title), role: `Agentic Platform · agente ${LANE[PROPOSER].name}`, decision: 'Propuesto', tone: '', when: fmt.date(propAt, { time: true, seconds: true }) },
           { step: `Aprobación de la propuesta`, role: W.approver, decision: 'Aprobado', tone: 'ok', when: fmt.date(run.decision.at, { time: true, seconds: true }) },
           { step: 'Revisión del informe', role: RP.reviewer, decision: 'Pendiente', tone: 'warn', when: '—' },
           { step: RP.final_step, role: RP.final_role, decision: 'Pendiente de evaluación', tone: 'warn', when: '—' }
@@ -1027,7 +1076,7 @@ td .code{white-space:nowrap}
         { heading: 'Nota', callout: `Ejecución ${run.id}: ${CALLS.auto} pasos automáticos y 1 aprobación, ${CALLS.total} llamadas (${CALLS.llm} al modelo de lenguaje), coste estimado ${fmt.usd(LLM_COST_USD)}. ${RP.note}` }
       ].filter(Boolean),
       signatures: [{ role: W.approver, note: `Aprobado · ${fmt.date(run.decision.at, { time: true })}` }, { role: RP.reviewer, note: 'Revisión pendiente' }],
-      footer: `${RP.code} · revisión 1 · Documento generado por Prodigy el ${fmt.date(when, { time: true })} · demostración con datos sintéticos · preparado por Ciklum`
+      footer: `${RP.code} · revisión 1 · Documento generado por Agentic Platform el ${fmt.date(when, { time: true })} · demostración con datos sintéticos · preparado por MFM`
     });
   }
 
@@ -1051,7 +1100,7 @@ td .code{white-space:nowrap}
       ].concat(DC.meta(H), [
         [fmt.cap(A.report.noun), A.report.code],
         ['Origen', `Workflow «${run.wf.name}» ${run.wf.version}`],
-        ['Redactado por', `Prodigy · agente ${LANE[DC.lane].name}`]
+        ['Redactado por', `Agentic Platform · agente ${LANE[DC.lane].name}`]
       ]),
       sections: [
         { html: PRINT_STYLE(DC.code, 0) },
@@ -1063,14 +1112,14 @@ td .code{white-space:nowrap}
           { label: 'Fecha objetivo', render: (x) => (x.due ? fmt.date(x.due) : '—') }
         ], rows: items } },
         { heading: 'Aprobaciones', table: approvalsTable([
-          { step: 'Redacción del borrador', role: `Prodigy · agente ${LANE[DC.lane].name}`, decision: 'Redactado', tone: '', when: fmt.date(drafted, { time: true, seconds: true }) },
+          { step: 'Redacción del borrador', role: `Agentic Platform · agente ${LANE[DC.lane].name}`, decision: 'Redactado', tone: '', when: fmt.date(drafted, { time: true, seconds: true }) },
           { step: 'Revisión', role: DC.reviewer, decision: 'Pendiente', tone: 'warn', when: '—' },
           { step: 'Aprobación y cierre', role: DC.approver, decision: 'Pendiente', tone: 'warn', when: '—' }
         ]) },
         { heading: 'Nota', callout: DC.note }
       ],
       signatures: [{ role: DC.reviewer, note: 'Revisión' }, { role: DC.approver, note: 'Aprobación' }],
-      footer: `${DC.code} · revisión 0 (borrador) · Documento generado por Prodigy el ${fmt.date(drafted, { time: true })} · demostración con datos sintéticos · preparado por Ciklum`
+      footer: `${DC.code} · revisión 0 (borrador) · Documento generado por Agentic Platform el ${fmt.date(drafted, { time: true })} · demostración con datos sintéticos · preparado por MFM`
     });
   }
 
@@ -1092,10 +1141,10 @@ td .code{white-space:nowrap}
     if (run.status === 'no-trigger') {
       return [`Con los parámetros del workflow (más de ${run.cond.minutes} min por encima de ${fv(run.cond.threshold)}), esta alarma no lo activa: ${run.cond.above} min. No se propone nada.`, 'Es la prueba de que el workflow usa sus parámetros de verdad.'];
     }
-    if (run.status === 'waiting') return [`Prodigy ha reunido la evidencia en ${fmt.ms(run.p1Ms)} y propone: ${TX.scope_short(H)}.`].concat(P.waiting(H));
+    if (run.status === 'waiting') return [`Agentic Platform ha reunido la evidencia en ${fmt.ms(run.p1Ms)} y propone: ${TX.scope_short(H)}.`].concat(P.waiting(H));
     if (run.status === 'rejected') return P.rejected;
     if (run.status === 'applying') return [`Aprobado por ${run.decision.by}. Ahora los agentes escriben: ${A.apply_systems}.`];
-    return P.done(H).concat(['Comparación ilustrativa: el tiempo de esta animación no mide rendimiento real. En el piloto se miden tiempos actuales y resultados con Prodigy.']);
+    return P.done(H).concat(['Comparación ilustrativa: el tiempo de esta animación no mide rendimiento real. En el piloto se miden tiempos actuales y resultados con Agentic Platform.']);
   }
   function presenterNext(state) {
     const run = state.scenes && state.scenes.alarma && state.scenes.alarma.run;

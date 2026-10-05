@@ -1,7 +1,7 @@
 /*
  * Escena «workflow» · De palabras a workflow, común a todas las industrias.
  *
- * El responsable del área escribe su procedimiento en castellano (o en inglés con ENG) y Prodigy lo convierte en un workflow de la
+ * El responsable del área escribe su procedimiento en castellano (o en inglés con ENG) y Agentic Platform lo convierte en un workflow de la
  * plataforma (una Routine del Orchestrator: frases que lo activan + agentes en orden fijo + aprobación).
  *  - La interpretación es determinista: orden de aparición, negaciones «sin …», verbos de bloqueo. Cada
  *    disparador, paso, aprobación y parámetro sale de una frase concreta del texto, que se resalta.
@@ -40,11 +40,11 @@
   const W = D.workflow;
 
   const AGENT = W.agent || 'Generador de workflows';
-  const AGENT_ACTOR = `Prodigy · agente ${AGENT}`;
+  const AGENT_ACTOR = `Agentic Platform · agente ${AGENT}`;
   const SPACE = W.space;
   const AUTHOR = ROLE[W.author] || W.author;
-  const MIN_MATCH = 0.6;      // routines.min_match_confidence de Prodigy
-  const ENFORCE_MIN = 0.8;    // routines.enforce_min_confidence de Prodigy
+  const MIN_MATCH = 0.6;      // routines.min_match_confidence de Agentic Platform
+  const ENFORCE_MIN = 0.8;    // routines.enforce_min_confidence de Agentic Platform
 
   const rx = (s) => (s instanceof RegExp ? s : new RegExp(s));
   const TEMPLATES = W.templates;
@@ -634,7 +634,7 @@
       trigger = { system: t.system, type: t.type, icon: t.icon, badges: (t.badges || []).slice(), label: fill(t.label, domain, p), sub: fill(t.sub || '', domain, p), entry: fill(t.entry, domain, p) };
       trigger.fullLabel = t.full ? fill(t.full, domain, p) : trigger.label;
     } else {
-      trigger = { system: I.trigger.type === 'programado' ? 'Programado' : 'Prodigy', type: I.trigger.type, icon: I.trigger.type === 'programado' ? 'clock' : 'bell', badges: [], label: clip(upperFirst(I.trigger.text), 64), sub: '', entry: I.trigger.type === 'programado' ? 'Programación del servidor' : 'Evento o petición en el chat de Prodigy' };
+      trigger = { system: I.trigger.type === 'programado' ? 'Programado' : 'Agentic Platform', type: I.trigger.type, icon: I.trigger.type === 'programado' ? 'clock' : 'bell', badges: [], label: clip(upperFirst(I.trigger.text), 64), sub: '', entry: I.trigger.type === 'programado' ? 'Programación del servidor' : 'Evento o petición en el chat de Agentic Platform' };
       trigger.fullLabel = trigger.label;
     }
     trigger.text = I.trigger.text;
@@ -746,7 +746,7 @@
     } else {
       checks.push({ id: 'aprobacion', tone: 'ok', text: 'No bloquea, retiene ni envía nada: no necesita aprobación' });
     }
-    checks.push({ id: 'catalogo', tone: 'ok', text: `${steps.length} de ${steps.length} pasos con agente activo en el espacio ${SPACE}`, stream: { system: 'Prodigy', action: 'Comprueba los conectores del espacio', result: approval && post.length ? `Antes de aprobar: ${fmt.list(pre)} · tras aprobar: ${fmt.list(post)}` : `Sistemas: ${fmt.list(pre.concat(post))}`, ms: 90 } });
+    checks.push({ id: 'catalogo', tone: 'ok', text: `${steps.length} de ${steps.length} pasos con agente activo en el espacio ${SPACE}`, stream: { system: 'Agentic Platform', action: 'Comprueba los conectores del espacio', result: approval && post.length ? `Antes de aprobar: ${fmt.list(pre)} · tras aprobar: ${fmt.list(post)}` : `Sistemas: ${fmt.list(pre.concat(post))}`, ms: 90 } });
     checks.push({ id: 'activacion', tone: test.lane === 'enforced' ? 'ok' : 'warn', text: `Frase de prueba: confianza ${fmt.num(test.score, 2)} · ${test.lane === 'enforced' ? 'lo ejecuta en orden fijo' : test.lane === 'hint' ? 'solo como sugerencia' : 'no lo activa'}` });
 
     // Configuración de cada agente (definición exportable)
@@ -952,13 +952,13 @@
   }
 
   function interpCard(st) {
-    let sub = 'Qué entiende Prodigy del texto';
+    let sub = 'Qué entiende Agentic Platform del texto';
     let body = idleBody();
     if (st.phase === 'rejected') { sub = 'Resultado de la interpretación'; body = rejectedBody(st.res); }
     if (st.phase === 'draft' || st.phase === 'published') {
       const n = st.m.steps.length;
       sub = `${fmt.plural(n, 'paso', 'pasos')} · ${st.m.approval ? '1 aprobación' : 'sin aprobación'} · cada uno con su frase del texto`;
-      body = html`${mapList(st.m)}<div class="card-body"><details class="run-log"><summary>${icon('chevron-right', 16)}<span>Registro de interpretación · ${streamSteps(st.m, st.vs).length} pasos · ${fmt.ms(st.res.ms)}</span></summary><div class="mt-2 wf-stream" id="wf-log"></div></details></div>`;
+      body = html`${mapList(st.m)}${reviewBlock(st.res)}<div class="card-body"><details class="run-log"><summary>${icon('chevron-right', 16)}<span>Registro de interpretación · ${streamSteps(st.m, st.vs).length} pasos · ${fmt.ms(st.res.ms)}</span></summary><div class="mt-2 wf-stream" id="wf-log"></div></details></div>`;
     }
     return App.card({ id: 'wf-interp-card', title: 'Interpretación', sub, icon: 'cpu', flush: true, body: html`<div id="wf-interp">${body}</div>` });
   }
@@ -967,7 +967,7 @@
     const q = (s) => JSON.stringify(String(s));
     const L = [];
     // La definición va en <pre> (la interfaz no la traduce): en inglés, comentarios en inglés.
-    L.push(EN ? `# Prodigy Routine · space ${SPACE}` : `# Routine de Prodigy · espacio ${SPACE}`);
+    L.push(EN ? `# Agentic Platform Routine · space ${SPACE}` : `# Routine de Agentic Platform · espacio ${SPACE}`);
     L.push(`# ${vs.published ? `v${vs.n} · ${EN ? 'published' : 'publicada'}` : `v${vs.n} · ${EN ? 'unpublished draft' : 'borrador sin publicar'}`}`);
     L.push(`slug: ${m.slug}`);
     L.push(`name: ${q(m.name)}`);
@@ -1053,7 +1053,7 @@
       tabs: [
         { id: 'diagrama', label: 'Diagrama', icon: 'workflow', body: html`<div class="wf-graph">${graph}</div><div class="wf-subhead">Salidas</div><div class="wf-outputs">${m.outputs.map((o) => html`<div class="wf-output">${icon(o.icon, 16)}<span>${o.text}</span></div>`)}</div>` },
         { id: 'pasos', label: 'Pasos', count: m.steps.length + (m.approval ? 1 : 0), body: stepsTable(m) },
-        { id: 'definicion', label: 'Definición', icon: 'file-text', body: html`<pre class="wf-yaml" id="wf-yaml">${yamlHTML(yaml)}</pre><div class="row mt-3"><button type="button" class="btn btn-secondary btn-sm" data-action="download-def">${icon('download', 15)}<span>Descargar definición (.yaml)</span></button><span class="muted small">Formato de las Routines de Prodigy: frases que lo activan y agentes en orden fijo.</span></div>` }
+        { id: 'definicion', label: 'Definición', icon: 'file-text', body: html`<pre class="wf-yaml" id="wf-yaml">${yamlHTML(yaml)}</pre><div class="row mt-3"><button type="button" class="btn btn-secondary btn-sm" data-action="download-def">${icon('download', 15)}<span>Descargar definición (.yaml)</span></button><span class="muted small">Formato de las Routines de Agentic Platform: frases que lo activan y agentes en orden fijo.</span></div>` }
       ]
     });
     const actions = html`${versionChip(vs)}${vs.published ? '' : html`<button type="button" class="btn btn-primary btn-sm" data-action="publish">${icon('upload', 15)}<span>Publicar workflow</span></button>`}`;
@@ -1146,25 +1146,56 @@
     const t = m.test;
     const lane = t.lane === 'enforced' ? 'orden fijo' : t.lane === 'hint' ? 'sugerencia' : 'no lo activa';
     return [
-      { agent: AGENT, system: 'Prodigy', action: 'Lee el procedimiento escrito', result: EN ? `${fmt.plural(words, 'word', 'words')} · ${fmt.plural(sentences, 'sentence', 'sentences')} · ${LANG.language}` : `${fmt.plural(words, 'palabra', 'palabras')} · ${fmt.plural(sentences, 'frase', 'frases')} · castellano`, ms: 40 },
+      { agent: AGENT, system: 'Agentic Platform', action: 'Lee el procedimiento escrito', result: EN ? `${fmt.plural(words, 'word', 'words')} · ${fmt.plural(sentences, 'sentence', 'sentences')} · ${LANG.language}` : `${fmt.plural(words, 'palabra', 'palabras')} · ${fmt.plural(sentences, 'frase', 'frases')} · castellano`, ms: 40 },
       { agent: AGENT, system: 'Modelo de lenguaje', action: 'Identifica disparador, pasos, aprobación y salidas (1 llamada)', result: `${m.trigger.fullLabel} · ${fmt.plural(m.steps.length, 'paso', 'pasos')} · ${m.approval ? '1 aprobación' : 'sin aprobación'}`, ms: 2350 },
-      { agent: AGENT, system: 'Prodigy', action: `Asigna cada paso a un agente del espacio (${CATALOG_N} activos)`, result: chain, ms: 70 },
+      { agent: AGENT, system: 'Agentic Platform', action: `Asigna cada paso a un agente del espacio (${CATALOG_N} activos)`, result: chain, ms: 70 },
       ...checkLines,
-      { agent: AGENT, system: 'Prodigy', action: 'Redacta las frases que lo activan y prueba la activación', result: `«${clip(t.phrase, 60)}» · confianza ${fmt.num(t.score, 2)} · ${lane}`, ms: 820, tone: t.lane === 'enforced' ? 'ok' : 'warn' },
-      { agent: AGENT, system: 'Prodigy', action: 'Guarda el borrador, sin publicar', result: vs && vs.published ? `${m.slug} · sin cambios respecto a la v${vs.n} publicada` : `${m.slug} · v${vs ? vs.n : 1} · borrador`, ms: 110, tone: 'ok' }
+      { agent: AGENT, system: 'Agentic Platform', action: 'Redacta las frases que lo activan y prueba la activación', result: `«${clip(t.phrase, 60)}» · confianza ${fmt.num(t.score, 2)} · ${lane}`, ms: 820, tone: t.lane === 'enforced' ? 'ok' : 'warn' },
+      { agent: AGENT, system: 'Agentic Platform', action: 'Guarda el borrador, sin publicar', result: vs && vs.published ? `${m.slug} · sin cambios respecto a la v${vs.n} publicada` : `${m.slug} · v${vs ? vs.n : 1} · borrador`, ms: 110, tone: 'ok' }
     ];
   }
   function rejectSteps(I, text) {
     const cat = OUT_OF_SCOPE.find((o) => o.id === I.category) || NOT_BUILT[I.category] || NOT_BUILT['no-reconocido'];
     const words = wordCount(text);
     return [
-      { agent: AGENT, system: 'Prodigy', action: 'Lee el procedimiento escrito', result: EN ? `${fmt.plural(words, 'word', 'words')} · ${LANG.language}` : `${fmt.plural(words, 'palabra', 'palabras')} · castellano`, ms: 40 },
+      { agent: AGENT, system: 'Agentic Platform', action: 'Lee el procedimiento escrito', result: EN ? `${fmt.plural(words, 'word', 'words')} · ${LANG.language}` : `${fmt.plural(words, 'palabra', 'palabras')} · castellano`, ms: 40 },
       { agent: AGENT, system: 'Modelo de lenguaje', action: 'Identifica disparador, pasos, aprobación y salidas (1 llamada)', result: cat.title, ms: 1900, tone: 'warn' },
-      { agent: AGENT, system: 'Prodigy', action: `Busca agentes del espacio para esos pasos (${CATALOG_N} activos)`, result: 'Ninguno corresponde: no se crea ningún workflow', ms: 60, tone: 'warn' }
+      { agent: AGENT, system: 'Agentic Platform', action: `Busca agentes del espacio para esos pasos (${CATALOG_N} activos)`, result: 'Ninguno corresponde: no se crea ningún workflow', ms: 60, tone: 'warn' }
     ];
   }
 
   /* ================================================================ Acciones */
+
+  /* Modo Local/Prodigy: el modelo revisa el workflow generado y lo explica en lenguaje natural. La estructura
+     (disparador, pasos, aprobación, parámetros) sigue saliendo de la interpretación determinista. */
+  let REVIEW_PENDING = null;
+  const useModel = () => !!(App.llm && App.llm.isLocal());
+  const LTW = (es, en) => (EN ? en : es);
+  const plainW = (v) => String(v == null ? '' : v).replace(/<[^>]+>/g, ' ').replace(/[ \t]+/g, ' ').trim();
+  async function askReview(text, m) {
+    const org = (D.meta && (D.meta.doc_org || D.meta.company)) || '';
+    const system = EN
+      ? `You are the ${AGENT} agent of Agentic Platform for ${org}. You receive a procedure written by a person and the workflow the platform generated from it (trigger, steps with their agent, human approval and parameters). In at most 5 short sentences, explain what the workflow will do and when, and point out any step, threshold or approval in the text that the workflow does not reflect. Use ONLY the information given; do not invent systems, figures or roles. Answer in English, without a title.`
+      : `Eres el agente ${AGENT} de Agentic Platform para ${org}. Recibes un procedimiento escrito por una persona y el workflow que la plataforma ha generado a partir de él (disparador, pasos con su agente, aprobación humana y parámetros). En 5 frases cortas como máximo, explica qué hará el workflow y cuándo, y señala cualquier paso, umbral o aprobación del texto que el workflow no recoja. Usa SOLO la información facilitada; no inventes sistemas, cifras ni roles. Responde en español, sin título.`;
+    const wf = {
+      [LTW('nombre', 'name')]: m.name,
+      [LTW('disparador', 'trigger')]: m.trigger ? plainW(m.trigger.label || m.trigger.full || m.trigger.entry || '') : null,
+      [LTW('pasos', 'steps')]: m.steps.map((x, i) => `${i + 1}. ${plainW(x.name || x.agent || x.cap)}${x.what ? `: ${plainW(x.what)}` : ''}`),
+      [LTW('aprobación', 'approval')]: m.approval ? `${m.approval.role} (${m.approval.policy})` : LTW('ninguna', 'none'),
+      [LTW('parámetros', 'parameters')]: m.contractParams
+    };
+    const user = `${LTW('Procedimiento escrito', 'Written procedure')}:\n${text}\n\n${LTW('Workflow generado', 'Generated workflow')}:\n${JSON.stringify(wf, null, 2)}`;
+    const r = await App.llm.chat({ system, user, maxTokens: 500, temperature: 0.2 });
+    return { text: plainW(r.text), model: r.model, ms: r.ms };
+  }
+  function reviewBlock(res) {
+    if (!res) return '';
+    const via = App.llm && App.llm.via ? App.llm.via() : { es: 'modelo', en: 'model' };
+    if (res.review && res.review.error) return html`<div class="card-body"><p class="muted">${icon('alert-triangle', 15)} ${LTW(`El modelo no ha revisado el workflow (${res.review.error}).`, `The model did not review the workflow (${res.review.error}).`)}</p></div>`;
+    if (res.review) return html`<div class="card-body"><div class="strong">${icon('cpu', 15)} ${LTW('Revisión del agente', 'Agent review')} · ${res.review.model} (${LTW(via.es, via.en)})</div><p class="mt-1" style="white-space:pre-line">${res.review.text}</p></div>`;
+    if (REVIEW_PENDING && REVIEW_PENDING === res.createdAt) return html`<div class="card-body"><div class="al-wait"><span class="spinner"></span><span>${LTW('El modelo está revisando el workflow…', 'The model is reviewing the workflow…')}</span></div></div>`;
+    return '';
+  }
 
   function patchMap(ctx, key, tab, value) {
     const cur = Object.assign({}, ctx.local[key] || {});
@@ -1198,13 +1229,28 @@
     if (card && window.innerWidth < 1024) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
     ctx.presenter({ next: `Mientras interpreta: «lee el texto, asigna cada paso a un agente y lo contrasta con ${TEMPLATES[tab].refs}». «Acelerar» si hace falta.` });
     const startedAt = App.nowISO();
+    const review = m && !vs.published && useModel() ? askReview(text, m).catch((e) => ({ error: e.message })) : null;
     const run = App.reasoningStream(ctx.$('#wf-stream'), m ? streamSteps(m, vs) : rejectSteps(I, text), { title: `${AGENT} · interpretación`, signal: ctx.signal, maxHeight: 420, start: startedAt });
     const res = await run.done;
     if (!ctx.alive()) return;
     ctx.vars.busy = false;
     patchMap(ctx, 'editing', tab, undefined);
     if (m) {
-      patchMap(ctx, 'results', tab, { kind: 'draft', text, createdAt: App.nowISO(), startedAt, ms: res.ms, params: {}, test: null });
+      const createdAt = App.nowISO();
+      patchMap(ctx, 'results', tab, { kind: 'draft', text, createdAt, startedAt, ms: res.ms, params: {}, test: null });
+      if (review) {
+        REVIEW_PENDING = createdAt;
+        review.then((got) => {
+          REVIEW_PENDING = null;
+          if (!ctx.alive()) return;
+          const cur = (ctx.local.results || {})[tab];
+          if (!cur || cur.createdAt !== createdAt) return;
+          patchMap(ctx, 'results', tab, Object.assign({}, cur, { review: got }));
+          if (got.error) App.toast(LTW(`El modelo no ha revisado el workflow (${got.error}).`, `The model did not review the workflow (${got.error}).`), { tone: 'warn', icon: 'alert-triangle', duration: 7000 });
+          else App.audit(LTW('Workflow revisado por el modelo', 'Workflow reviewed by the model'), `${m.slug} · ${got.model} · ${fmt.ms(got.ms)}`, AGENT_ACTOR);
+          ctx.rerender();
+        });
+      }
       if (vs.published) {
         App.audit('Workflow sin cambios', `${m.slug} · coincide con la v${vs.n} publicada`, AGENT_ACTOR);
         App.toast(`Sin cambios: coincide con la v${vs.n} publicada`, { tone: 'info' });
@@ -1380,7 +1426,7 @@
         const st = status(state);
         if (st.phase === 'rejected') {
           return PRES.rejected || [
-            'Si el texto pide algo fuera de su alcance, Prodigy no se inventa un workflow: explica por qué y no guarda nada.',
+            'Si el texto pide algo fuera de su alcance, Agentic Platform no se inventa un workflow: explica por qué y no guarda nada.',
             `Solo encadena agentes habilitados en el espacio ${SPACE}; la petición queda igualmente en auditoría.`
           ];
         }
@@ -1396,8 +1442,8 @@
         }
         return PRES.idle || [
           'Así se escribe un procedimiento: en castellano, como en el manual. No hay que dibujar ni programar nada.',
-          'Prodigy lo convierte en un workflow de la plataforma: disparador, agentes en orden, aprobación humana y salidas, cada uno enlazado a su frase.',
-          'Honestidad: el generador desde texto se simula aquí y su integración en Prodigy se valida en el piloto; los workflows (Routines), el editor, la aprobación y la auditoría son de serie.'
+          'Agentic Platform lo convierte en un workflow de la plataforma: disparador, agentes en orden, aprobación humana y salidas, cada uno enlazado a su frase.',
+          'Honestidad: el generador desde texto se simula aquí y su integración en Agentic Platform se valida en el piloto; los workflows (Routines), el editor, la aprobación y la auditoría son de serie.'
         ];
       },
       next: (state) => {

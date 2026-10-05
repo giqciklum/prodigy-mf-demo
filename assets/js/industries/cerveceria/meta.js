@@ -1,5 +1,5 @@
-/* Cervecera Bardenas · datos generales. Empresa ficticia; datos sintéticos de demostración (Ciklum). */
-prodigyPack('cerveceria', {
+/* Cervecera Bardenas · datos generales. Empresa ficticia; datos sintéticos de demostración (MFM). */
+agenticPack('cerveceria', {
   meta: {
     id: 'cerveceria',
     industry: 'Cervecera y bebidas',

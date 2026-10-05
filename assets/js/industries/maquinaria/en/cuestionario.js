@@ -1,5 +1,5 @@
-/* Hidromec Ebro · supplier audit questionnaire from Vehículos Industriales Arga (English). Synthetic data (Ciklum). */
-prodigyPackEn('maquinaria', {
+/* Hidromec Ebro · supplier audit questionnaire from Vehículos Industriales Arga (English). Synthetic data (MFM). */
+agenticPackEn('maquinaria', {
   cuestionario: {
     agent: 'Customer questionnaires',
     lang: 'en',
@@ -74,7 +74,7 @@ prodigyPackEn('maquinaria', {
       before: [
         'Every OEM sends its self-assessment before auditing. In 2025 the plant had 6 customer audits and 14 internal ones: background work that eats up Quality’s hours.',
         'This one comes from Vehículos Industriales Arga: {total} questions on the GH-30 and GH-55 units, and the rule is strict: anything without evidence is scored as non-compliant.',
-        'When you press the button, Prodigy searches the manual, procedures and certificates, plus the records in Windchill, Maximo, Opcenter, SAP and Salesforce, and drafts each answer with its source.'
+        'When you press the button, Agentic Platform searches the manual, procedures and certificates, plus the records in Windchill, Maximo, Opcenter, SAP and Salesforce, and drafts each answer with its source.'
       ],
       during: [
         '{drafted} of {total} have a cited draft, with document and section; every citation is checked against the source text. {flagged} are left unanswered: business continuity, carbon footprint and TISAX. No document, nothing invented.',
@@ -417,7 +417,7 @@ prodigyPackEn('maquinaria', {
         qEn: 'Do you hold a current TISAX assessment? State the assessment level, the label and how you protect the drawings and data provided by Arga.',
         flag: {
           reason: 'None of the {doc_count} indexed documents covers information security or a TISAX assessment.',
-          context: 'Arga will exchange chassis drawings through its supplier portal, which is why it asks. Prodigy does not assume an assessment exists or describe measures that are not documented.',
+          context: 'Arga will exchange chassis drawings through its supplier portal, which is why it asks. Agentic Platform does not assume an assessment exists or describe measures that are not documented.',
           partial: [],
           missing: ['TISAX assessment: level (AL2 or AL3), label and expiry date', 'Information security policy', 'Measures to protect customer drawings in PLM Windchill']
         }

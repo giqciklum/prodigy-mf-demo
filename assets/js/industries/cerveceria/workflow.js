@@ -1,6 +1,6 @@
-/* Cervecera Bardenas · De palabras a workflow. Empresa ficticia; datos sintéticos de demostración (Ciklum).
+/* Cervecera Bardenas · De palabras a workflow. Empresa ficticia; datos sintéticos de demostración (MFM).
  * Esquema documentado en la cabecera de assets/js/scenes/workflow.js. Regex sobre texto plegado (minúsculas, sin tildes). */
-prodigyPack('cerveceria', {
+agenticPack('cerveceria', {
   workflow: {
     space: 'Calidad y Producción · Arguedas',
     author: 'quality',
@@ -30,7 +30,7 @@ prodigyPack('cerveceria', {
         id: 'finanzas',
         re: '\\b(?:compr(?:a|ar|e|en|as)|vend(?:e|er|a|an)|invert(?:ir)?|inviert(?:e|a|an))\\b[^.;]{0,50}\\b(?:acciones (?:de|en)\\b|bolsa|bitcoins?|criptomonedas?|divisas|fondos de inversion|futuros de cebada)|\\btransferencias? bancarias?\\b|\\btransferir dinero\\b',
         title: 'Operación financiera',
-        body: 'El texto pide comprar o vender acciones, futuros o mover dinero. Ningún agente del espacio Calidad y Producción · Arguedas opera en mercados ni hace pagos, y Prodigy no crea pasos que no correspondan a un agente habilitado.'
+        body: 'El texto pide comprar o vender acciones, futuros o mover dinero. Ningún agente del espacio Calidad y Producción · Arguedas opera en mercados ni hace pagos, y Agentic Platform no crea pasos que no correspondan a un agente habilitado.'
       },
       {
         id: 'personas',
@@ -42,7 +42,7 @@ prodigyPack('cerveceria', {
         id: 'control',
         re: '\\b(?:cambi\\w*|modific\\w*|ajust\\w*|baj(?:ar|e|a)|sub(?:ir|e|a))\\b[^.;]{0,30}\\b(?:consignas?|setpoints?|recetas?)\\b|\\b(?:parar|pare|paren|arrancar|arranque|apagar|apague|encender|encienda|abrir la valvula|cerrar la valvula)\\b[^.;]{0,25}\\b(?:llenador\\w*|pasteurizador\\w*|fermentador\\w*|filtro\\w*|compresor\\w*|glicol)\\b',
         title: 'Actuación sobre el control de planta',
-        body: 'El texto pide cambiar consignas o recetas, o actuar sobre válvulas y equipos. Prodigy lee el SCADA de bodega y Brewmaxx, pero no escribe en el control de planta: esos cambios los hace el personal de bodega desde su sistema.'
+        body: 'El texto pide cambiar consignas o recetas, o actuar sobre válvulas y equipos. Agentic Platform lee el SCADA de bodega y Brewmaxx, pero no escribe en el control de planta: esos cambios los hace el personal de bodega desde su sistema.'
       }
     ],
     idle: [
@@ -55,8 +55,8 @@ prodigyPack('cerveceria', {
     presenter: {
       idle: [
         'Así escribe Calidad un procedimiento: en castellano, como en su APPCC. No hay que dibujar ni programar nada.',
-        'Prodigy lo convierte en un workflow de la plataforma: disparador, agentes en orden, aprobación humana y salidas, cada uno enlazado a su frase.',
-        'Honestidad: el generador desde texto se simula aquí y su integración en Prodigy se valida en el piloto; los workflows (Routines), el editor, la aprobación y la auditoría son de serie.'
+        'Agentic Platform lo convierte en un workflow de la plataforma: disparador, agentes en orden, aprobación humana y salidas, cada uno enlazado a su frase.',
+        'Honestidad: el generador desde texto se simula aquí y su integración en Agentic Platform se valida en el piloto; los workflows (Routines), el editor, la aprobación y la auditoría son de serie.'
       ],
       outOfScopeExample: 'Baja la consigna de todos los fermentadores un grado cuando suba la temperatura'
     },

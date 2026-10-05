@@ -1,6 +1,5 @@
 /*
- * Prodigy · consola de demostración por industria — núcleo.
- * Basado en el núcleo de la demo de Congelados de Navarra (giqciklum/prodigy-cn-demo).
+ * Agentic Platform · consola de demostración por industria — núcleo.
  * JavaScript plano (ES2020), sin dependencias. Expone window.App.
  * Todo lo que depende de la empresa sale de window.CN_DATA.meta (paquete de la industria activa).
  */
@@ -9,8 +8,8 @@
 
   const DATA = window.CN_DATA || {};
   const META = DATA.meta || {};
-  const STORE_KEY = `prodigy-ind-${META.id || 'demo'}-v1`;
-  const UI_KEY = 'prodigy-ind-ui-v1';
+  const STORE_KEY = `agentic-ind-${META.id || 'demo'}-v1`;
+  const UI_KEY = 'agentic-ind-ui-v1';
   const STATE_VERSION = 2;
   const VERSION = '2.1';
   const I18N = window.CN_I18N;
@@ -429,10 +428,10 @@
     'MES Mapex': 'factory', 'Mapex': 'factory', 'Siemens Opcenter APS': 'calendar', 'Opcenter APS': 'calendar', 'Opcenter': 'calendar',
     'Mecalux Easy WMS': 'warehouse', 'Easy WMS': 'warehouse', 'SCADA Galileo': 'activity', 'Galileo/SCADA': 'activity', 'Galileo': 'activity',
     'Elara': 'clipboard', 'Microsoft Teams': 'message-square', 'Teams': 'message-square', 'Outlook': 'mail', 'Microsoft 365': 'mail',
-    'Correo': 'mail', 'GMAO': 'wrench', 'Prodigy': 'workflow', 'Modelo de lenguaje': 'cpu', 'Procedimientos': 'book-open'
+    'Correo': 'mail', 'GMAO': 'wrench', 'Agentic Platform': 'workflow', 'Modelo de lenguaje': 'cpu', 'Procedimientos': 'book-open'
   };
   Object.assign(SYSTEM_ICONS, META.system_icons || {});
-  const INTERNAL_SYSTEMS = new Set(['Prodigy', 'Modelo de lenguaje', 'Procedimientos']);
+  const INTERNAL_SYSTEMS = new Set(['Agentic Platform', 'Modelo de lenguaje', 'Procedimientos']);
   /** Insignia de sistema con tooltip «conector de demostración». */
   function sys(name, opts) {
     const o = opts || {};
@@ -1517,12 +1516,12 @@ tr{break-inside:avoid}
 </style><script>if(window.self!==window.top)document.documentElement.classList.add('embedded');</script></head><body>
 <div class="toolbar"><span>${esc(o.title)}</span><button type="button" onclick="window.print()">Imprimir o guardar como PDF</button></div>
 <main class="page">
-<header class="rh"><div class="org">${esc(META.report_org || META.company || '')}</div><div class="brand">Prodigy</div></header>
+<header class="rh"><div class="org">${esc(META.report_org || META.company || '')}</div><div class="brand">Agentic Platform</div></header>
 <h1>${esc(o.title)}</h1>${o.subtitle ? `<p class="subtitle">${esc(o.subtitle)}</p>` : ''}
 <dl class="meta">${meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${toHTML(v)}</dd></div>`).join('')}</dl>
 ${(o.sections || []).map(reportSection).join('')}
 ${signs ? `<div class="sign">${signs}</div>` : ''}
-<div class="pf">${esc(o.footer || `Generado con Prodigy el ${fmt.date(when, { time: true })} · Demostración con datos sintéticos · preparado por Ciklum`)}</div>
+<div class="pf">${esc(o.footer || `Generado con Agentic Platform el ${fmt.date(when, { time: true })} · Demostración con datos sintéticos · preparado por MFM`)}</div>
 </main></body></html>`;
   }
   /**
@@ -1604,7 +1603,7 @@ ${signs ? `<div class="sign">${signs}</div>` : ''}
         title: `${fmt.cap(noun)} no encontrado`,
         kicker: 'Trazabilidad',
         size: 'sm',
-        body: callout({ tone: 'warn', icon: 'search', title: `No encuentro «${k || '—'}» en ${T.systems_short || 'los sistemas'}`, body: `No se muestra ninguna traza: Prodigy no genera datos que no estén en los sistemas. Comprueba el código${T.example ? ` (formato ${T.example})` : ''} o consulta al responsable.` })
+        body: callout({ tone: 'warn', icon: 'search', title: `No encuentro «${k || '—'}» en ${T.systems_short || 'los sistemas'}`, body: `No se muestra ninguna traza: Agentic Platform no genera datos que no estén en los sistemas. Comprueba el código${T.example ? ` (formato ${T.example})` : ''} o consulta al responsable.` })
       });
     }
     audit('Consulta de trazabilidad', k);
@@ -1652,8 +1651,8 @@ ${signs ? `<div class="sign">${signs}</div>` : ''}
     });
   }
   function exportAudit() {
-    const payload = { sistema: `Prodigy · ${META.company} (demostración)`, centro: META.site, exportado: nowISO(), entradas: state.audit };
-    downloadFile(`registro-auditoria-prodigy-${META.id || 'demo'}.json`, 'application/json', JSON.stringify(payload, null, 2), { audit: false });
+    const payload = { sistema: `Agentic Platform · ${META.company} (demostración)`, centro: META.site, exportado: nowISO(), entradas: state.audit };
+    downloadFile(`registro-auditoria-agentic-${META.id || 'demo'}.json`, 'application/json', JSON.stringify(payload, null, 2), { audit: false });
     audit('Registro de auditoría exportado', `${state.audit.length} entradas`);
   }
   function openAuditLog() {
@@ -1671,19 +1670,19 @@ ${signs ? `<div class="sign">${signs}</div>` : ''}
   function openAbout() {
     const C = META.company;
     const sections = META.about || [
-      ['Qué es', `Una simulación interactiva de la consola de Prodigy, la plataforma de agentes de Ciklum, configurada para ${C}. Se abre en el navegador, sin instalación y sin acceso a sistemas reales.`],
-      ['Datos', `${META.data_nouns || 'Datos'} son sintéticos y coherentes entre sí. Los ha preparado Ciklum para esta demostración; ${C} es una empresa ficticia.`],
+      ['Qué es', `Una simulación interactiva de la consola de Agentic Platform, la plataforma de agentes de MFM, configurada para ${C}. Se abre en el navegador, sin instalación y sin acceso a sistemas reales.`],
+      ['Datos', `${META.data_nouns || 'Datos'} son sintéticos y coherentes entre sí. Los ha preparado MFM para esta demostración; ${C} es una empresa ficticia.`],
       ['Acciones', 'Bloqueos, tickets, envíos y publicaciones se simulan y no salen de este navegador. Todo queda en el registro de auditoría de la sesión y se borra con «Reiniciar demo».'],
       ['Conectores', `${fmt.list(META.connectors || [])} aparecen como conectores de demostración. En un piloto se conectan uno o dos sistemas en modo lectura.`],
-      ['De serie y a medida', 'De serie en Prodigy: agentes y workflows (Routines) con editor, aprobación humana, registro de auditoría, respuestas con citas y control de coste por petición. Representado en esta demo: el generador de workflows desde texto y los agentes del sector. Su integración y los conectores se validan en el piloto.'],
-      ['Misma estructura en cada industria', 'Las cuatro consolas (maquinaria industrial, banca, retail y cervecera) comparten las ocho escenas de la demo de Congelados de Navarra: resumen del turno, de palabras a workflow, alarma con aprobación humana, reclamación, simulacro de trazabilidad, cuestionario de cliente, procedimientos con citas y cómo encaja Prodigy.'],
-      ['Modelo de lenguaje', `Esta página no llama a ningún modelo: las respuestas están preparadas. En un piloto, el modelo lo elige ${C} (Azure OpenAI, Gemini o un modelo local) y Prodigy se instala en su infraestructura.`]
+      ['De serie y a medida', 'De serie en Agentic Platform: agentes y workflows (Routines) con editor, aprobación humana, registro de auditoría, respuestas con citas y control de coste por petición. Representado en esta demo: el generador de workflows desde texto y los agentes del sector. Su integración y los conectores se validan en el piloto.'],
+      ['Misma estructura en cada industria', 'Las cinco consolas (maquinaria industrial, banca, retail, cervecera y despacho de abogados) comparten las ocho escenas de la demo de Congelados de Navarra: resumen del turno, de palabras a workflow, alarma con aprobación humana, reclamación, simulacro de trazabilidad, cuestionario de cliente, procedimientos con citas y cómo encaja Agentic Platform.'],
+      ['Modelo de lenguaje', `Esta página no llama a ningún modelo: las respuestas están preparadas. En un piloto, el modelo lo elige ${C} (Azure OpenAI, Gemini o un modelo local) y Agentic Platform se instala en su infraestructura.`]
     ];
     modal({
       title: 'Acerca de esta demo',
-      kicker: `Prodigy · ${C}`,
+      kicker: `Agentic Platform · ${C}`,
       size: 'md',
-      body: html`<div class="stack" style="gap:14px">${sections.map(([h, t]) => html`<div><div class="h3" style="font-size:14px">${h}</div><p class="slate mt-1">${t}</p></div>`)}<p class="muted small">Versión ${VERSION} · ${fmt.date(META.today || '2026-09-29')} · preparado por Ciklum</p></div>`,
+      body: html`<div class="stack" style="gap:14px">${sections.map(([h, t]) => html`<div><div class="h3" style="font-size:14px">${h}</div><p class="slate mt-1">${t}</p></div>`)}<p class="muted small">Versión ${VERSION} · ${fmt.date(META.today || '2026-09-29')} · preparado por MFM</p></div>`,
       actions: [
         { label: 'Cambiar de industria', icon: 'layers', variant: 'ghost', left: true, close: false, onClick: () => { window.location.href = 'index.html'; return false; } },
         { label: 'Registro de auditoría', icon: 'history', variant: 'secondary', onClick: () => { setTimeout(openAuditLog, 0); } },
@@ -1898,7 +1897,7 @@ ${signs ? `<div class="sign">${signs}</div>` : ''}
     if (current) {
       if (sec) sec.textContent = current.section;
       if (tit) tit.textContent = current.title;
-      document.title = `${current.title} · Prodigy · ${META.company}`;
+      document.title = `${current.title} · Agentic Platform · ${META.company}`;
     }
     const cnt = document.getElementById('audit-count');
     if (cnt) cnt.textContent = String(state.audit.length);

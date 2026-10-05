@@ -1,6 +1,6 @@
 /* Hidromec Ebro · complaint REC-2026-0187 (oil leak on PH-250 press s/n PH250-26-0412). English version.
- * Fictitious company, customers and people; synthetic demo data (Ciklum). */
-prodigyPackEn('maquinaria', {
+ * Fictitious company, customers and people; synthetic demo data (MFM). */
+agenticPackEn('maquinaria', {
   reclamacion: {
     code: 'REC-2026-0187',
     nav: 'Complaint REC-2026-0187',
@@ -60,7 +60,7 @@ prodigyPackEn('maquinaria', {
     ].join('\n'),
     mail_extra: {
       label: 'End customer’s email (forwarded)',
-      note: 'Original message from Estampaciones Nervión, forwarded by the distributor below its own email. Prodigy uses it to cross-check dates and symptoms.',
+      note: 'Original message from Estampaciones Nervión, forwarded by the distributor below its own email. Agentic Platform uses it to cross-check dates and symptoms.',
       headers: { From: 'Maintenance · Estampaciones Nervión <mantenimiento@estampaciones-nervion.example>', To: 'sat@psnorte.example', Date: 'Fri, 25 Sep 2026 08:12', Subject: 'New PH-250 press losing oil' },
       text: [
         'Hi Iñaki,',
@@ -143,7 +143,7 @@ prodigyPackEn('maquinaria', {
       fix_title: 'the complaint’s serial number',
       systems: 'Salesforce Service and PLM Windchill',
       systems_short: 'Salesforce and Windchill',
-      fix_text: 'If the distributor has copied the serial number wrongly, type the correct one. Prodigy looks it up in the installed base and checks that it matches the unit and the customer of the complaint before changing anything.',
+      fix_text: 'If the distributor has copied the serial number wrongly, type the correct one. Agentic Platform looks it up in the installed base and checks that it matches the unit and the customer of the complaint before changing anything.',
       same_body: 'It exists in the installed base: PH-250 delivered on 04/08/2026 to Prensas y Servicios del Norte (end customer Estampaciones Nervión). No changes.',
       unknown_hint: 'If the number is doubtful, ask the distributor for a photo of the rating plate (one is already attached).',
       mismatch_body: 'The code exists in the systems, but it is not the serial number of the press in the complaint: the record is not changed.',
@@ -154,7 +154,7 @@ prodigyPackEn('maquinaria', {
     },
     sheet: {
       sub: 'Data extracted from the email and checked in Salesforce, Windchill and SAP',
-      empty_text: 'Prodigy will extract the unit, serial number, defect, hours, reference and deadlines from the email, and check them against the installed base before preparing the 8D and the reply.',
+      empty_text: 'Agentic Platform will extract the unit, serial number, defect, hours, reference and deadlines from the email, and check them against the installed base before preparing the 8D and the reply.',
       rows: [
         { k: 'Reference', v: 'INC-PSN-0931', code: true, sub: 'Distributor’s reference · case REC-2026-0187 in Salesforce Service' },
         { k: 'Customer', v: 'Prensas y Servicios del Norte, S.L. (distributor, Bilbao)', sub: 'End customer: Estampaciones Nervión, S.L. (Basauri) · station 3' },
@@ -293,7 +293,7 @@ prodigyPackEn('maquinaria', {
       control: {
         label: 'Summary for the approver',
         note: 'Internal summary that accompanies the approval; it is not sent to the distributor.',
-        edited_note: 'The summary refers to Prodigy’s draft; the edited version includes Quality’s changes to the text being sent.',
+        edited_note: 'The summary refers to Agentic Platform’s draft; the edited version includes Quality’s changes to the text being sent.',
         subject: 'Internal summary · REC-2026-0187 · NC-2026-0233',
         text: [
           'What is being approved:',
@@ -316,8 +316,8 @@ prodigyPackEn('maquinaria', {
       approver: 'Quality Manager',
       policy: 'PR-CAL-004 · PR-CAL-008',
       summary: {
-        pending: 'Prodigy has prepared the reply to sat@psnorte.example, the kit dispatch and technical visit, and the block on the seals and presses from the batch still at the plant. Nothing is sent or blocked until Quality approves it.',
-        approved: 'Quality has approved the reply and the containment. Prodigy has sent the email to the distributor, blocked seals and presses in SAP QM, created the service order and updated NC-2026-0233.',
+        pending: 'Agentic Platform has prepared the reply to sat@psnorte.example, the kit dispatch and technical visit, and the block on the seals and presses from the batch still at the plant. Nothing is sent or blocked until Quality approves it.',
+        approved: 'Quality has approved the reply and the containment. Agentic Platform has sent the email to the distributor, blocked seals and presses in SAP QM, created the service order and updated NC-2026-0233.',
         rejected: 'Quality has rejected the proposal: the reply has not been sent, the kit has not been dispatched and nothing has been blocked.'
       },
       scope: [
@@ -343,7 +343,7 @@ prodigyPackEn('maquinaria', {
     compare: {
       rows: [
         { k: 'People involved', hoy: '4–5: Quality, after-sales, production, maintenance and purchasing', pro_strong: '1', pro: ': Quality reviews, corrects if needed and approves' },
-        { k: 'Systems to open', hoy: '6: Outlook, Salesforce, Windchill, SAP, Opcenter and Maximo', pro_strong: '1', pro: ': this console; Prodigy queries all 6' }
+        { k: 'Systems to open', hoy: '6: Outlook, Salesforce, Windchill, SAP, Opcenter and Maximo', pro_strong: '1', pro: ': this console; Agentic Platform queries all 6' }
       ],
       steps_today: '15–20 manual searches, cross-checks and drafts',
       time_label: 'Trace, draft 8D and reply',
@@ -408,7 +408,7 @@ prodigyPackEn('maquinaria', {
       },
       history_heading: 'Annex C · Previous complaints (12 months)',
       approvals: [
-        { paso: '8D and reply drafts', rol: 'Prodigy · Customer complaints agent', kind: 'agent' },
+        { paso: '8D and reply drafts', rol: 'Agentic Platform · Customer complaints agent', kind: 'agent' },
         { paso: 'Customer reply and containment (D3)', rol: 'Quality Manager', kind: 'reply' },
         { paso: 'Root cause confirmation (D4)', rol: 'Quality Manager · Purchasing', kind: 'pending' },
         { paso: '8D closure (D8)', rol: 'Quality Manager', kind: 'pending' }
@@ -419,10 +419,10 @@ prodigyPackEn('maquinaria', {
       running: 'While it runs: point out the SAP line (24 seals from the batch scrapped for flash at goods receipt), the Opcenter retest (seepage on 2 presses from the same batch) and the Salesforce line (two seal leaks in a year). If needed, “Speed up”.',
       idle: [
         'Email from Prensas y Servicios del Norte, a distributor in Bilbao: a PH-250 delivered in August is losing oil from the main cylinder and their customer’s press is at a standstill. It arrived yesterday at 17:42 with two deadlines: acknowledgement within 24 hours and an 8D within 10 working days.',
-        'In production, Prodigy analyses it as soon as it reaches the Quality mailbox. Here we launch it by hand to see what it does and which systems it queries.'
+        'In production, Agentic Platform analyses it as soon as it reaches the Quality mailbox. Here we launch it by hand to see what it does and which systems it queries.'
       ],
       pending: [
-        'What is highlighted in the email is what Prodigy has extracted. The serial number is checked against the Salesforce installed base: it exists, it is under warranty and the rating plate matches.',
+        'What is highlighted in the email is what Agentic Platform has extracted. The serial number is checked against the Salesforce installed base: it exists, it is under warranty and the rating plate matches.',
         'The trace: from the serial number to the as-built configuration in Windchill, from there to seal batch JNT-2607-031 and forwards to the 23 units in the field with seals from the same batch, plus 3 presses and 72 seals still at the plant.',
         'The finding that changes the investigation: at goods receipt 2% of the seals were scrapped for flash on the lip, and yesterday’s retest found seepage on 2 of the 3 presses from the same batch still at the plant. It is a hypothesis, not the cause: the seal has yet to be analysed.',
         'History: in November there was another leak with seals from the same supplier. In D7 the 8D proposes blocking a batch automatically when goods-receipt scrap exceeds 1%.',

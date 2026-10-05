@@ -1,5 +1,5 @@
 /* Cervecera Bardenas · alarm with approval: fermentation vessel FV-12 temperature off set point (English).
- * Fictitious company; synthetic demo data (Ciklum). The functions receive the scene context H
+ * Fictitious company; synthetic demo data (MFM). The functions receive the scene context H
  * (W workflow, C evaluated condition, sc current scope, ids generated on approval, fmt, fv, pl…). */
 (function () {
   'use strict';
@@ -32,7 +32,7 @@
   };
   const TEAMS = 'Cellar · Arguedas';
 
-  prodigyPackEn('cerveceria', {
+  agenticPackEn('cerveceria', {
     alarma: {
       nav: 'FV-12 alarm',
       title: 'FV-12 alarm in progress',
@@ -110,7 +110,7 @@
           const a = H.all;
           return [
             { lane: 'mon', system: 'SCADA bodega', verb: 'Querying', action: 'Reads probe TT-FV12-02 from 01:00 to 07:00, one reading every 10 min', result: `${SERIES.length} readings, no gaps · now 16.5 °C (07:00)`, ms: 1800, set: { volume: `${SERIES.length} temperature readings` } },
-            { lane: 'mon', system: 'Prodigy', eval: true, ms: 90 },
+            { lane: 'mon', system: 'Agentic Platform', eval: true, ms: 90 },
             { lane: 'mon', system: 'SCADA bodega', verb: 'Querying', action: 'Cross-checks the excursion against the position of valve VG-12 and glycol loop B', result: 'VG-12 at 0% with 100% demand since 02:20; loop B at −4 °C: hypothesis for Maintenance', tone: 'warn', ms: 1400, set: { volume: `${SERIES.length} readings · valve and loop`, result: `Excursion confirmed: ${H.C.above} min above · peak 17.1 °C` } },
             { lane: 'traz', system: 'Brewmaxx (MES)', verb: 'Querying', action: 'Identifies the batch and the brews that filled FV-12', result: `L2609-FV12 · Bardenas Lager · 4 brews (C-2609-41 to 44) · ${H.pl(480)}`, ms: 2000, set: { volume: '1 batch · 4 brews' } },
             { lane: 'traz', system: 'SAP S/4HANA', verb: 'Querying', action: 'Resolves raw materials, yeast and batch cost', result: `Malt MAL-2609-02/03, hops LUP-2606-11, 5th-generation W-34/70 yeast · ${H.fmt.eur(a.value)} at standard cost`, ms: 2400, set: { volume: `${H.pl(a.count)} · ${a.items.length} items` }, reveal: 'lots' },
@@ -118,7 +118,7 @@
             { lane: 'traz', system: 'Brewmaxx (MES)', verb: 'Querying', action: 'Looks up the planned operations that depend on FV-12', result: `${a.holds.length} operations; the first, ${H.first.id}, ${H.holdWhen(H.first).includes('/') ? 'on' : 'at'} ${H.holdWhen(H.first)}`, tone: 'warn', ms: 1900, set: { volume: `${H.pl(a.count)} · ${a.holds.length} operations`, result: `First operation affected: ${H.first.id}` }, milestone: 'traz', audit: { action: 'Batch and operations identified', detail: `L2609-FV12 (480 hl) and yeast LEV-2609-12 (14 hl) · ${a.holds.length} planned operations · FV-11 and FV-14 to be monitored` } },
             { lane: 'cal', node: 'apr', system: 'Procedimientos', verb: 'Analysing', action: 'Applies PR-FER-003 and APPCC-01 to this excursion', result: 'Hold the batch, analyse diacetyl (VDK), acetaldehyde and esters in the LIMS and do not repitch the yeast; the Head Brewer decides', ms: 1300 },
             { lane: 'cal', node: 'apr', system: 'Modelo de lenguaje', verb: 'Drafting', action: 'Drafts the proposal and its rationale with the evidence', result: `Proposal: hold ${H.pl(a.count)} in ${a.items.length} items, urgent LIMS sample, work order for the valve and reschedule ${a.holds.length} operations`, ms: 6500, set: { volume: `${H.pl(a.count)} · ${a.holds.length} operations` } },
-            { lane: 'cal', node: 'apr', system: 'Prodigy', verb: 'Evaluating', action: `Requests the ${H.W.approver}'s approval before writing to SAP QM, LIMS, Maximo and Brewmaxx`, result: 'Awaiting the Head Brewer\'s decision', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Proposal sent to the Head Brewer' }, milestone: 'prop', audit: { action: 'Hold proposal sent for approval', detail: `L2609-FV12 and LEV-2609-12 · ${H.pl(a.count)} · approver: ${H.W.approver}` } }
+            { lane: 'cal', node: 'apr', system: 'Agentic Platform', verb: 'Evaluating', action: `Requests the ${H.W.approver}'s approval before writing to SAP QM, LIMS, Maximo and Brewmaxx`, result: 'Awaiting the Head Brewer\'s decision', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Proposal sent to the Head Brewer' }, milestone: 'prop', audit: { action: 'Hold proposal sent for approval', detail: `L2609-FV12 and LEV-2609-12 · ${H.pl(a.count)} · approver: ${H.W.approver}` } }
           ];
         },
         p2: (H) => {
@@ -287,7 +287,7 @@
           {
             icon: 'send', title: 'Notice to the cellar', systems: ['Microsoft Teams'], note: H.run.endAt ? `sent at ${H.fmt.time(H.run.endAt)}` : '',
             message: {
-              from: 'Prodigy · Maintenance agent', channel: `«${TEAMS}» channel`, at: H.run.endAt ? H.fmt.time(H.run.endAt) : '',
+              from: 'Agentic Platform · Maintenance agent', channel: `«${TEAMS}» channel`, at: H.run.endAt ? H.fmt.time(H.run.endAt) : '',
               paras: [
                 { to: ROLE.cellar, text: `Hold ${H.ids.ret} on FV-12 approved by the ${H.decision.by}. Keep cooling via the bypass and do not crop the yeast from the cone. Sample ${H.ids.mu} at 07:30.` },
                 { to: 'Maintenance', text: `${H.ids.ot}: glycol valve VG-12 not opening since 02:20 (actuator not responding).` },

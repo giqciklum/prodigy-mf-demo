@@ -1,5 +1,5 @@
 /* Hidromec Ebro · alarm with approval: spindle vibration on machining centre MC-04 (English).
- * Fictitious company; synthetic demonstration data (Ciklum). The functions receive the scene context H
+ * Fictitious company; synthetic demonstration data (MFM). The functions receive the scene context H
  * (W workflow, C evaluated condition, sc current scope, ids generated on approval, fmt, fv, pl…). */
 (function () {
   'use strict';
@@ -37,7 +37,7 @@
   };
   const TEAMS = 'Maintenance · Zaragoza plant';
 
-  prodigyPackEn('maquinaria', {
+  agenticPackEn('maquinaria', {
     alarma: {
       nav: 'MC-04 alarm',
       title: 'MC-04 alarm in progress',
@@ -115,7 +115,7 @@
           const a = H.all;
           return [
             { lane: 'mon', system: 'IIoT Vibración', verb: 'Querying', action: 'Reads sensor VS-MC04-01 from 03:20 to 06:20, one reading every 4 min', result: `${V.length} readings, no gaps · now 0.4 mm/s (06:20), spindle stopped since 05:52`, ms: 1850, set: { volume: `${V.length} vibration readings` } },
-            { lane: 'mon', system: 'Prodigy', eval: true, ms: 90 },
+            { lane: 'mon', system: 'Agentic Platform', eval: true, ms: 90 },
             { lane: 'mon', system: 'IIoT Vibración', verb: 'Querying', action: 'Cross-checks the anomaly against the spectrum and the front bearing temperature', result: 'Outer race defect frequency (BPFO) marked since 03:40 and bearing at 61 °C: hypothesis for Maintenance', tone: 'warn', ms: 1400, set: { volume: `${V.length} readings · spectrum · temperature`, result: `Anomaly confirmed: ${H.C.above} min above · peak 8.4 mm/s` } },
             { lane: 'traz', system: 'MES Opcenter', verb: 'Querying', action: `Lists the parts machined on MC-04 between ${H.C.start} and ${H.C.end}`, result: `${a.count} serialised cylinder heads in ${a.items.length} containers`, ms: 2100, set: { volume: `${a.count} serial numbers` } },
             { lane: 'traz', system: 'SAP S/4HANA', verb: 'Querying', action: 'Resolves batch, order and material for each serial number', result: `Batch CUL-2609-118 · OF 4100872 (operation 30) · ${H.fmt.eur(a.value)} at standard cost`, ms: 2400, set: { volume: `${a.count} cylinder heads · 1 batch · 1 production order` }, reveal: 'lots' },
@@ -123,7 +123,7 @@
             { lane: 'traz', system: 'SAP S/4HANA', verb: 'Querying', action: 'Checks the orders and shipments that consume those cylinder heads', result: `${a.holds.length} orders and shipments; the first, ${H.first.id}, at ${H.first.time} on ${H.first.where.toLowerCase()}`, tone: 'warn', ms: 2200, set: { volume: `${a.count} cylinder heads · ${a.holds.length} orders and shipments`, result: `First affected operation at ${H.first.time}` }, milestone: 'traz', audit: { action: 'Parts and orders identified', detail: `${a.count} cylinder heads from batch CUL-2609-118 in ${a.items.length} containers · ${a.holds.length} downstream orders and shipments · ${a.elseTotal} cylinder heads from the same batch to be assessed` } },
             { lane: 'cal', node: 'apr', system: 'Procedimientos', verb: 'Analysing', action: 'Applies PR-MAN-011 and PR-CAL-004 to this anomaly', result: 'Stop and inspect the spindle; block the parts from the window and measure 100% on the CMM; only Quality releases', ms: 1300 },
             { lane: 'cal', node: 'apr', system: 'Modelo de lenguaje', verb: 'Drafting', action: 'Drafts the proposal and its rationale with the evidence', result: `Proposal: block ${a.count} cylinder heads, hold ${a.holds.length} orders and shipments, spindle shutdown work order and move OF 4100872 to MC-02`, ms: 6800, set: { volume: `${a.count} cylinder heads · ${a.holds.length} orders` } },
-            { lane: 'cal', node: 'apr', system: 'Prodigy', verb: 'Evaluating', action: `Requests approval from the ${H.W.approver} before writing to SAP QM, Maximo and SAP PP`, result: 'Awaiting the Maintenance decision', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Proposal sent to Maintenance' }, milestone: 'prop', audit: { action: 'Block and shutdown proposal sent for approval', detail: `${a.count} cylinder heads in ${a.items.length} containers · shutdown work order · OF 4100872 to MC-02 · approver: ${H.W.approver}` } }
+            { lane: 'cal', node: 'apr', system: 'Agentic Platform', verb: 'Evaluating', action: `Requests approval from the ${H.W.approver} before writing to SAP QM, Maximo and SAP PP`, result: 'Awaiting the Maintenance decision', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Proposal sent to Maintenance' }, milestone: 'prop', audit: { action: 'Block and shutdown proposal sent for approval', detail: `${a.count} cylinder heads in ${a.items.length} containers · shutdown work order · OF 4100872 to MC-02 · approver: ${H.W.approver}` } }
           ];
         },
         p2: (H) => {
@@ -298,7 +298,7 @@
           {
             icon: 'send', title: 'Team alert', systems: ['Microsoft Teams'], note: H.run.endAt ? `sent at ${H.fmt.time(H.run.endAt)}` : '',
             message: {
-              from: 'Prodigy · Maintenance agent', channel: `“${TEAMS}” channel`, at: H.run.endAt ? H.fmt.time(H.run.endAt) : '',
+              from: 'Agentic Platform · Maintenance agent', channel: `“${TEAMS}” channel`, at: H.run.endAt ? H.fmt.time(H.run.endAt) : '',
               paras: [
                 { to: 'On-call technician', text: `${H.ids.ot}, priority 1, on MC-04, approved by ${H.decision.by}. Lock out per PR-SEG-002 and inspect the front spindle bearing (BPFO in the spectrum, 61 °C at 05:32).` },
                 { to: ROLE.production, text: 'OF 4100872 moves to MC-02 from 07:30; the 08:00 assembly goes ahead with cylinder heads from batch CUL-2609-104.' },

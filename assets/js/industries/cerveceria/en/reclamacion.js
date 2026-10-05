@@ -1,6 +1,6 @@
 /* Cervecera Bardenas · complaint REC-2026-0093 (Bardenas Lager kegs with oxidised taste, lot L2608-K14).
- * Fictional company, customers and persons; synthetic demonstration data (Ciklum). */
-prodigyPackEn('cerveceria', {
+ * Fictional company, customers and persons; synthetic demonstration data (MFM). */
+agenticPackEn('cerveceria', {
   reclamacion: {
     code: 'REC-2026-0093',
     nav: 'Complaint REC-2026-0093',
@@ -55,7 +55,7 @@ prodigyPackEn('cerveceria', {
     ].join('\n'),
     mail_extra: {
       label: 'Distributor tasting report',
-      note: 'Tasting report attached by the distributor (PDF converted to text). Prodigy uses it to compare the defect with the tasting of the retained sample.',
+      note: 'Tasting report attached by the distributor (PDF converted to text). Agentic Platform uses it to compare the defect with the tasting of the retained sample.',
       headers: { From: 'Distribuciones Hosteleras Ribera · Quality', Subject: 'Tasting Report · INC-DHR-26-047 · unopened keg from lot L2608-K14', Date: 'Mon, 28 Sep 2026 09:30' },
       text: [
         'TASTING REPORT · Distribuciones Hosteleras Ribera, S.L.',
@@ -140,7 +140,7 @@ prodigyPackEn('cerveceria', {
       label: 'Lot Code',
       systems: 'SAP S/4HANA, Brewmaxx and WMS Mecalux',
       systems_short: 'SAP and Brewmaxx',
-      fix_text: 'If the distributor copied the lot incorrectly, write the correct one. Prodigy searches it in SAP and Brewmaxx and verifies it is Bardenas Lager in keg and that it was shipped to this customer before changing anything.',
+      fix_text: 'If the distributor copied the lot incorrectly, write the correct one. Agentic Platform searches it in SAP and Brewmaxx and verifies it is Bardenas Lager in keg and that it was shipped to this customer before changing anything.',
       same_body: 'Exists in SAP: Bardenas Lager in 30 l keg, packaged 18/08/2026 in LLB-1; 168 kegs shipped to Distribuciones Hosteleras Ribera. No changes.',
       unknown_hint: 'If the code is uncertain, compare it with the keg label photo the distributor attaches.',
       mismatch_body: 'The code exists in the systems, but it is not a keg lot shipped to this customer: the form is not changed.',
@@ -152,7 +152,7 @@ prodigyPackEn('cerveceria', {
     },
     sheet: {
       sub: 'Data extracted from email and verified in SAP, Brewmaxx and LIMS',
-      empty_text: 'Prodigy will extract from the email the product, lot, defect, bars, customer stock and deadline, and verify them in SAP and Brewmaxx before preparing the 8D and response.',
+      empty_text: 'Agentic Platform will extract from the email the product, lot, defect, bars, customer stock and deadline, and verify them in SAP and Brewmaxx before preparing the 8D and response.',
       rows: [
         { k: 'Reference', v: 'INC-DHR-26-047', code: true, sub: 'Distributor reference · complaint REC-2026-0093' },
         { k: 'Customer', v: 'Distribuciones Hosteleras Ribera, S.L. (Tudela)', sub: 'Hospitality distributor · affected bars in Tudela, Cintruénigo and Castejón' },
@@ -281,7 +281,7 @@ prodigyPackEn('cerveceria', {
       control: {
         label: 'Summary for Approver',
         note: 'Internal summary accompanying approval; not sent to distributor.',
-        edited_note: 'Summary corresponds to Prodigy draft; edited version includes Quality changes to sending text.',
+        edited_note: 'Summary corresponds to Agentic Platform draft; edited version includes Quality changes to sending text.',
         subject: 'Internal Summary · REC-2026-0093 · NC-2026-0141',
         text: [
           'What is approved:',
@@ -303,8 +303,8 @@ prodigyPackEn('cerveceria', {
       approver: 'Quality Manager',
       policy: 'PR-CAL-006 · APPCC-01',
       summary: {
-        pending: 'Prodigy has prepared the response for calidad@dhribera.example, replacement and collection of 47 kegs, payment and blocking of lot kegs remaining in factory. Nothing is sent or blocked until Quality approves.',
-        approved: 'Quality has approved the response and containment. Prodigy has sent the email to the distributor, blocked 96 kegs in CB-03, created replacement and payment and updated NC-2026-0141.',
+        pending: 'Agentic Platform has prepared the response for calidad@dhribera.example, replacement and collection of 47 kegs, payment and blocking of lot kegs remaining in factory. Nothing is sent or blocked until Quality approves.',
+        approved: 'Quality has approved the response and containment. Agentic Platform has sent the email to the distributor, blocked 96 kegs in CB-03, created replacement and payment and updated NC-2026-0141.',
         rejected: 'Quality has rejected the proposal: response not sent, no kegs blocked, replacement not scheduled.'
       },
       scope: [
@@ -330,7 +330,7 @@ prodigyPackEn('cerveceria', {
     compare: {
       rows: [
         { k: 'People involved', hoy: '4: Quality, Brewmaster, Logistics and Customer Service', pro_strong: '1', pro: ': Quality reviews, corrects if needed and approves' },
-        { k: 'Systems to open', hoy: '6: Outlook, SAP, Brewmaxx, LIMS, WMS and Maximo', pro_strong: '1', pro: ': this console; Prodigy consults all 6' }
+        { k: 'Systems to open', hoy: '6: Outlook, SAP, Brewmaxx, LIMS, WMS and Maximo', pro_strong: '1', pro: ': this console; Agentic Platform consults all 6' }
       ],
       steps_today: '12–15 searches, cross-checks and manual drafting',
       time_label: 'Traceability, draft 8D and response',
@@ -403,7 +403,7 @@ prodigyPackEn('cerveceria', {
       },
       history_heading: 'Annex C · Previous Complaints (12 months)',
       approvals: [
-        { paso: 'Draft 8D and Response', rol: 'Prodigy · Customer Complaints Agent', kind: 'agent' },
+        { paso: 'Draft 8D and Response', rol: 'Agentic Platform · Customer Complaints Agent', kind: 'agent' },
         { paso: 'Response to Customer and Containment (D3)', rol: 'Quality Manager', kind: 'reply' },
         { paso: 'Root Cause Confirmation (D4)', rol: 'Quality Manager · Brewmaster', kind: 'pending' },
         { paso: '8D Closure (D8)', rol: 'Quality Manager', kind: 'pending' }
@@ -414,10 +414,10 @@ prodigyPackEn('cerveceria', {
       running: 'While running: point out the Brewmaxx line (64 ppb O₂ at filling, head 3 at 91) and LIMS (bottle from same beer is fine). If needed, "Accelerate".',
       idle: [
         'Email from Distribuciones Hosteleras Ribiera, our largest distributor in La Ribiera: three bars have returned kegs of Bardenas Lager for cardboard taste, all from lot L2608-K14. It arrived yesterday at 12:06 and their agreement asks for response in 48 hours.',
-        'In production, Prodigy analyses it as soon as it enters the Quality mailbox. Here we launch it manually to see what it does and what systems it consults.'
+        'In production, Agentic Platform analyses it as soon as it enters the Quality mailbox. Here we launch it manually to see what it does and what systems it consults.'
       ],
       pending: [
-        'The highlighted text in the email is what Prodigy extracted. Each data point is verified in SAP: the lot exists, it is keg Lager and 168 kegs were shipped to them on 20/08.',
+        'The highlighted text in the email is what Agentic Platform extracted. Each data point is verified in SAP: the lot exists, it is keg Lager and 168 kegs were shipped to them on 20/08.',
         'The traceability: from malt and fermentation to filling in LLB-1 and to 14 customers. 912 kegs out, 96 in our chamber not blocked and 32 held.',
         'The data that changes the investigation: the lot was filled with 64 ppb oxygen, above specification, and released with deviation because tasting was good. The bottle from same beer is fine. It\'s a hypothesis, not the cause.',
         'History: the same thing happened in October 2025 from a seal on the same filler. The 8D proposes not to release keg with high O₂ and not to postpone preventive maintenance.',

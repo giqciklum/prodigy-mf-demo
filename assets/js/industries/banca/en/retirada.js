@@ -3,7 +3,7 @@
  * POS terminal 3 at Gasolinera Ronda Norte (merchant 334512987, acquirer Banco Cierzo) between 10 and 22/09/2026 →
  * 3,912 transactions (3,844 settled) with 1,284 cards: 1,107 issued by Banco Cierzo and 177 by other issuers
  * (121 Visa and 56 Mastercard) → block, reissue and notices to customers, card schemes, merchant and supervisors.
- * Framework: PCI DSS, PSD2 and DORA. Synthetic demo data (Ciklum).
+ * Framework: PCI DSS, PSD2 and DORA. Synthetic demo data (MFM).
  */
 (function () {
   'use strict';
@@ -230,7 +230,7 @@
       id: 'aepd', label: 'Agencia Española de Protección de Datos (Spanish Data Protection Agency)', icon: 'lock', notify: false, chip: 'Assess with the DPO',
       channel: 'AEPD e-office (if applicable)',
       meta: ['Personal data breach', 'Deadline: 72 h (GDPR Art. 33)', 'Notice in Spanish'],
-      body: 'The data protection officer assesses whether the exposure of customers\' card data is notifiable; Prodigy prepares the draft with the number of data subjects and the measures.',
+      body: 'The data protection officer assesses whether the exposure of customers\' card data is notifiable; Agentic Platform prepares the draft with the number of data subjects and the measures.',
       refs: 'INC-2026-0412', qtyText: '801 data subjects', action: 'DPO assessment and, if applicable, notification',
       notice: {
         lang: 'Spanish',
@@ -329,7 +329,7 @@
       { agent: 'trace', system: 'Salesforce FSC', action: 'Cardholders, preferred channel and verified contact details', result: '801 customers with 838 active cards · 774 with an active app · 801 with a verified mobile · 37 with debit and credit', ms: 560, reveal: 5, mark: 'Cardholders and recipients identified' },
       { agent: 'trace', system: 'Falcon Fraud', action: 'Subsequent fraud on the common point cards', result: '186 suspicious transactions totalling 41,230 € on 152 cards, all from BIN 454812 (05:50 alarm)', ms: 380, tone: 'warn' },
       { agent: 'bal', system: 'Redsys', action: 'Cleansing of the window transactions', result: '68 excluded (46 voided the same day and 22 incomplete pre-authorisations) · 3,844 settled', ms: 330 },
-      { agent: 'bal', system: 'Prodigy', action: 'Reconciliation of cards by issuer and situation', result: '100.0% reconciled · 0 unassigned cards · 1,284 of 1,284 cards classified', ms: 90, tone: 'ok', mark: 'Card reconciliation closed' },
+      { agent: 'bal', system: 'Agentic Platform', action: 'Reconciliation of cards by issuer and situation', result: '100.0% reconciled · 0 unassigned cards · 1,284 of 1,284 cards classified', ms: 90, tone: 'ok', mark: 'Card reconciliation closed' },
       { agent: 'rec', system: 'GRC Archer', action: 'Opens the incident and the DORA classification assessment', result: 'INC-2026-0412 in draft · classification pending validation by ICT Risk', ms: 410 },
       { agent: 'rec', system: 'Outlook', action: 'Prepares the notices without sending them', result: '8 drafts: cardholders (SMS, app and email), customers already notified, Visa, Mastercard, merchant, Redsys, Banco de España and AEPD', ms: 780, mark: 'Record and notices prepared' }
     ],
@@ -470,7 +470,7 @@
     ]
   };
 
-  prodigyPackEn('banca', {
+  agenticPackEn('banca', {
     retirada: {
       title: 'Common point of compromise drill',
       nav: 'Traceability drill',
@@ -514,17 +514,17 @@
       report: { subtitle: 'Record of the common point of compromise exercise · PCI DSS · PSD2 · DORA', approvedText: 'Notices saved as drafts marked DRILL; none has been sent and no card has been blocked.' },
       compare: {
         rows: [
-          { k: 'People involved', today: '4–5: Fraud, Payments and Cards, Acquiring, Customer Service and ICT Risk', prodigy: '1: {approver} reviews and approves' },
-          { k: 'Systems checked', today: '6–7 opened by hand: Falcon, Redsys, T24, Salesforce, Archer, spreadsheets and email', prodigy: '6 connectors queried by the agents: Falcon Fraud, Redsys, T24, Salesforce FSC, GRC Archer and Outlook' },
-          { k: 'Steps', today: '15–20 queries, PAN cross-checks by BIN and files for the card schemes', prodigy: '{steps} automatic steps and 1 approval' },
-          { k: 'Reconciliation', today: 'Spreadsheet with Redsys and T24 extracts', prodigy: 'Calculated by issuer and situation: {reconciled} reconciled' }
+          { k: 'People involved', today: '4–5: Fraud, Payments and Cards, Acquiring, Customer Service and ICT Risk', agentic: '1: {approver} reviews and approves' },
+          { k: 'Systems checked', today: '6–7 opened by hand: Falcon, Redsys, T24, Salesforce, Archer, spreadsheets and email', agentic: '6 connectors queried by the agents: Falcon Fraud, Redsys, T24, Salesforce FSC, GRC Archer and Outlook' },
+          { k: 'Steps', today: '15–20 queries, PAN cross-checks by BIN and files for the card schemes', agentic: '{steps} automatic steps and 1 approval' },
+          { k: 'Reconciliation', today: 'Spreadsheet with Redsys and T24 extracts', agentic: 'Calculated by issuer and situation: {reconciled} reconciled' }
         ]
       },
       presenter: {
         idle: [
           'Common point of compromise drill: in banking, traceability runs from the merchant to every card and cardholder.',
           'Choose the starting point: case CPP-2609-07 or the merchant code.',
-          'Prodigy goes through Falcon, Redsys, T24 and Salesforce: terminal, window, transactions, issuer by BIN, situation of each card and each cardholder\'s channel, and reconciles the 1,284 cards.'
+          'Agentic Platform goes through Falcon, Redsys, T24 and Salesforce: terminal, window, transactions, issuer by BIN, situation of each card and each cardholder\'s channel, and reconciles the 1,284 cards.'
         ],
         nextIdle: 'Click "Start drill" with case CPP-2609-07 (or choose "Merchant 334512987").',
         nextRun: 'Click "View notice" for the cardholders or Visa, then "Approve and close drill".',

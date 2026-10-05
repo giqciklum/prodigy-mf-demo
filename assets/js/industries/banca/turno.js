@@ -1,5 +1,5 @@
-/* Banco Cierzo · resumen del turno (escena «turno»). Datos sintéticos de demostración (Ciklum). */
-prodigyPack('banca', {
+/* Banco Cierzo · resumen del turno (escena «turno»). Datos sintéticos de demostración (MFM). */
+agenticPack('banca', {
   turno: (function () {
     'use strict';
     const hhmm = (i) => `${String(Math.floor((i * 5) / 60)).padStart(2, '0')}:${String((i * 5) % 60).padStart(2, '0')}`;
@@ -65,7 +65,7 @@ prodigyPack('banca', {
         title: 'Mapa de operaciones · Centro de Operaciones',
         sub: 'Indicadores del parte de las 06:00 y de Falcon Fraud a las 05:50 · pulsa un elemento para ver su ficha',
         icon: 'building',
-        readonly: 'Prodigy lee Falcon Fraud, Core bancario T24, Redsys y ServiceNow; no bloquea tarjetas ni cambia reglas sin aprobación',
+        readonly: 'Agentic Platform lee Falcon Fraud, Core bancario T24, Redsys y ServiceNow; no bloquea tarjetas ni cambia reglas sin aprobación',
         zones: [
           { id: 'can', title: 'Canales', sub: 'Clientes y comercios', items: [
             { code: 'WEB', name: 'Banca online', reading: '99,98 %', status: 'ok', kv: [['Sesiones (24 h)', '412.300']] },
@@ -82,7 +82,7 @@ prodigyPack('banca', {
           ] },
           { id: 'fra', title: 'Prevención del fraude', sub: 'Falcon Fraud', items: [
             { code: 'FAL-454812', name: 'BIN 454812 · Débito', reading: '2,9 %', status: 'crit', tags: ['454812'], go: 'alarma', goLabel: 'Abrir la alarma',
-              note: 'Ataque de prueba de tarjetas seguido de compras en electrónica. Prodigy propone una regla preventiva en Falcon, reemitir 214 tarjetas y avisar a los clientes por SMS y en la app.',
+              note: 'Ataque de prueba de tarjetas seguido de compras en electrónica. Agentic Platform propone una regla preventiva en Falcon, reemitir 214 tarjetas y avisar a los clientes por SMS y en la app.',
               kv: [['Operaciones sospechosas', '186 · 41.230 €'], ['Desde', '02:10'], ['Pico', '3,6 % a las 04:55'], ['Tarjetas afectadas', '214']] },
             { code: 'FAL-GLB', name: 'Resto de BIN', reading: '0,05 %', status: 'ok' },
             { code: 'FAL-Q', name: 'Cola de alertas', reading: '243 alertas', status: null, note: 'Alertas de Falcon pendientes de revisar por el analista de turno; 151 son del BIN 454812.', kv: [['Analistas de noche', '2'], ['Del BIN 454812', '151']] },
@@ -170,7 +170,7 @@ prodigyPack('banca', {
           { agent: AGENT, system: 'ServiceNow', action: 'Lee los indicadores de las 06:00 de 14 servicios (canales, autorización, fraude, SAC y medios de pago)', result: '14 indicadores recibidos, sin huecos', ms: 590 },
           { agent: AGENT, system: 'Falcon Fraud', action: 'Consulta la tasa de fraude por BIN y la cola de alertas de la noche', result: 'BIN 454812 al 2,9 % (186 operaciones, 41.230 €); resto de BIN al 0,05 %', ms: 620, tone: 'crit' },
           { agent: AGENT, system: 'Redsys', action: 'Revisa la autenticación 3DS y las exenciones aplicadas por los adquirentes', result: '6,8 % de autenticaciones caducadas desde las 01:50; 29 % de compras con exención', ms: 480, tone: 'crit' },
-          { agent: AGENT, system: 'Prodigy', action: 'Compara cada indicador con sus umbrales de servicio (12 indicadores)', result: '2 críticos · 4 avisos · 8 sin incidencias', ms: 60, tone: 'crit' },
+          { agent: AGENT, system: 'Agentic Platform', action: 'Compara cada indicador con sus umbrales de servicio (12 indicadores)', result: '2 críticos · 4 avisos · 8 sin incidencias', ms: 60, tone: 'crit' },
           { agent: AGENT, system: 'Core bancario T24', action: 'Agrupa por cliente las 214 tarjetas afectadas y comprueba su estado', result: '214 tarjetas activas de 209 clientes; 31 ya bloqueadas a mano a las 04:10', ms: 440 },
           { agent: AGENT, system: 'Falcon Fraud', action: 'Cruza las tarjetas atacadas con los expedientes de punto común abiertos', result: '61 tarjetas pasaron por el TPV 3 de Gasolinera Ronda Norte (CPP-2609-07)', ms: 410, tone: 'warn' },
           { agent: AGENT, system: 'Salesforce FSC', action: 'Cruza los comercios del ataque con las reclamaciones abiertas del SAC', result: 'SAC-2026-04187: cargos de TIENDAONLINE-ELEC, uno de los comercios de esta noche', ms: 370, tone: 'warn' },
@@ -215,12 +215,12 @@ prodigyPack('banca', {
         say: [
           'Así empieza el turno el Director de Operaciones: lo que pide una decisión, en una sola bandeja.',
           'Los datos llegan de sus sistemas: alertas de Falcon, autorizaciones de Redsys, clientes y tarjetas del core T24, reclamaciones de Salesforce e incidencias de ServiceNow. Aquí son sintéticos, pero coherentes entre sí.',
-          'El mapa resume la operación de un vistazo: gris lo normal, color lo que pide atención. El BIN 454812 está en rojo; al pulsarlo se ven las operaciones, el importe y lo que propone Prodigy.',
+          'El mapa resume la operación de un vistazo: gris lo normal, color lo que pide atención. El BIN 454812 está en rojo; al pulsarlo se ven las operaciones, el importe y lo que propone Agentic Platform.',
           'Tres asuntos: el pico de fraude del BIN 454812 de las 05:50 (186 operaciones, 41.230 €), la reclamación de Lucía Ferrer, que pide decidir hoy la devolución provisional, y el parte con 2 críticos.'
         ],
         sayBefore: ['Generar parte diario: revisa 14 servicios, no duplica incidencias abiertas y crea los tickets. Fijaos en el tiempo.'],
         sayAfter: [
-          'Relación que encuentra Prodigy: el comercio de la reclamación de Lucía Ferrer aparece en el ataque de esta noche, y 61 tarjetas atacadas pasaron por el punto común de la gasolinera. Nadie ha tenido que cruzar Falcon, T24 y Salesforce.',
+          'Relación que encuentra Agentic Platform: el comercio de la reclamación de Lucía Ferrer aparece en el ataque de esta noche, y 61 tarjetas atacadas pasaron por el punto común de la gasolinera. Nadie ha tenido que cruzar Falcon, T24 y Salesforce.',
           'Y no duplica: dos incidencias ya abiertas se actualizan en lugar de abrir tickets nuevos.'
         ],
         next: 'Pulsar «Generar parte diario» y comentar el registro mientras se ejecuta.',

@@ -1,6 +1,6 @@
 /* Hidromec Ebro · reclamación REC-2026-0187 (fuga de aceite en la prensa PH-250 n.º PH250-26-0412).
- * Empresa, clientes y personas ficticios; datos sintéticos de demostración (Ciklum). */
-prodigyPack('maquinaria', {
+ * Empresa, clientes y personas ficticios; datos sintéticos de demostración (MFM). */
+agenticPack('maquinaria', {
   reclamacion: {
     code: 'REC-2026-0187',
     nav: 'Reclamación REC-2026-0187',
@@ -60,7 +60,7 @@ prodigyPack('maquinaria', {
     ].join('\n'),
     mail_extra: {
       label: 'Correo del cliente final (reenviado)',
-      note: 'Mensaje original de Estampaciones Nervión que el distribuidor reenvía debajo de su correo. Prodigy lo usa para contrastar fechas y síntomas.',
+      note: 'Mensaje original de Estampaciones Nervión que el distribuidor reenvía debajo de su correo. Agentic Platform lo usa para contrastar fechas y síntomas.',
       headers: { From: 'Mantenimiento · Estampaciones Nervión <mantenimiento@estampaciones-nervion.example>', To: 'sat@psnorte.example', Date: 'vie, 25 sep 2026 08:12', Subject: 'Prensa nueva PH-250 perdiendo aceite' },
       text: [
         'Hola, Iñaki:',
@@ -143,7 +143,7 @@ prodigyPack('maquinaria', {
       fix_title: 'el número de serie de la reclamación',
       systems: 'Salesforce Service y PLM Windchill',
       systems_short: 'Salesforce y Windchill',
-      fix_text: 'Si el distribuidor ha copiado mal el número de serie, escribe el correcto. Prodigy lo busca en la base instalada y comprueba que corresponde al equipo y al cliente de la reclamación antes de cambiar nada.',
+      fix_text: 'Si el distribuidor ha copiado mal el número de serie, escribe el correcto. Agentic Platform lo busca en la base instalada y comprueba que corresponde al equipo y al cliente de la reclamación antes de cambiar nada.',
       same_body: 'Existe en la base instalada: PH-250 entregada el 04/08/2026 a Prensas y Servicios del Norte (cliente final Estampaciones Nervión). Sin cambios.',
       unknown_hint: 'Si el número es dudoso, pide al distribuidor una foto de la placa de características (ya hay una adjunta).',
       mismatch_body: 'El código existe en los sistemas, pero no es el número de serie de la prensa reclamada: no se cambia la ficha.',
@@ -154,7 +154,7 @@ prodigyPack('maquinaria', {
     },
     sheet: {
       sub: 'Datos extraídos del correo y comprobados en Salesforce, Windchill y SAP',
-      empty_text: 'Prodigy extraerá del correo el equipo, el número de serie, el defecto, las horas, la referencia y los plazos, y los comprobará en la base instalada antes de preparar el 8D y la respuesta.',
+      empty_text: 'Agentic Platform extraerá del correo el equipo, el número de serie, el defecto, las horas, la referencia y los plazos, y los comprobará en la base instalada antes de preparar el 8D y la respuesta.',
       rows: [
         { k: 'Referencia', v: 'INC-PSN-0931', code: true, sub: 'Referencia del distribuidor · caso REC-2026-0187 en Salesforce Service' },
         { k: 'Cliente', v: 'Prensas y Servicios del Norte, S.L. (distribuidor, Bilbao)', sub: 'Cliente final: Estampaciones Nervión, S.L. (Basauri) · puesto 3' },
@@ -293,7 +293,7 @@ prodigyPack('maquinaria', {
       control: {
         label: 'Resumen para quien aprueba',
         note: 'Resumen interno que acompaña a la aprobación; no se envía al distribuidor.',
-        edited_note: 'El resumen corresponde al borrador de Prodigy; la versión editada incluye cambios de Calidad en el texto que se envía.',
+        edited_note: 'El resumen corresponde al borrador de Agentic Platform; la versión editada incluye cambios de Calidad en el texto que se envía.',
         subject: 'Resumen interno · REC-2026-0187 · NC-2026-0233',
         text: [
           'Qué se aprueba:',
@@ -316,8 +316,8 @@ prodigyPack('maquinaria', {
       approver: 'Responsable de Calidad',
       policy: 'PR-CAL-004 · PR-CAL-008',
       summary: {
-        pending: 'Prodigy ha preparado la respuesta para sat@psnorte.example, el envío del kit y la visita técnica, y el bloqueo de las juntas y prensas del lote que siguen en planta. No se envía ni se bloquea nada hasta que Calidad lo apruebe.',
-        approved: 'Calidad ha aprobado la respuesta y la contención. Prodigy ha enviado el correo al distribuidor, ha bloqueado juntas y prensas en SAP QM, ha creado la orden de servicio y ha actualizado NC-2026-0233.',
+        pending: 'Agentic Platform ha preparado la respuesta para sat@psnorte.example, el envío del kit y la visita técnica, y el bloqueo de las juntas y prensas del lote que siguen en planta. No se envía ni se bloquea nada hasta que Calidad lo apruebe.',
+        approved: 'Calidad ha aprobado la respuesta y la contención. Agentic Platform ha enviado el correo al distribuidor, ha bloqueado juntas y prensas en SAP QM, ha creado la orden de servicio y ha actualizado NC-2026-0233.',
         rejected: 'Calidad ha rechazado la propuesta: no se ha enviado la respuesta, ni el kit, ni se ha bloqueado nada.'
       },
       scope: [
@@ -343,7 +343,7 @@ prodigyPack('maquinaria', {
     compare: {
       rows: [
         { k: 'Personas que intervienen', hoy: '4–5: Calidad, posventa, producción, mantenimiento y compras', pro_strong: '1', pro: ': Calidad revisa, corrige si hace falta y aprueba' },
-        { k: 'Sistemas que hay que abrir', hoy: '6: Outlook, Salesforce, Windchill, SAP, Opcenter y Maximo', pro_strong: '1', pro: ': esta consola; Prodigy consulta los 6' }
+        { k: 'Sistemas que hay que abrir', hoy: '6: Outlook, Salesforce, Windchill, SAP, Opcenter y Maximo', pro_strong: '1', pro: ': esta consola; Agentic Platform consulta los 6' }
       ],
       steps_today: '15–20 búsquedas, cruces y redacciones a mano',
       time_label: 'Traza, 8D en borrador y respuesta',
@@ -408,7 +408,7 @@ prodigyPack('maquinaria', {
       },
       history_heading: 'Anexo C · Reclamaciones anteriores (12 meses)',
       approvals: [
-        { paso: 'Borradores 8D y respuesta', rol: 'Prodigy · agente Reclamaciones de cliente', kind: 'agent' },
+        { paso: 'Borradores 8D y respuesta', rol: 'Agentic Platform · agente Reclamaciones de cliente', kind: 'agent' },
         { paso: 'Respuesta al cliente y contención (D3)', rol: 'Responsable de Calidad', kind: 'reply' },
         { paso: 'Confirmación de la causa raíz (D4)', rol: 'Responsable de Calidad · Compras', kind: 'pending' },
         { paso: 'Cierre del 8D (D8)', rol: 'Responsable de Calidad', kind: 'pending' }
@@ -419,10 +419,10 @@ prodigyPack('maquinaria', {
       running: 'Mientras corre: señalar la línea de SAP (24 juntas del lote desechadas por rebaba en recepción), la re-prueba de Opcenter (rezume en 2 prensas del mismo lote) y la de Salesforce (dos fugas por junta en un año). Si hace falta, «Acelerar».',
       idle: [
         'Correo de Prensas y Servicios del Norte, distribuidor de Bilbao: una PH-250 entregada en agosto pierde aceite por el cilindro principal y su cliente tiene la prensa parada. Llegó ayer a las 17:42 con dos plazos: acuse en 24 horas y 8D en 10 días laborables.',
-        'En producción, Prodigy lo analiza en cuanto entra en el buzón de Calidad. Aquí lo lanzamos a mano para ver qué hace y qué sistemas consulta.'
+        'En producción, Agentic Platform lo analiza en cuanto entra en el buzón de Calidad. Aquí lo lanzamos a mano para ver qué hace y qué sistemas consulta.'
       ],
       pending: [
-        'Lo resaltado en el correo es lo que Prodigy ha extraído. El número de serie se comprueba en la base instalada de Salesforce: existe, está en garantía y la placa coincide.',
+        'Lo resaltado en el correo es lo que Agentic Platform ha extraído. El número de serie se comprueba en la base instalada de Salesforce: existe, está en garantía y la placa coincide.',
         'La traza: del número de serie a la configuración as-built de Windchill, de ahí al lote de juntas JNT-2607-031 y hacia delante a los 23 equipos en campo con juntas del mismo lote, más 3 prensas y 72 juntas aún en planta.',
         'El dato que cambia la investigación: en la recepción del lote se desechó un 2 % de juntas por rebaba en el labio, y la re-prueba de ayer encontró rezume en 2 de las 3 prensas del mismo lote que siguen en planta. Es una hipótesis, no la causa: falta analizar la junta.',
         'Histórico: en noviembre hubo otra fuga con juntas del mismo proveedor. El 8D propone en D7 bloquear automáticamente un lote cuando el desecho en recepción pase del 1 %.',

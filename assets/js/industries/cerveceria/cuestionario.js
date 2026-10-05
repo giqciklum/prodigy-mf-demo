@@ -1,5 +1,5 @@
-/* Cervecera Bardenas · cuestionario de homologación de Northgate Beverages Ltd (importador británico). Empresas ficticias; datos sintéticos (Ciklum). */
-prodigyPack('cerveceria', {
+/* Cervecera Bardenas · cuestionario de homologación de Northgate Beverages Ltd (importador británico). Empresas ficticias; datos sintéticos (MFM). */
+agenticPack('cerveceria', {
   cuestionario: {
     agent: 'Cuestionarios de cliente',
     lang: 'en',
@@ -75,7 +75,7 @@ prodigyPack('cerveceria', {
       before: [
         'Antes del primer envío al Reino Unido, Northgate Beverages tiene que homologar la fábrica. Su cuestionario decide si la cerveza entra en los lineales en noviembre.',
         'Son {total} preguntas en inglés sobre certificación, vidrio, gluten, pasteurización, trazabilidad y etiquetado británico. Los procedimientos están en español; da igual.',
-        'Al pulsar, Prodigy busca en el certificado IFS, el plan APPCC, los procedimientos y las especificaciones, y en los registros de Brewmaxx, LIMS, SAP, el WMS y el SCADA de bodega, y redacta cada respuesta con su fuente.'
+        'Al pulsar, Agentic Platform busca en el certificado IFS, el plan APPCC, los procedimientos y las especificaciones, y en los registros de Brewmaxx, LIMS, SAP, el WMS y el SCADA de bodega, y redacta cada respuesta con su fuente.'
       ],
       during: [
         '{drafted} de {total} con borrador y cita, en inglés y con traducción; cada cita se comprueba contra el texto de la fuente. {flagged} quedan sin responder: cultura de seguridad alimentaria, materiales en contacto y datos de envase para el EPR británico. Sin documento, no se inventa nada.',
@@ -226,7 +226,7 @@ prodigyPack('cerveceria', {
         qEs: 'Describa su plan de cultura de seguridad alimentaria: cómo se mide, qué objetivos tiene y el resultado de la última evaluación.',
         flag: {
           reason: 'Ninguno de los {doc_count} documentos indexados describe el plan de cultura de seguridad alimentaria ni su evaluación.',
-          context: 'IFS Food versión 8 exige un plan de cultura de seguridad alimentaria con objetivos y medición, así que debería existir en Calidad. Prodigy no describe su contenido ni supone resultados.',
+          context: 'IFS Food versión 8 exige un plan de cultura de seguridad alimentaria con objetivos y medición, así que debería existir en Calidad. Agentic Platform no describe su contenido ni supone resultados.',
           partial: [],
           missing: ['Plan de cultura de seguridad alimentaria con objetivos', 'Método de medición (encuesta, indicadores)', 'Resultado de la última evaluación y acciones']
         }
@@ -373,7 +373,7 @@ prodigyPack('cerveceria', {
         qEs: 'Aporte las declaraciones de conformidad de todos los envases en contacto con el producto (botellas, latas y barnices, tapones corona, barriles), incluida la situación del bisfenol A en los barnices de lata.',
         flag: {
           reason: 'Las declaraciones de conformidad de los proveedores de envases no están entre los {doc_count} documentos indexados.',
-          context: 'El Reglamento (UE) 2024/3190 prohíbe el bisfenol A en materiales en contacto con alimentos, con periodos transitorios; por eso Northgate pregunta por los barnices interiores de las latas. Prodigy no supone el estado de cada proveedor.',
+          context: 'El Reglamento (UE) 2024/3190 prohíbe el bisfenol A en materiales en contacto con alimentos, con periodos transitorios; por eso Northgate pregunta por los barnices interiores de las latas. Agentic Platform no supone el estado de cada proveedor.',
           partial: [],
           missing: ['Declaraciones de conformidad (Reglamento (CE) 1935/2004 y Reglamento (UE) 10/2011) de latas, barnices, tapones corona y juntas', 'Confirmación de barnices sin bisfenol A', 'Fecha de vigencia de cada declaración']
         }
@@ -384,7 +384,7 @@ prodigyPack('cerveceria', {
         qEs: 'Para la responsabilidad ampliada del productor de envases del Reino Unido (pEPR), indique el peso y el material de cada componente del envase y su contenido reciclado.',
         flag: {
           reason: 'Ninguno de los {doc_count} documentos indexados recoge pesos, materiales ni contenido reciclado de los envases.',
-          context: 'Northgate, como importador, es el productor obligado en el Reino Unido y necesita estos datos para declarar. Los tiene Compras de envases; Prodigy no los estima.',
+          context: 'Northgate, como importador, es el productor obligado en el Reino Unido y necesita estos datos para declarar. Los tiene Compras de envases; Agentic Platform no los estima.',
           partial: [],
           missing: ['Peso y material de botella, lata, tapón, etiqueta y embalaje secundario y terciario', 'Contenido reciclado del vidrio y del aluminio', 'Datos por formato: botella de 33 cl, lata de 33 cl y barril de 30 l']
         }

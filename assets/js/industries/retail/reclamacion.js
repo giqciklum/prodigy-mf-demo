@@ -1,6 +1,6 @@
 /* Mercados Moncayo · reclamación ATC-2026-0412 (fragmento de vidrio en tomate frito Moncayo, lote L26214).
- * Empresa, proveedores y personas ficticios; datos sintéticos de demostración (Ciklum). */
-prodigyPack('retail', {
+ * Empresa, proveedores y personas ficticios; datos sintéticos de demostración (MFM). */
+agenticPack('retail', {
   reclamacion: {
     code: 'ATC-2026-0412',
     nav: 'Reclamación ATC-2026-0412',
@@ -51,7 +51,7 @@ prodigyPack('retail', {
     ].join('\n'),
     mail_extra: {
       label: 'Ticket de compra (CRM Fidelización)',
-      note: 'Compra asociada a la tarjeta Club del consumidor, recuperada del CRM y del TPV de la tienda. Prodigy la usa para comprobar la compra, la tienda y la fecha.',
+      note: 'Compra asociada a la tarjeta Club del consumidor, recuperada del CRM y del TPV de la tienda. Agentic Platform la usa para comprobar la compra, la tienda y la fecha.',
       headers: { From: 'TPV T-011 Zaragoza Delicias · caja 3', Subject: 'Ticket 011-3-260926-0187 · Club Moncayo 2601 0000 4418', Date: 'sáb, 26 sep 2026 18:52' },
       text: [
         'MERCADOS MONCAYO · T-011 ZARAGOZA DELICIAS',
@@ -136,7 +136,7 @@ prodigyPack('retail', {
       label: 'Código de lote',
       systems: 'SAP S/4 Retail y WMS Manhattan',
       systems_short: 'SAP y WMS',
-      fix_text: 'Si el consumidor ha copiado mal el lote, escribe el correcto. Prodigy lo busca en SAP y en el WMS y comprueba que corresponde al producto reclamado y que se sirvió a su tienda antes de cambiar nada.',
+      fix_text: 'Si el consumidor ha copiado mal el lote, escribe el correcto. Agentic Platform lo busca en SAP y en el WMS y comprueba que corresponde al producto reclamado y que se sirvió a su tienda antes de cambiar nada.',
       same_body: 'Existe en SAP: Tomate frito Moncayo 400 g de Conservas del Jalón, servido a T-011 el 07/08/2026. Sin cambios.',
       unknown_hint: 'Si el código es dudoso, compáralo con la foto de la etiqueta que adjunta el consumidor.',
       mismatch_body: 'El código existe en los sistemas, pero no es un lote de Tomate frito Moncayo 400 g servido a T-011: no se cambia la ficha.',
@@ -147,7 +147,7 @@ prodigyPack('retail', {
     },
     sheet: {
       sub: 'Datos extraídos del mensaje y comprobados en el CRM, SAP y el TPV',
-      empty_text: 'Prodigy extraerá del mensaje el producto, el lote, el defecto, la compra y la tienda, y los comprobará en el CRM, en SAP y en el TPV antes de preparar el 8D con el fabricante y la respuesta.',
+      empty_text: 'Agentic Platform extraerá del mensaje el producto, el lote, el defecto, la compra y la tienda, y los comprobará en el CRM, en SAP y en el TPV antes de preparar el 8D con el fabricante y la respuesta.',
       rows: [
         { k: 'Referencia', v: 'ATC-2026-0412', code: true, sub: 'Caso de Atención al consumidor en ServiceNow' },
         { k: 'Consumidor', v: 'Javier Lasheras · Club Moncayo 2601 0000 4418', ok: 'Socio desde 2019 · tel. 676 000 412' },
@@ -287,7 +287,7 @@ prodigyPack('retail', {
       control: {
         label: 'Resumen para quien aprueba',
         note: 'Resumen interno que acompaña a la aprobación; no se envía al consumidor.',
-        edited_note: 'El resumen corresponde al borrador de Prodigy; la versión editada incluye cambios de Calidad en el texto que se envía.',
+        edited_note: 'El resumen corresponde al borrador de Agentic Platform; la versión editada incluye cambios de Calidad en el texto que se envía.',
         subject: 'Resumen interno · ATC-2026-0412 · INC-PRO-2026-0058',
         text: [
           'Qué se aprueba:',
@@ -309,8 +309,8 @@ prodigyPack('retail', {
       approver: 'Responsable de Calidad',
       policy: 'PR-ATC-002 · PR-CAL-010',
       summary: {
-        pending: 'Prodigy ha preparado la respuesta al consumidor, la recogida de la muestra, el reembolso y el bloqueo del lote en la plataforma y en su tienda. No se envía ni se bloquea nada hasta que Calidad lo apruebe.',
-        approved: 'Calidad ha aprobado la respuesta y la contención. Prodigy ha enviado la respuesta, ha bloqueado el lote en la plataforma y en el TPV de T-011, ha programado la recogida y ha enviado la incidencia al fabricante.',
+        pending: 'Agentic Platform ha preparado la respuesta al consumidor, la recogida de la muestra, el reembolso y el bloqueo del lote en la plataforma y en su tienda. No se envía ni se bloquea nada hasta que Calidad lo apruebe.',
+        approved: 'Calidad ha aprobado la respuesta y la contención. Agentic Platform ha enviado la respuesta, ha bloqueado el lote en la plataforma y en el TPV de T-011, ha programado la recogida y ha enviado la incidencia al fabricante.',
         rejected: 'Calidad ha rechazado la propuesta: no se ha enviado la respuesta ni se ha bloqueado ninguna unidad.'
       },
       scope: [
@@ -337,7 +337,7 @@ prodigyPack('retail', {
     compare: {
       rows: [
         { k: 'Personas que intervienen', hoy: '4: Atención al consumidor, Calidad, plataforma y tienda', pro_strong: '1', pro: ': Calidad revisa, corrige si hace falta y aprueba' },
-        { k: 'Sistemas que hay que abrir', hoy: '6: Outlook, CRM, SAP, WMS, TPV y ServiceNow', pro_strong: '1', pro: ': esta consola; Prodigy consulta los 6' }
+        { k: 'Sistemas que hay que abrir', hoy: '6: Outlook, CRM, SAP, WMS, TPV y ServiceNow', pro_strong: '1', pro: ': esta consola; Agentic Platform consulta los 6' }
       ],
       steps_today: '12–15 búsquedas, llamadas a la tienda y redacciones a mano',
       time_label: 'Traza, 8D en borrador y respuesta',
@@ -398,7 +398,7 @@ prodigyPack('retail', {
       },
       history_heading: 'Anexo C · Reclamaciones de marca propia (12 meses)',
       approvals: [
-        { paso: 'Borradores 8D y respuesta', rol: 'Prodigy · agente Reclamaciones de consumidores', kind: 'agent' },
+        { paso: 'Borradores 8D y respuesta', rol: 'Agentic Platform · agente Reclamaciones de consumidores', kind: 'agent' },
         { paso: 'Respuesta al consumidor y contención (D3)', rol: 'Responsable de Calidad', kind: 'reply' },
         { paso: 'Confirmación de la causa raíz (D4)', rol: 'Calidad de proveedores', kind: 'pending' },
         { paso: 'Cierre del 8D (D8)', rol: 'Responsable de Calidad', kind: 'pending' }
@@ -409,10 +409,10 @@ prodigyPack('retail', {
       running: 'Mientras corre: señalar la línea de ServiceNow (el fabricante notificó una rotura de tarro durante el mismo lote) y la del TPV (dónde está cada unidad). Si hace falta, «Acelerar».',
       idle: [
         'Mensaje de un socio del Club por la app, anoche a las 21:37: un fragmento de vidrio en un tarro de tomate frito de nuestra marca. No se ha cortado, pero su hija comió del mismo plato. El procedimiento pide responder en 48 horas.',
-        'En producción, Prodigy lo analiza en cuanto entra en el buzón de Atención al consumidor. Aquí lo lanzamos a mano para ver qué hace y qué sistemas consulta.'
+        'En producción, Agentic Platform lo analiza en cuanto entra en el buzón de Atención al consumidor. Aquí lo lanzamos a mano para ver qué hace y qué sistemas consulta.'
       ],
       pending: [
-        'Lo resaltado es lo que Prodigy ha extraído. Cada dato se comprueba: el socio y el ticket en el CRM, el lote en SAP. Coinciden producto, tienda y fecha.',
+        'Lo resaltado es lo que Agentic Platform ha extraído. Cada dato se comprueba: el socio y el ticket en el CRM, el lote en SAP. Coinciden producto, tienda y fecha.',
         'La traza: del fabricante a la plataforma y a 41 tiendas. 1.920 unidades vendidas, 2.400 en lineal y 480 en la plataforma; 36 en la tienda del consumidor.',
         'El dato que cambia la investigación: el fabricante notificó en agosto la rotura de un tarro en la llenadora durante este mismo lote. Es una hipótesis, no la causa: se confirma con el fragmento.',
         'Histórico: en junio hubo vidrio en melocotón en almíbar con una causa del mismo tipo. El 8D propone en D7 exigir purgas validadas y aviso en 24 h de cada rotura.',

@@ -4,7 +4,7 @@
  * (MON-2607-22, MON-2608-03, MON-2608-11) → 26 units (20 PH-250 and 6 GH-55): 23 in the field at 11 customers in
  * Spain, Portugal and France and 3 PH-250 at the plant. Same units as CN_DATA.trace and complaint REC-2026-0187.
  * The customer notices stay in each customer's language (Spanish, Portuguese or French).
- * Synthetic demonstration data (Ciklum).
+ * Synthetic demonstration data (MFM).
  */
 (function () {
   'use strict';
@@ -302,7 +302,7 @@
       { agent: 'trace', system: 'SAP S/4HANA', action: 'Deliveries, customers and planned shipments', result: `${field.length} units delivered to 11 customers (Spain, Portugal and France) · EXP-26-3318 planned today at 11:00`, ms: 590, tone: 'warn', reveal: 4 },
       { agent: 'trace', system: 'Salesforce Service', action: 'Installed base: final site, contracts and contacts', result: `${field.length} units at ${places} sites · ${contracts} customers with a maintenance contract · ${finalsN} units at end customers of 2 distributors`, ms: 480, reveal: 5, mark: 'Customers and sites identified' },
       { agent: 'bal', system: 'SAP S/4HANA', action: 'Batch stock, rejects and consumption', result: '72 seals in C-14-03 (not blocked) · 24 scrapped · 1,104 consumed in 3 assembly orders', ms: 420 },
-      { agent: 'bal', system: 'Prodigy', action: 'Batch reconciliation: received versus fitted, scrapped and in stock', result: `100.0% reconciled · 0 seals unaccounted for · ${UNITS.length} of ${UNITS.length} units located`, ms: 95, tone: 'ok', mark: 'Batch reconciliation closed' },
+      { agent: 'bal', system: 'Agentic Platform', action: 'Batch reconciliation: received versus fitted, scrapped and in stock', result: `100.0% reconciled · 0 seals unaccounted for · ${UNITS.length} of ${UNITS.length} units located`, ms: 95, tone: 'ok', mark: 'Batch reconciliation closed' },
       { agent: 'rec', system: 'Salesforce Service', action: 'Opens field campaign CC-2026-07 with one service order per unit', result: `Campaign CC-2026-07 in draft · ${field.length} service orders not released`, ms: 360 },
       { agent: 'rec', system: 'Outlook', action: 'Prepares the notices without sending them', result: '12 notices (11 customers in Spanish, Portuguese and French, plus the supplier) pending approval', ms: 720, mark: 'Record and notices prepared' }
     ],
@@ -429,7 +429,7 @@
     ]
   };
 
-  prodigyPackEn('maquinaria', {
+  agenticPackEn('maquinaria', {
     retirada: {
       title: 'Field campaign drill',
       nav: 'Traceability drill',
@@ -473,17 +473,17 @@
       report: { subtitle: 'Record of the traceability and field campaign exercise · ISO 9001 · PR-POS-005' },
       compare: {
         rows: [
-          { k: 'People involved', today: '3–4: Quality, After-sales, Production and Logistics', prodigy: '1: {approver} reviews and approves' },
-          { k: 'Systems queried', today: '5–6 opened by hand: SAP, Opcenter, Windchill, Salesforce, spreadsheets and email', prodigy: '5 connectors queried by the agents: SAP S/4HANA, MES Opcenter, PLM Windchill, Salesforce Service and Outlook' },
-          { k: 'Steps', today: '15–20 queries, cross-checks by serial number and manual calculations', prodigy: '{steps} automatic steps and 1 approval' },
-          { k: 'Batch reconciliation', today: 'Spreadsheet with consumption, stock and rejects', prodigy: 'Calculated by assembly order: {reconciled} reconciled' }
+          { k: 'People involved', today: '3–4: Quality, After-sales, Production and Logistics', agentic: '1: {approver} reviews and approves' },
+          { k: 'Systems queried', today: '5–6 opened by hand: SAP, Opcenter, Windchill, Salesforce, spreadsheets and email', agentic: '5 connectors queried by the agents: SAP S/4HANA, MES Opcenter, PLM Windchill, Salesforce Service and Outlook' },
+          { k: 'Steps', today: '15–20 queries, cross-checks by serial number and manual calculations', agentic: '{steps} automatic steps and 1 approval' },
+          { k: 'Batch reconciliation', today: 'Spreadsheet with consumption, stock and rejects', agentic: 'Calculated by assembly order: {reconciled} reconciled' }
         ]
       },
       presenter: {
         idle: [
           'Field campaign drill with traceability and batch reconciliation; in the pilot, Quality confirms the protocol and we measure the real time.',
           'Choose the starting point: seal batch JNT-2607-031 or the serial number of the press that was leaking oil.',
-          'Prodigy goes through SAP, Opcenter, Windchill and Salesforce backwards to the supplier and forwards to every serial number and customer, and reconciles the batch seal by seal.'
+          'Agentic Platform goes through SAP, Opcenter, Windchill and Salesforce backwards to the supplier and forwards to every serial number and customer, and reconciles the batch seal by seal.'
         ],
         nextIdle: 'Click “Start drill” with batch JNT-2607-031 (or choose “Serial no. PH250-26-0412”).',
         nextRun: 'Click “View notice” for a Portuguese or French customer and then “Approve and close drill”.',

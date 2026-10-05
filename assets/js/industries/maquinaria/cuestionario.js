@@ -1,5 +1,5 @@
-/* Hidromec Ebro · cuestionario de auditoría de proveedor de Vehículos Industriales Arga. Datos sintéticos (Ciklum). */
-prodigyPack('maquinaria', {
+/* Hidromec Ebro · cuestionario de auditoría de proveedor de Vehículos Industriales Arga. Datos sintéticos (MFM). */
+agenticPack('maquinaria', {
   cuestionario: {
     agent: 'Cuestionarios de cliente',
     lang: 'es',
@@ -74,7 +74,7 @@ prodigyPack('maquinaria', {
       before: [
         'Cada OEM trae su autoevaluación antes de auditar. En 2025 la planta recibió 6 auditorías de cliente y 14 internas: es trabajo de fondo que se come horas de Calidad.',
         'Esta llega de Vehículos Industriales Arga: {total} preguntas sobre los grupos GH-30 y GH-55, y la regla es dura: lo que no tenga evidencia puntúa como no conforme.',
-        'Al pulsar, Prodigy busca en el manual, los procedimientos y los certificados, y en los registros de Windchill, Maximo, Opcenter, SAP y Salesforce, y redacta cada respuesta con su fuente.'
+        'Al pulsar, Agentic Platform busca en el manual, los procedimientos y los certificados, y en los registros de Windchill, Maximo, Opcenter, SAP y Salesforce, y redacta cada respuesta con su fuente.'
       ],
       during: [
         '{drafted} de {total} con borrador y cita, con documento y apartado; cada cita se comprueba contra el texto de la fuente. {flagged} quedan sin responder: continuidad de negocio, huella de carbono y TISAX. Sin documento, no se inventa nada.',
@@ -417,7 +417,7 @@ prodigyPack('maquinaria', {
         qEs: '¿Dispone de una evaluación TISAX vigente? Indique el nivel de evaluación, la etiqueta y cómo protege los planos y datos que le facilita Arga.',
         flag: {
           reason: 'Ninguno de los {doc_count} documentos indexados trata la seguridad de la información ni una evaluación TISAX.',
-          context: 'Arga intercambiará planos de chasis a través del portal de proveedores, por eso lo pregunta. Prodigy no supone que exista una evaluación ni describe medidas que no estén documentadas.',
+          context: 'Arga intercambiará planos de chasis a través del portal de proveedores, por eso lo pregunta. Agentic Platform no supone que exista una evaluación ni describe medidas que no estén documentadas.',
           partial: [],
           missing: ['Evaluación TISAX: nivel (AL2 o AL3), etiqueta y fecha de caducidad', 'Política de seguridad de la información', 'Medidas de protección de los planos de cliente en PLM Windchill']
         }

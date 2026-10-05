@@ -27,7 +27,7 @@
   const TODAY = META.today;
   const APPROVER = R.approver || ROLE.quality_shift || META.user_role;
   const AGENTS = Object.assign({ trace: 'Trazabilidad', bal: 'Balance de masas', rec: 'Registro y avisos' }, R.agents || {});
-  const actorOf = (k) => `Prodigy · agente ${AGENTS[k] || k}`;
+  const actorOf = (k) => `Agentic Platform · agente ${AGENTS[k] || k}`;
   const TARGET_S = R.target_s || 4 * 3600;
   const TITLE = R.title || 'Simulacro de retirada';
   const MODES = R.modes;
@@ -334,7 +334,7 @@
     const m = MODES[mode];
     if (miss && miss.mode === mode && norm(miss.code) === norm(code)) {
       return App.callout({ tone: 'warn', icon: 'search', title: `No encuentro ${m.noun} «${norm(miss.code) || '—'}» en ${m.where}`,
-        body: `No se ha iniciado el simulacro: Prodigy no genera datos que no estén en los sistemas. Comprueba el código (formato ${m.format}) o elige uno de la lista.` });
+        body: `No se ha iniciado el simulacro: Agentic Platform no genera datos que no estén en los sistemas. Comprueba el código (formato ${m.format}) o elige uno de la lista.` });
     }
     const sc = findScope(mode, code);
     if (!sc) return html`<div class="ret-preview muted small">${icon('search', 16)}<span>Escribe o elige un código de la lista.</span></div>`;
@@ -483,7 +483,7 @@
       icon: 'clock',
       body: html`<div class="stack">
         ${App.stats([
-          { label: 'Trazado con Prodigy', value: fmt.ms(run.ms), tone: 'ok' },
+          { label: 'Trazado con Agentic Platform', value: fmt.ms(run.ms), tone: 'ok' },
           { label: 'Objetivo del ejercicio', value: fmt.dur(TARGET_S) },
           { label: 'Hoy (estimación)', value: R.todayEstimate || '1–4 h' }
         ])}
@@ -574,22 +574,22 @@
     const CMP = R.compare;
     const review = dec ? secondsBetween(run.doneAt, dec.at) : null;
     const map = { steps: String(sc.steps.length), reconciled: pct1(sc.bal.reconciled), approver: APPROVER };
-    const rows = CMP.rows.map((r) => ({ k: r.k, today: tok(r.today, map), prodigy: tok(r.prodigy, map) })).concat([{
+    const rows = CMP.rows.map((r) => ({ k: r.k, today: tok(r.today, map), agentic: tok(r.agentic, map) })).concat([{
       k: 'Tiempo',
       today: `${R.todayEstimate || '1–4 h'} (estimación)`,
-      prodigy: review != null ? `${fmt.ms(run.ms)} de trazado + ${fmt.dur(review)} hasta la decisión` : `${fmt.ms(run.ms)} de trazado · decisión pendiente`,
+      agentic: review != null ? `${fmt.ms(run.ms)} de trazado + ${fmt.dur(review)} hasta la decisión` : `${fmt.ms(run.ms)} de trazado · decisión pendiente`,
       strong: true
     }]);
     return App.card({
       id: 'ret-compare',
-      title: 'Hoy frente a Prodigy',
+      title: 'Hoy frente a Agentic Platform',
       sub: 'Mismo simulacro · la columna «Hoy» es un supuesto ilustrativo que se valida con una línea base en el piloto',
       icon: 'bar-chart',
       flush: true,
       body: App.table({ rows, cols: [
         { label: 'Concepto', width: '22%', render: (r) => html`<span class="strong">${r.k}</span>` },
         { label: 'Hoy (estimación a validar)', width: '39%', render: (r) => r.today },
-        { label: 'Con Prodigy (simulación)', render: (r) => (r.strong ? html`<strong class="t-ok">${r.prodigy}</strong>` : r.prodigy) }
+        { label: 'Con Agentic Platform (simulación)', render: (r) => (r.strong ? html`<strong class="t-ok">${r.agentic}</strong>` : r.agentic) }
       ] }),
       footer: html`<span class="muted small row row-nowrap" style="align-items:flex-start">${icon('info', 16)}<span>${CMP.footer || `Los valores de «Hoy» son supuestos ilustrativos y los segundos de esta demo corresponden a una simulación; en las semanas 1–2 del piloto se mide la línea base real de ${META.company}.`}</span></span>`
     });
@@ -634,7 +634,7 @@
       : `Pendiente de la aprobación de ${APPROVER}.`;
     const code = run.code;
     const org = META.report_org || META.company;
-    const pageCss = `<style>@page{@top-left{content:"${org}";font:500 8.5px Inter,system-ui,sans-serif;color:var(--muted)}@top-right{content:"${code} · Rev. ${rev} · ${status}";font:600 8.5px Inter,system-ui,sans-serif;color:var(--muted)}@bottom-left{content:"Documento generado por Prodigy · demostración con datos sintéticos";font:8.5px Inter,system-ui,sans-serif;color:var(--muted)}@bottom-right{content:"Página " counter(page) " de " counter(pages);font:8.5px Inter,system-ui,sans-serif;color:var(--muted)}}</style>`;
+    const pageCss = `<style>@page{@top-left{content:"${org}";font:500 8.5px Inter,system-ui,sans-serif;color:var(--muted)}@top-right{content:"${code} · Rev. ${rev} · ${status}";font:600 8.5px Inter,system-ui,sans-serif;color:var(--muted)}@bottom-left{content:"Documento generado por Agentic Platform · demostración con datos sintéticos";font:8.5px Inter,system-ui,sans-serif;color:var(--muted)}@bottom-right{content:"Página " counter(page) " de " counter(pages);font:8.5px Inter,system-ui,sans-serif;color:var(--muted)}}</style>`;
     const P = sc.balance.product;
     const L = sc.units.list;
     App.printableReport({
@@ -648,7 +648,7 @@
         ['Punto de partida', sc.label], ['Inicio', fmt.date(run.startedAt, { time: true, seconds: true })], ['Tiempo de trazado', fmt.ms(run.ms)],
         [sc.located.label, sc.located.value], [(sc.balance.kpiLabel || 'Balance de masas'), `${pct1(b.reconciled)} conciliado`], [(sc.kpiNotify && sc.kpiNotify.label) || 'Clientes a notificar', String(sc.kpiNotify && sc.kpiNotify.value != null ? sc.kpiNotify.value : sc.notify.length)]
       ],
-      footer: `Documento generado por Prodigy el ${fmt.date(App.nowISO(), { time: true })} · demostración con datos sintéticos · ${code} · revisión ${rev} · ${status.toLowerCase()}`,
+      footer: `Documento generado por Agentic Platform el ${fmt.date(App.nowISO(), { time: true })} · demostración con datos sintéticos · ${code} · revisión ${rev} · ${status.toLowerCase()}`,
       sections: [
         { heading: '1. Objeto y alcance', text: `${tok(RP.objeto, { label: sc.label })} ${RP.noAction || 'El ejercicio no bloquea existencias ni envía avisos.'}` },
         { heading: '2. Resultado', list: [
@@ -669,7 +669,7 @@
         { html: App.raw(pageCss) }
       ].filter(Boolean)),
       signatures: [
-        { role: `Elaborado · Prodigy (agente ${AGENTS.trace})`, note: fmt.date(run.doneAt, { time: true }) },
+        { role: `Elaborado · Agentic Platform (agente ${AGENTS.trace})`, note: fmt.date(run.doneAt, { time: true }) },
         { role: `${dec && dec.status === 'rejected' ? 'Rechazado' : 'Aprobado'} · ${APPROVER}`, note: dec ? fmt.date(dec.at, { time: true }) : 'Pendiente de aprobación' }
       ]
     });

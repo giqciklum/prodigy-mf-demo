@@ -26,7 +26,7 @@
 
   function panel(it, actions) {
     if (!it) {
-      return html`<div class="om-panel om-panel-empty">${icon('eye', 18)}<span>Pulsa un elemento del mapa para ver su lectura, su estado y lo que propone Prodigy.</span></div>`;
+      return html`<div class="om-panel om-panel-empty">${icon('eye', 18)}<span>Pulsa un elemento del mapa para ver su lectura, su estado y lo que propone Agentic Platform.</span></div>`;
     }
     return html`<div class="om-panel">
       <div class="om-panel-head">

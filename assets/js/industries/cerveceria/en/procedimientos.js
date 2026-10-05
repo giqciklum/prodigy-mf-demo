@@ -1,5 +1,5 @@
 /* Cerveceria Bardenas · procedure query with citations. Fictional documents, consistent with HISTORIAS.md. */
-prodigyPackEn('cerveceria', {
+agenticPackEn('cerveceria', {
   procedimientos: {
     section: 'Calidad',
     nav: 'Procedures',
@@ -189,7 +189,7 @@ prodigyPackEn('cerveceria', {
 /* Canonical summary by code (CN_DATA.procedures): completed without overwriting what other files set. */
 (function (id) {
   'use strict';
-  const pack = window.PRODIGY_INDUSTRIES[id];
+  const pack = window.AGENTIC_INDUSTRIES[id];
   const procs = pack.procedures = pack.procedures || {};
   pack.procedimientos.docs.forEach((d) => {
     const cur = procs[d.code] = procs[d.code] || {};

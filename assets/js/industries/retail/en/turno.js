@@ -1,5 +1,5 @@
-/* Mercados Moncayo · shift summary («turno» scene), English. Synthetic demo data (Ciklum). */
-prodigyPackEn('retail', {
+/* Mercados Moncayo · shift summary («turno» scene), English. Synthetic demo data (MFM). */
+agenticPackEn('retail', {
   turno: (function () {
     'use strict';
     const hhmm = (i) => `${String(Math.floor((i * 5) / 60)).padStart(2, '0')}:${String((i * 5) % 60).padStart(2, '0')}`;
@@ -64,7 +64,7 @@ prodigyPackEn('retail', {
         title: 'Operations map · distribution centre and 64 stores',
         sub: 'Readings from the 06:00 report and the cold-chain sensors at 05:50 · click an item to see its details',
         icon: 'warehouse',
-        readonly: 'Prodigy reads the cold-chain sensors, WMS Manhattan, SAP S/4 Retail and store POS; it does not change set points or block sales without approval',
+        readonly: 'Agentic Platform reads the cold-chain sensors, WMS Manhattan, SAP S/4 Retail and store POS; it does not change set points or block sales without approval',
         zones: [
           { id: 'rec', title: 'Goods-in', sub: 'Plaza distribution centre', items: [
             { code: 'REC-VID', name: 'Glass control', reading: '0.42 % breakages', status: 'crit', tags: ['L26214'], go: 'reclamacion', goLabel: 'Open the complaint',
@@ -83,7 +83,7 @@ prodigyPackEn('retail', {
           ] },
           { id: 'hu', title: 'Huesca stores', sub: '9 stores', items: [
             { code: 'T027-MR3', name: 'T-027 · multideck MR-3', reading: '9.4 °C', status: 'crit', go: 'alarma', goLabel: 'Open the alarm',
-              note: 'Evaporator fan stopped since 03:10. Prodigy proposes removing the product to the cold room, an urgent work order and blocking at the POS anything exposed for more than 2 h.',
+              note: 'Evaporator fan stopped since 03:10. Agentic Platform proposes removing the product to the cold room, an urgent work order and blocking at the POS anything exposed for more than 2 h.',
               kv: [['Units inside', '318'], ['Above 5 °C', 'since 03:55'], ['Peak', '9.8 °C at 05:30'], ['Store opening', '09:00']] },
             { code: 'T027-CL', name: 'T-027 · cold room', reading: '2.9 °C', status: 'ok', note: 'Space for about 400 packs: proposed destination for the transfer.', kv: [['Free capacity', '≈ 1.2 m³']] },
             { code: 'T031', name: 'T-031 Monzón', reading: '3.0 °C', status: 'ok' }
@@ -166,7 +166,7 @@ prodigyPackEn('retail', {
           { agent: AGENT, system: 'Sensores de frío', action: 'Reads the 1,284 multideck and cold room probes across the 64 stores and the distribution centre', result: '1,279 readings received; 5 probes with no data (T-019 and T-044)', ms: 680 },
           { agent: AGENT, system: 'WMS Manhattan', action: 'Checks goods-in, picking and the DC dispatch docks', result: '46 pallets awaiting loading; 3 pallets with broken jars in 7 days', ms: 520, tone: 'warn' },
           { agent: AGENT, system: 'TPV tiendas', action: 'Reviews POS status and yesterday’s sales', result: '3 stores with POS offline; sales −1.2 % against forecast', ms: 410 },
-          { agent: AGENT, system: 'Prodigy', action: 'Compares each reading with its HACCP and service thresholds (12 indicators)', result: '2 critical · 4 warnings · 8 with no issues', ms: 60, tone: 'crit' },
+          { agent: AGENT, system: 'Agentic Platform', action: 'Compares each reading with its HACCP and service thresholds (12 indicators)', result: '2 critical · 4 warnings · 8 with no issues', ms: 60, tone: 'crit' },
           { agent: AGENT, system: 'SAP S/4 Retail', action: 'Lists the range in multideck MR-3 at T-027 with its lots', result: '318 units across 12 lines (yoghurts, desserts, fresh milk, cream and butter)', ms: 450, tone: 'crit' },
           { agent: AGENT, system: 'SAP S/4 Retail', action: 'Cross-checks glass breakages against suppliers and lots', result: 'Conservas del Jalón: 3 pallets this week; lot L26214 already had 14 broken jars at goods-in on 05/08', ms: 430, tone: 'warn' },
           { agent: AGENT, system: 'CRM Fidelización', action: 'Cross-checks the alerts against open consumer complaints', result: 'ATC-2026-0412: glass in Tomate frito Moncayo 400 g, lot L26214', ms: 360, tone: 'warn' },
@@ -210,12 +210,12 @@ prodigyPackEn('retail', {
         say: [
           'This is how the Director of Operations at Mercados Moncayo starts the shift: everything that needs a decision, in a single inbox.',
           'The data comes from their systems: temperatures from the cold-chain sensors, pallets from WMS Manhattan, lots and range from SAP, sales from the POS and complaints from the CRM. Here they are synthetic, but consistent with each other.',
-          'The map sums up the distribution centre and the stores at a glance: grey is normal, colour is what needs attention. Multideck MR-3 in Huesca is red; click it to see what is inside and what Prodigy proposes.',
+          'The map sums up the distribution centre and the stores at a glance: grey is normal, colour is what needs attention. Multideck MR-3 in Huesca is red; click it to see what is inside and what Agentic Platform proposes.',
           'Three issues: the T-027 dairy multideck alarm at 05:50 (318 units, the store opens at 09:00), the complaint about glass in Moncayo tomato sauce and the report with 2 critical items.'
         ],
         sayBefore: ['Generate daily report: it reviews 14 items, does not duplicate open incidents and creates the tickets. Watch the time.'],
         sayAfter: [
-          'The link Prodigy finds: the manufacturer of the tomato sauce in the complaint keeps having glass breakages at goods-in, and the same lot already arrived with broken jars. Nobody had to cross-check the WMS, SAP and the CRM.',
+          'The link Agentic Platform finds: the manufacturer of the tomato sauce in the complaint keeps having glass breakages at goods-in, and the same lot already arrived with broken jars. Nobody had to cross-check the WMS, SAP and the CRM.',
           'And no duplicates: two incidents that were already open are updated instead of opening new tickets.'
         ],
         next: 'Click “Generate daily report” and talk through the log while it runs.',

@@ -1,6 +1,6 @@
 /* Mercados Moncayo · complaint ATC-2026-0412 (glass fragment in Tomate frito Moncayo, batch L26214). English version.
- * Fictitious company, suppliers and people; synthetic demo data (Ciklum). */
-prodigyPackEn('retail', {
+ * Fictitious company, suppliers and people; synthetic demo data (MFM). */
+agenticPackEn('retail', {
   reclamacion: {
     code: 'ATC-2026-0412',
     nav: 'Complaint ATC-2026-0412',
@@ -51,7 +51,7 @@ prodigyPackEn('retail', {
     ].join('\n'),
     mail_extra: {
       label: 'Till receipt (Loyalty CRM)',
-      note: 'Purchase linked to the consumer’s Club card, retrieved from the CRM and the store POS. Prodigy uses it to check the purchase, the store and the date.',
+      note: 'Purchase linked to the consumer’s Club card, retrieved from the CRM and the store POS. Agentic Platform uses it to check the purchase, the store and the date.',
       headers: { From: 'POS T-011 Zaragoza Delicias · till 3', Subject: 'Receipt 011-3-260926-0187 · Club Moncayo 2601 0000 4418', Date: 'Sat, 26 Sep 2026 18:52' },
       text: [
         'MERCADOS MONCAYO · T-011 ZARAGOZA DELICIAS',
@@ -136,7 +136,7 @@ prodigyPackEn('retail', {
       label: 'Batch code',
       systems: 'SAP S/4 Retail and WMS Manhattan',
       systems_short: 'SAP and WMS',
-      fix_text: 'If the consumer has copied the batch wrongly, type the correct one. Prodigy looks it up in SAP and the WMS and checks that it matches the product in the complaint and was supplied to his store before changing anything.',
+      fix_text: 'If the consumer has copied the batch wrongly, type the correct one. Agentic Platform looks it up in SAP and the WMS and checks that it matches the product in the complaint and was supplied to his store before changing anything.',
       same_body: 'It exists in SAP: Tomate frito Moncayo 400 g from Conservas del Jalón, supplied to T-011 on 07/08/2026. No changes.',
       unknown_hint: 'If the code is doubtful, compare it with the photo of the label attached by the consumer.',
       mismatch_body: 'The code exists in the systems, but it is not a batch of Tomate frito Moncayo 400 g supplied to T-011: the record is not changed.',
@@ -147,7 +147,7 @@ prodigyPackEn('retail', {
     },
     sheet: {
       sub: 'Data extracted from the message and checked in the CRM, SAP and the POS',
-      empty_text: 'Prodigy will extract the product, batch, defect, purchase and store from the message, and check them in the CRM, SAP and the POS before preparing the 8D with the manufacturer and the reply.',
+      empty_text: 'Agentic Platform will extract the product, batch, defect, purchase and store from the message, and check them in the CRM, SAP and the POS before preparing the 8D with the manufacturer and the reply.',
       rows: [
         { k: 'Reference', v: 'ATC-2026-0412', code: true, sub: 'Consumer Care case in ServiceNow' },
         { k: 'Consumer', v: 'Javier Lasheras · Club Moncayo 2601 0000 4418', ok: 'Member since 2019 · tel. 676 000 412' },
@@ -287,7 +287,7 @@ prodigyPackEn('retail', {
       control: {
         label: 'Summary for the approver',
         note: 'Internal summary that accompanies the approval; it is not sent to the consumer.',
-        edited_note: 'The summary refers to Prodigy’s draft; the edited version includes Quality’s changes to the text being sent.',
+        edited_note: 'The summary refers to Agentic Platform’s draft; the edited version includes Quality’s changes to the text being sent.',
         subject: 'Internal summary · ATC-2026-0412 · INC-PRO-2026-0058',
         text: [
           'What is being approved:',
@@ -309,8 +309,8 @@ prodigyPackEn('retail', {
       approver: 'Quality Manager',
       policy: 'PR-ATC-002 · PR-CAL-010',
       summary: {
-        pending: 'Prodigy has prepared the reply to the consumer, the sample collection, the refund and the block on the batch at the DC and in his store. Nothing is sent or blocked until Quality approves it.',
-        approved: 'Quality has approved the reply and the containment. Prodigy has sent the reply, blocked the batch at the DC and on the T-011 POS, scheduled the collection and sent the incident to the manufacturer.',
+        pending: 'Agentic Platform has prepared the reply to the consumer, the sample collection, the refund and the block on the batch at the DC and in his store. Nothing is sent or blocked until Quality approves it.',
+        approved: 'Quality has approved the reply and the containment. Agentic Platform has sent the reply, blocked the batch at the DC and on the T-011 POS, scheduled the collection and sent the incident to the manufacturer.',
         rejected: 'Quality has rejected the proposal: the reply has not been sent and no unit has been blocked.'
       },
       scope: [
@@ -337,7 +337,7 @@ prodigyPackEn('retail', {
     compare: {
       rows: [
         { k: 'People involved', hoy: '4: Consumer Care, Quality, DC and store', pro_strong: '1', pro: ': Quality reviews, corrects if needed and approves' },
-        { k: 'Systems to open', hoy: '6: Outlook, CRM, SAP, WMS, POS and ServiceNow', pro_strong: '1', pro: ': this console; Prodigy queries all 6' }
+        { k: 'Systems to open', hoy: '6: Outlook, CRM, SAP, WMS, POS and ServiceNow', pro_strong: '1', pro: ': this console; Agentic Platform queries all 6' }
       ],
       steps_today: '12–15 manual searches, calls to the store and drafts',
       time_label: 'Trace, draft 8D and reply',
@@ -398,7 +398,7 @@ prodigyPackEn('retail', {
       },
       history_heading: 'Annex C · Own-brand complaints (12 months)',
       approvals: [
-        { paso: '8D and reply drafts', rol: 'Prodigy · Consumer complaints agent', kind: 'agent' },
+        { paso: '8D and reply drafts', rol: 'Agentic Platform · Consumer complaints agent', kind: 'agent' },
         { paso: 'Consumer reply and containment (D3)', rol: 'Quality Manager', kind: 'reply' },
         { paso: 'Root cause confirmation (D4)', rol: 'Supplier quality', kind: 'pending' },
         { paso: '8D closure (D8)', rol: 'Quality Manager', kind: 'pending' }
@@ -409,10 +409,10 @@ prodigyPackEn('retail', {
       running: 'While it runs: point out the ServiceNow line (the manufacturer reported a jar breaking during this very batch) and the POS line (where every unit is). If needed, “Speed up”.',
       idle: [
         'Message from a Club member via the app, last night at 21:37: a glass fragment in a jar of our own-brand tomato sauce. He did not cut himself, but his daughter ate from the same plate. The procedure requires a reply within 48 hours.',
-        'In production, Prodigy analyses it as soon as it reaches the Consumer Care mailbox. Here we launch it by hand to see what it does and which systems it queries.'
+        'In production, Agentic Platform analyses it as soon as it reaches the Consumer Care mailbox. Here we launch it by hand to see what it does and which systems it queries.'
       ],
       pending: [
-        'What is highlighted is what Prodigy has extracted. Each item is checked: the member and the receipt in the CRM, the batch in SAP. Product, store and date all match.',
+        'What is highlighted is what Agentic Platform has extracted. Each item is checked: the member and the receipt in the CRM, the batch in SAP. Product, store and date all match.',
         'The trace: from the manufacturer to the DC and on to 41 stores. 1,920 units sold, 2,400 on shelf and 480 at the DC; 36 in the consumer’s store.',
         'The finding that changes the investigation: in August the manufacturer reported a jar breaking on the filler during this very batch. It is a hypothesis, not the cause: the fragment will confirm it.',
         'History: in June there was glass in peaches in syrup with the same type of cause. In D7 the 8D proposes requiring validated purges and notice of every breakage within 24 h.',

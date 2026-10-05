@@ -1,5 +1,5 @@
-/* Banco Cierzo · Wolfsberg CBDDQ v1.4 solicitado por Nordbank AG (banco corresponsal). Entidades ficticias; datos sintéticos (Ciklum). */
-prodigyPack('banca', {
+/* Banco Cierzo · Wolfsberg CBDDQ v1.4 solicitado por Nordbank AG (banco corresponsal). Entidades ficticias; datos sintéticos (MFM). */
+agenticPack('banca', {
   cuestionario: {
     agent: 'Cuestionarios de cliente',
     lang: 'en',
@@ -75,7 +75,7 @@ prodigyPack('banca', {
       before: [
         'Cada corresponsal pide el CBDDQ de Wolfsberg en su revisión periódica. Si no se entrega a tiempo, la relación se escala y puede acabar cerrándose: es trabajo de Cumplimiento que no se puede retrasar.',
         'Este llega de Nordbank AG: {total} preguntas en inglés sobre propiedad, programa de PBC/FT, diligencia debida, sanciones y auditoría. El manual está en español; da igual.',
-        'Al pulsar, Prodigy busca en el manual de PBC/FT, las políticas, la autoevaluación del riesgo y las cuentas anuales, y en los registros de T24, Archer, Falcon y Redsys, y redacta cada respuesta con su fuente.'
+        'Al pulsar, Agentic Platform busca en el manual de PBC/FT, las políticas, la autoevaluación del riesgo y las cuentas anuales, y en los registros de T24, Archer, Falcon y Redsys, y redacta cada respuesta con su fuente.'
       ],
       during: [
         '{drafted} de {total} con borrador y cita, en inglés y con traducción; cada cita se comprueba contra el texto de la fuente. {flagged} quedan sin responder: activos virtuales, anticorrupción e historial de sanciones regulatorias. Sin documento, no se inventa nada.',
@@ -216,7 +216,7 @@ prodigyPack('banca', {
         qEs: '¿Presta la entidad servicios a proveedores de servicios de activos virtuales (VASP) o mantiene u opera con activos virtuales? En su caso, describa los controles.',
         flag: {
           reason: 'Ninguno de los {doc_count} documentos indexados trata los activos virtuales ni la relación con proveedores de servicios de criptoactivos.',
-          context: 'Desde el Reglamento (UE) 2023/1114 (MiCA) y el Reglamento (UE) 2023/1113, los corresponsales preguntan siempre por los VASP. Prodigy no responde «No» por ausencia de documentos: lo tiene que confirmar Cumplimiento con Negocio.',
+          context: 'Desde el Reglamento (UE) 2023/1114 (MiCA) y el Reglamento (UE) 2023/1113, los corresponsales preguntan siempre por los VASP. Agentic Platform no responde «No» por ausencia de documentos: lo tiene que confirmar Cumplimiento con Negocio.',
           partial: [],
           missing: ['Política sobre clientes proveedores de servicios de criptoactivos (CASP/VASP)', 'Confirmación de si la entidad mantiene u opera con activos virtuales', 'Controles reforzados aplicados, si existen']
         }
@@ -252,7 +252,7 @@ prodigyPack('banca', {
         qEs: '¿Tiene la entidad una política y un programa anticorrupción y antisoborno documentados, con evaluación de riesgos y formación? ¿Cuándo se revisaron por última vez?',
         flag: {
           reason: 'La política anticorrupción y el modelo de prevención de delitos no están entre los {doc_count} documentos indexados.',
-          context: 'El artículo 31 bis del Código Penal hace que las entidades españolas suelan tener un modelo de prevención de delitos que cubre el cohecho y la corrupción entre particulares. Debería existir en Cumplimiento penal; Prodigy no describe su contenido ni supone una fecha de revisión.',
+          context: 'El artículo 31 bis del Código Penal hace que las entidades españolas suelan tener un modelo de prevención de delitos que cubre el cohecho y la corrupción entre particulares. Debería existir en Cumplimiento penal; Agentic Platform no describe su contenido ni supone una fecha de revisión.',
           partial: [],
           missing: ['Política anticorrupción y antisoborno', 'Evaluación del riesgo de corrupción y fecha de la última revisión', 'Formación específica y su cobertura']
         }

@@ -3,7 +3,7 @@
  * 4.800 tarros recibidos en la Plataforma de Plaza → 4.320 servidos a 41 tiendas y 480 en plataforma → 1.920
  * vendidos y 2.400 en lineal → 612 clientes de fidelización compraron el lote. Aviso a las autoridades de Aragón
  * y La Rioja, a AESAN y al fabricante. Mismas tiendas y cifras que CN_DATA.trace['L26214'].
- * Datos sintéticos de demostración (Ciklum).
+ * Datos sintéticos de demostración (MFM).
  */
 (function () {
   'use strict';
@@ -263,7 +263,7 @@
       { agent: 'trace', system: 'CRM Fidelización', action: 'Compradores identificados con tarjeta', result: `612 clientes compraron 1.047 tarros · ${n0(appN)} con app · ${smsN} solo SMS · ${mailN} solo correo`, ms: 470, reveal: 5, mark: 'Clientes de fidelización identificados' },
       { agent: 'trace', system: 'SAP S/4 Retail', action: 'Otros lotes con el mismo envase o materia prima', result: 'TAR-2607-55 también en L26215, L26216 y L26217; TOM-2607-18 en L26213 y L26215: fuera del alcance hasta que el fabricante confirme el origen del vidrio', ms: 390, tone: 'warn' },
       { agent: 'bal', system: 'WMS Manhattan', action: 'Movimientos del lote en plataforma y tiendas', result: '4.800 recibidos · 4.320 servidos · 480 en plataforma · 0 mermas registradas en tienda', ms: 410 },
-      { agent: 'bal', system: 'Prodigy', action: 'Cuadre de unidades: recibido, servido, vendido y en lineal', result: 'Conciliado 100,0 % · 0 tarros sin justificar · 41 de 41 tiendas localizadas', ms: 90, tone: 'ok', mark: 'Cuadre de unidades cerrado' },
+      { agent: 'bal', system: 'Agentic Platform', action: 'Cuadre de unidades: recibido, servido, vendido y en lineal', result: 'Conciliado 100,0 % · 0 tarros sin justificar · 41 de 41 tiendas localizadas', ms: 90, tone: 'ok', mark: 'Cuadre de unidades cerrado' },
       { agent: 'rec', system: 'ServiceNow', action: 'Abre la incidencia de retirada y una tarea por tienda', result: 'INC-RET-2026-0031 en borrador · 41 tareas de tienda sin liberar', ms: 360 },
       { agent: 'rec', system: 'Outlook', action: 'Prepara los avisos sin enviar', result: '7 borradores: tiendas, 612 clientes, aviso público, Aragón, La Rioja, AESAN y fabricante', ms: 640, mark: 'Registro y avisos preparados' }
     ],
@@ -418,7 +418,7 @@
     ]
   };
 
-  prodigyPack('retail', {
+  agenticPack('retail', {
     retirada: {
       title: 'Simulacro de retirada',
       nav: 'Simulacro de retirada',
@@ -462,17 +462,17 @@
       report: { subtitle: 'Registro del ejercicio de trazabilidad y retirada · Reglamento (CE) 178/2002 · IFS Logistics', approvedText: 'Avisos guardados como borrador con la marca SIMULACRO; no se ha enviado ninguno ni se ha bloqueado la venta.' },
       compare: {
         rows: [
-          { k: 'Personas implicadas', today: '4–5: Calidad, plataforma, jefes de zona, Atención al consumidor y Comunicación', prodigy: '1: {approver} revisa y aprueba' },
-          { k: 'Sistemas consultados', today: '5–6 abiertos a mano: SAP, WMS, informes de TPV, CRM, hojas de cálculo y correo', prodigy: '6 conectores consultados por los agentes: SAP S/4 Retail, WMS Manhattan, TPV, CRM Fidelización, ServiceNow y Outlook' },
-          { k: 'Pasos', today: '15–20 consultas, extracciones por tienda y listados de socios', prodigy: '{steps} pasos automáticos y 1 aprobación' },
-          { k: 'Balance de unidades', today: 'Hoja de cálculo con recepciones, servicios y ventas', prodigy: 'Calculado por flujo: {reconciled} conciliado' }
+          { k: 'Personas implicadas', today: '4–5: Calidad, plataforma, jefes de zona, Atención al consumidor y Comunicación', agentic: '1: {approver} revisa y aprueba' },
+          { k: 'Sistemas consultados', today: '5–6 abiertos a mano: SAP, WMS, informes de TPV, CRM, hojas de cálculo y correo', agentic: '6 conectores consultados por los agentes: SAP S/4 Retail, WMS Manhattan, TPV, CRM Fidelización, ServiceNow y Outlook' },
+          { k: 'Pasos', today: '15–20 consultas, extracciones por tienda y listados de socios', agentic: '{steps} pasos automáticos y 1 aprobación' },
+          { k: 'Balance de unidades', today: 'Hoja de cálculo con recepciones, servicios y ventas', agentic: 'Calculado por flujo: {reconciled} conciliado' }
         ]
       },
       presenter: {
         idle: [
           'Simulacro de retirada del lote del tomate frito con el vidrio: de la materia prima a cada tienda y cada socio.',
           'Se elige el punto de partida: el lote L26214 o la recepción en plataforma.',
-          'Prodigy recorre SAP, el WMS, los TPV y el CRM: plataforma, 41 tiendas, ventas, lineal y los 612 clientes de fidelización, y cuadra los 4.800 tarros.'
+          'Agentic Platform recorre SAP, el WMS, los TPV y el CRM: plataforma, 41 tiendas, ventas, lineal y los 612 clientes de fidelización, y cuadra los 4.800 tarros.'
         ],
         nextIdle: 'Pulsar «Iniciar simulacro» con el lote L26214 (o elegir «Recepción REC-PLZ-26-08-0311»).',
         nextRun: 'Pulsar «Ver aviso» de los 612 clientes o del Gobierno de Aragón y después «Aprobar y cerrar simulacro».',

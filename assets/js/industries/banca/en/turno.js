@@ -1,5 +1,5 @@
-/* Banco Cierzo · shift summary (scene «turno»), English. Synthetic demo data (Ciklum). */
-prodigyPackEn('banca', {
+/* Banco Cierzo · shift summary (scene «turno»), English. Synthetic demo data (MFM). */
+agenticPackEn('banca', {
   turno: (function () {
     'use strict';
     const hhmm = (i) => `${String(Math.floor((i * 5) / 60)).padStart(2, '0')}:${String((i * 5) % 60).padStart(2, '0')}`;
@@ -65,7 +65,7 @@ prodigyPackEn('banca', {
         title: 'Operations map · Operations Centre',
         sub: 'Indicators from the 06:00 report and from Falcon Fraud at 05:50 · click an item to see its details',
         icon: 'building',
-        readonly: 'Prodigy reads Falcon Fraud, Core bancario T24, Redsys and ServiceNow; it does not block cards or change rules without approval',
+        readonly: 'Agentic Platform reads Falcon Fraud, Core bancario T24, Redsys and ServiceNow; it does not block cards or change rules without approval',
         zones: [
           { id: 'can', title: 'Channels', sub: 'Customers and merchants', items: [
             { code: 'WEB', name: 'Online banking', reading: '99.98%', status: 'ok', kv: [['Sessions (24 h)', '412,300']] },
@@ -82,7 +82,7 @@ prodigyPackEn('banca', {
           ] },
           { id: 'fra', title: 'Fraud prevention', sub: 'Falcon Fraud', items: [
             { code: 'FAL-454812', name: 'BIN 454812 · Debit', reading: '2.9%', status: 'crit', tags: ['454812'], go: 'alarma', goLabel: 'Open the alarm',
-              note: 'Card-testing attack followed by electronics purchases. Prodigy proposes a preventive rule in Falcon, reissuing 214 cards and notifying customers by SMS and in the app.',
+              note: 'Card-testing attack followed by electronics purchases. Agentic Platform proposes a preventive rule in Falcon, reissuing 214 cards and notifying customers by SMS and in the app.',
               kv: [['Suspicious transactions', '186 · 41,230 €'], ['Since', '02:10'], ['Peak', '3.6% at 04:55'], ['Cards affected', '214']] },
             { code: 'FAL-GLB', name: 'Other BINs', reading: '0.05%', status: 'ok' },
             { code: 'FAL-Q', name: 'Alert queue', reading: '243 alerts', status: null, note: 'Falcon alerts awaiting review by the analyst on shift; 151 are from BIN 454812.', kv: [['Night analysts', '2'], ['From BIN 454812', '151']] },
@@ -170,7 +170,7 @@ prodigyPackEn('banca', {
           { agent: AGENT, system: 'ServiceNow', action: 'Reads the 06:00 indicators of 14 services (channels, authorisation, fraud, SAC and payments)', result: '14 indicators received, no gaps', ms: 590 },
           { agent: AGENT, system: 'Falcon Fraud', action: 'Checks the fraud rate by BIN and the overnight alert queue', result: 'BIN 454812 at 2.9% (186 transactions, 41,230 €); other BINs at 0.05%', ms: 620, tone: 'crit' },
           { agent: AGENT, system: 'Redsys', action: 'Reviews 3DS authentication and the exemptions applied by acquirers', result: '6.8% of authentications expired since 01:50; 29% of purchases under an exemption', ms: 480, tone: 'crit' },
-          { agent: AGENT, system: 'Prodigy', action: 'Compares each indicator with its service thresholds (12 indicators)', result: '2 critical · 4 warnings · 8 with no issues', ms: 60, tone: 'crit' },
+          { agent: AGENT, system: 'Agentic Platform', action: 'Compares each indicator with its service thresholds (12 indicators)', result: '2 critical · 4 warnings · 8 with no issues', ms: 60, tone: 'crit' },
           { agent: AGENT, system: 'Core bancario T24', action: 'Groups the 214 affected cards by customer and checks their status', result: '214 active cards of 209 customers; 31 already blocked manually at 04:10', ms: 440 },
           { agent: AGENT, system: 'Falcon Fraud', action: 'Cross-checks the attacked cards against open common point of purchase cases', result: '61 cards went through POS terminal 3 at Gasolinera Ronda Norte (CPP-2609-07)', ms: 410, tone: 'warn' },
           { agent: AGENT, system: 'Salesforce FSC', action: 'Cross-checks the merchants in the attack against open SAC complaints', result: 'SAC-2026-04187: charges from TIENDAONLINE-ELEC, one of tonight\'s merchants', ms: 370, tone: 'warn' },
@@ -215,12 +215,12 @@ prodigyPackEn('banca', {
         say: [
           'This is how the Head of Operations starts the shift: everything that needs a decision, in a single inbox.',
           'The data comes from their own systems: Falcon alerts, Redsys authorisations, customers and cards from the T24 core, Salesforce complaints and ServiceNow incidents. Here it is synthetic, but consistent across the board.',
-          'The map sums up operations at a glance: grey is normal, colour needs attention. BIN 454812 is red; click it to see the transactions, the amount and what Prodigy proposes.',
+          'The map sums up operations at a glance: grey is normal, colour needs attention. BIN 454812 is red; click it to see the transactions, the amount and what Agentic Platform proposes.',
           'Three matters: the 05:50 fraud spike on BIN 454812 (186 transactions, 41,230 €), Lucía Ferrer\'s complaint, which needs a provisional refund decision today, and the report with 2 critical items.'
         ],
         sayBefore: ['Generate daily report: it reviews 14 services, does not duplicate open incidents and creates the tickets. Watch the time it takes.'],
         sayAfter: [
-          'The link Prodigy finds: the merchant in Lucía Ferrer\'s complaint shows up in tonight\'s attack, and 61 attacked cards went through the petrol station\'s common point of purchase. Nobody had to cross-check Falcon, T24 and Salesforce.',
+          'The link Agentic Platform finds: the merchant in Lucía Ferrer\'s complaint shows up in tonight\'s attack, and 61 attacked cards went through the petrol station\'s common point of purchase. Nobody had to cross-check Falcon, T24 and Salesforce.',
           'And no duplicates: two incidents already open are updated instead of opening new tickets.'
         ],
         next: 'Click "Generate daily report" and talk through the log while it runs.',

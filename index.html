@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Prodigy por industria</title>
-  <meta name="description" content="Cuatro consolas de Prodigy con la misma estructura y los mismos casos con agentes que la demo de Congelados de Navarra: maquinaria industrial, banca, retail y cervecera. Datos sintéticos preparados por Ciklum.">
+  <title>Agentic Platform por industria</title>
+  <meta name="description" content="Cinco consolas de Agentic Platform con la misma estructura y los mismos casos con agentes que la demo de Congelados de Navarra: maquinaria industrial, banca, retail, cervecera y despacho de abogados. Datos sintéticos preparados por MFM.">
   <meta name="theme-color" content="#344E45">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect width='26' height='26' rx='6' fill='%23344E45'/%3E%3Cpath d='M8.5 8.5 17.5 13 8.5 17.5' fill='none' stroke='%23EEF3F1' stroke-width='1.6'/%3E%3Ccircle cx='8.5' cy='8.5' r='2.6' fill='%23EEF3F1'/%3E%3Ccircle cx='17.5' cy='13' r='2.6' fill='%23EEF3F1'/%3E%3Ccircle cx='8.5' cy='17.5' r='2.6' fill='%23EEF3F1'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,34 +60,32 @@
   <script src="assets/js/industries/banca/meta.js"></script>
   <script src="assets/js/industries/retail/meta.js"></script>
   <script src="assets/js/industries/cerveceria/meta.js"></script>
+  <script src="assets/js/industries/abogados/meta.js"></script>
   <script src="assets/js/industries/maquinaria/en/meta.js"></script>
   <script src="assets/js/industries/banca/en/meta.js"></script>
   <script src="assets/js/industries/retail/en/meta.js"></script>
   <script src="assets/js/industries/cerveceria/en/meta.js"></script>
+  <script src="assets/js/industries/abogados/en/meta.js"></script>
 </head>
 <body>
   <header class="top">
     <div class="wrap">
       <svg class="logo" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="6" fill="#496C60"/><path d="M8.5 8.5 17.5 13 8.5 17.5" fill="none" stroke="#EEF3F1" stroke-width="1.6"/><circle cx="8.5" cy="8.5" r="2.6" fill="#EEF3F1"/><circle cx="17.5" cy="13" r="2.6" fill="#EEF3F1"/><circle cx="8.5" cy="17.5" r="2.6" fill="#EEF3F1"/></svg>
-      <div class="brand">Prodigy<small data-t="sub">Plataforma de agentes de Ciklum</small></div>
+      <div class="brand">Agentic Platform<small data-t="sub">Plataforma de agentes de MFM</small></div>
       <div class="langs" role="group" aria-label="Idioma / Language"><button type="button" data-lang="es" aria-pressed="true">ESP</button><button type="button" data-lang="en" aria-pressed="false">ENG</button></div>
     </div>
   </header>
   <main class="wrap">
     <section class="hero">
       <div class="kicker" data-t="kicker">Demostración por industria</div>
-      <h1 data-t="h1">La misma consola y los mismos casos con agentes, en cuatro sectores</h1>
+      <h1 data-t="h1">La misma consola y los mismos casos con agentes, en cinco sectores</h1>
       <p class="lead" data-t="lead">Cada consola repite las ocho escenas de la demo de Congelados de Navarra con los sistemas, la normativa y los casos de su sector. Las empresas y los datos son ficticios, y todo se ejecuta en el navegador sin tocar sistemas reales.</p>
       <ul class="scenes" id="scenes" aria-label="Escenas de cada consola">
-        <li>Resumen del turno</li><li>De palabras a workflow</li><li>Alarma con aprobación humana</li><li>Reclamación de cliente</li><li>Simulacro de trazabilidad</li><li>Cuestionario de cliente</li><li>Procedimientos con citas</li><li>Cómo encaja Prodigy</li>
+        <li>Resumen del turno</li><li>De palabras a workflow</li><li>Alarma con aprobación humana</li><li>Reclamación de cliente</li><li>Simulacro de trazabilidad</li><li>Cuestionario de cliente</li><li>Procedimientos con citas</li><li>Cómo encaja Agentic Platform</li>
       </ul>
     </section>
     <section class="grid" id="grid" aria-label="Industrias"></section>
-    <section class="ref">
-      <span data-t="ref">Demo de referencia: Congelados de Navarra, alimentación congelada.</span>
-      <a href="https://giqciklum.github.io/prodigy-cn-demo/" target="_blank" rel="noopener" data-t="refa">Abrir la demo original ↗</a>
-    </section>
-    <footer data-t="foot">Datos sintéticos de demostración preparados por Ciklum. Las acciones (bloqueos, avisos, publicaciones) se simulan y quedan solo en este navegador.</footer>
+    <footer data-t="foot">Datos sintéticos de demostración preparados por MFM. Las acciones (bloqueos, avisos, publicaciones) se simulan y quedan solo en este navegador.</footer>
   </main>
   <script>
     (function () {
@@ -116,6 +114,12 @@
           ['Reclamación', 'Barriles con sabor oxidado de un distribuidor de hostelería'],
           ['Simulacro', 'Retirada del lote de barril L2608-K14 en 14 clientes'],
           ['Cuestionario', 'Homologación de un importador británico']
+        ],
+        abogados: [
+          ['Alarma', 'Demanda recibida por LexNET con posible conflicto de intereses y plazo de 20 días'],
+          ['Reclamación', 'Queja de un cliente por una minuta de honorarios del área Mercantil'],
+          ['Simulacro', 'Brecha de datos: informe de due diligence enviado a un destinatario erróneo (RGPD, 72 h)'],
+          ['Cuestionario', 'Homologación en el panel de despachos de un banco']
         ]
       };
       var CASES_EN = {
@@ -142,33 +146,39 @@
           ['Complaint', 'Kegs with an oxidised taste from an on-trade distributor'],
           ['Drill', 'Recall of keg batch L2608-K14 from 14 customers'],
           ['Questionnaire', 'Supplier approval for a UK importer']
+        ],
+        abogados: [
+          ['Alarm', 'Claim served via LexNET with a possible conflict of interest and a 20-day deadline'],
+          ['Complaint', 'Client complaint about a Corporate fee note'],
+          ['Drill', 'Data breach: due diligence report sent to the wrong recipient (GDPR, 72 h)'],
+          ['Questionnaire', 'Onboarding to a bank’s panel of law firms']
         ]
       };
       var T = {
-        es: { scenes: ['Resumen del turno', 'De palabras a workflow', 'Alarma con aprobación humana', 'Reclamación de cliente', 'Simulacro de trazabilidad', 'Cuestionario de cliente', 'Procedimientos con citas', 'Cómo encaja Prodigy'], conn: 'Conectores', open: 'Abrir la consola de ' },
-        en: { scenes: ['Shift summary', 'From words to workflow', 'Alarm with human approval', 'Customer complaint', 'Traceability drill', 'Customer questionnaire', 'Procedures with citations', 'How Prodigy fits'], conn: 'Connectors', open: 'Open the console for ',
-          sub: 'Ciklum agent platform', kicker: 'Demo by industry', h1: 'The same console and the same agent use cases, in four sectors',
+        es: { scenes: ['Resumen del turno', 'De palabras a workflow', 'Alarma con aprobación humana', 'Reclamación de cliente', 'Simulacro de trazabilidad', 'Cuestionario de cliente', 'Procedimientos con citas', 'Cómo encaja Agentic Platform'], conn: 'Conectores', open: 'Abrir la consola de ' },
+        en: { scenes: ['Shift summary', 'From words to workflow', 'Alarm with human approval', 'Customer complaint', 'Traceability drill', 'Customer questionnaire', 'Procedures with citations', 'How Agentic Platform fits'], conn: 'Connectors', open: 'Open the console for ',
+          sub: 'MFM agent platform', kicker: 'Demo by industry', h1: 'The same console and the same agent use cases, in five sectors',
           lead: 'Each console repeats the eight scenes of the Congelados de Navarra demo with the systems, regulations and cases of its sector. Companies and data are fictitious, and everything runs in the browser without touching real systems.',
           ref: 'Reference demo: Congelados de Navarra, frozen food.', refa: 'Open the original demo ↗',
-          foot: 'Synthetic demo data prepared by Ciklum. Actions (holds, notices, publications) are simulated and stay in this browser only.' }
+          foot: 'Synthetic demo data prepared by MFM. Actions (holds, notices, publications) are simulated and stay in this browser only.' }
       };
       var LANG = 'es';
-      try { var qs = new URLSearchParams(location.search).get('lang'); LANG = qs === 'en' || qs === 'es' ? qs : (localStorage.getItem('prodigy-ind-lang') === 'en' ? 'en' : 'es'); localStorage.setItem('prodigy-ind-lang', LANG); } catch (e) { /* sin almacenamiento */ }
+      try { var qs = new URLSearchParams(location.search).get('lang'); LANG = qs === 'en' || qs === 'es' ? qs : (localStorage.getItem('agentic-ind-lang') === 'en' ? 'en' : 'es'); localStorage.setItem('agentic-ind-lang', LANG); } catch (e) { /* sin almacenamiento */ }
       var EN = LANG === 'en';
       document.documentElement.lang = LANG;
       if (EN) {
-        document.title = 'Prodigy by industry';
+        document.title = 'Agentic Platform by industry';
         document.querySelectorAll('[data-t]').forEach(function (el) { if (T.en[el.getAttribute('data-t')]) el.textContent = T.en[el.getAttribute('data-t')]; });
         CASES = CASES_EN;
       }
       document.getElementById('scenes').innerHTML = T[LANG].scenes.map(function (x) { return '<li>' + x + '</li>'; }).join('');
       document.querySelectorAll('[data-lang]').forEach(function (b) {
         b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === LANG));
-        b.addEventListener('click', function () { try { localStorage.setItem('prodigy-ind-lang', b.getAttribute('data-lang')); } catch (e) { /* */ } location.search = '?lang=' + b.getAttribute('data-lang'); });
+        b.addEventListener('click', function () { try { localStorage.setItem('agentic-ind-lang', b.getAttribute('data-lang')); } catch (e) { /* */ } location.search = '?lang=' + b.getAttribute('data-lang'); });
       });
-      var ORDER = ['maquinaria', 'banca', 'retail', 'cerveceria'];
-      var P = window.PRODIGY_INDUSTRIES || {};
-      var PE = window.PRODIGY_INDUSTRIES_EN || {};
+      var ORDER = ['maquinaria', 'banca', 'retail', 'cerveceria', 'abogados'];
+      var P = window.AGENTIC_INDUSTRIES || {};
+      var PE = window.AGENTIC_INDUSTRIES_EN || {};
       var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
       document.getElementById('grid').innerHTML = ORDER.filter(function (k) { return P[k] && P[k].meta; }).map(function (k) {
         var m = EN && PE[k] && PE[k].meta ? PE[k].meta : P[k].meta;

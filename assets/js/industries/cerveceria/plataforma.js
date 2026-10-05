@@ -1,6 +1,6 @@
-/* Cervecera Bardenas · «Cómo encaja Prodigy»: arquitectura, demo frente a piloto, calculadora de horas y preguntas.
- * Empresa ficticia; datos sintéticos de demostración (Ciklum). */
-prodigyPack('cerveceria', {
+/* Cervecera Bardenas · «Cómo encaja Agentic Platform»: arquitectura, demo frente a piloto, calculadora de horas y preguntas.
+ * Empresa ficticia; datos sintéticos de demostración (MFM). */
+agenticPack('cerveceria', {
   plataforma: {
     nav: 'Cómo encaja en Bardenas',
     title: 'Cómo encaja en Cervecera Bardenas',
@@ -29,8 +29,8 @@ prodigyPack('cerveceria', {
       cloud: { seg: 'Nube propia', label: 'Nube de Cervecera Bardenas (Azure, AWS o GCP)', zone: 'Suscripción en la nube de Cervecera Bardenas (Azure, AWS o GCP)', text: 'La misma instalación en su suscripción de nube, en la región que elijan (UE).' }
     },
     llm: {
-      azure: { seg: 'Azure OpenAI', name: 'Azure OpenAI', local: false, place: 'Región UE, con el contrato de Cervecera Bardenas', exit: 'Sale de su red solo el texto de cada petición', note: 'Conexión por la pasarela LiteLLM de Prodigy; se confirma en las semanas 1–2.' },
-      gemini: { seg: 'Gemini', name: 'Google Gemini', local: false, place: 'Con la cuenta y la región que contrate Cervecera Bardenas', exit: 'Sale de su red solo el texto de cada petición', note: 'Proveedor incluido de serie en el catálogo de modelos de Prodigy.' },
+      azure: { seg: 'Azure OpenAI', name: 'Azure OpenAI', local: false, place: 'Región UE, con el contrato de Cervecera Bardenas', exit: 'Sale de su red solo el texto de cada petición', note: 'Conexión por la pasarela LiteLLM de Agentic Platform; se confirma en las semanas 1–2.' },
+      gemini: { seg: 'Gemini', name: 'Google Gemini', local: false, place: 'Con la cuenta y la región que contrate Cervecera Bardenas', exit: 'Sale de su red solo el texto de cada petición', note: 'Proveedor incluido de serie en el catálogo de modelos de Agentic Platform.' },
       local: { seg: 'Modelo local', name: 'Modelo local', local: true, place: 'Servidor con GPU en su CPD (Ollama, LM Studio o llama.cpp)', exit: 'La inferencia se ejecuta dentro de su red', note: 'La calidad y la velocidad se dimensionan con su servidor. Sistemas revisa también los flujos de conectores y telemetría.' }
     },
     people: ['brewmaster', 'quality', 'quality_shift', 'maintenance', 'logistics', 'customer_service'],
@@ -55,7 +55,7 @@ prodigyPack('cerveceria', {
       { name: 'Microsoft 365', icon: 'mail', text: 'Avisos en Teams y borradores en Outlook. El envío al cliente se aprueba.', write: true }
     ],
     decisions: {
-      deploy: ['No depende de servicios de Ciklum en la nube. Lo opera su equipo de Sistemas o un servicio gestionado. La red de control de bodega no se abre: el SCADA se lee desde la DMZ industrial.'],
+      deploy: ['No depende de servicios de MFM en la nube. Lo opera su equipo de Sistemas o un servicio gestionado. La red de control de bodega no se abre: el SCADA se lee desde la DMZ industrial.'],
       llm: 'Se cambia de modelo por configuración, sin tocar los workflows; también admite OpenAI o AWS Bedrock en la UE.',
       access: [
         'SSO con Microsoft Entra ID (OIDC) o SAML 2.0. Permisos por rol y por realm: el realm «Calidad · Arguedas» solo ve sus procedimientos y sus datos.',
@@ -72,18 +72,18 @@ prodigyPack('cerveceria', {
     faqTitle: 'Preguntas habituales de Sistemas, Calidad y Dirección',
     faqSub: 'Respuestas cortas para la conversación con el equipo técnico',
     faq: [
-      { topic: 'Integración', q: '¿Dónde se instala?', a: 'En una máquina virtual de su CPD con Docker Compose o en Kubernetes con Helm, o en su suscripción de nube. No depende de servicios de Ciklum en la nube.' },
+      { topic: 'Integración', q: '¿Dónde se instala?', a: 'En una máquina virtual de su CPD con Docker Compose o en Kubernetes con Helm, o en su suscripción de nube. No depende de servicios de MFM en la nube.' },
       { topic: 'Integración', q: '¿Hay conectores de SAP, Brewmaxx, LabWare o el SCADA?', a: 'No de serie. En el piloto se construyen para 1–2 sistemas, por API (OData de SAP, REST de LabWare) o réplica de base de datos de solo lectura; el SCADA, a través de su historian u OPC UA en modo lectura. La lectura de bases de datos Postgres ya funciona.' },
-      { topic: 'Seguridad', q: '¿Toca el control de bodega?', a: 'No. El SCADA se lee desde la DMZ industrial, con la segmentación de IEC 62443; Prodigy no escribe en PLC ni cambia consignas o válvulas. Cualquier actuación la hacen Producción y Mantenimiento.' },
+      { topic: 'Seguridad', q: '¿Toca el control de bodega?', a: 'No. El SCADA se lee desde la DMZ industrial, con la segmentación de IEC 62443; Agentic Platform no escribe en PLC ni cambia consignas o válvulas. Cualquier actuación la hacen Producción y Mantenimiento.' },
       { topic: 'Seguridad', q: '¿Cómo entran los usuarios?', a: 'Con SSO de Microsoft Entra ID (OIDC) o SAML 2.0. Los permisos van por rol y por realm (área). Las cuentas de servicio de los conectores son de solo lectura.' },
       { topic: 'Datos', q: '¿Qué datos salen de nuestra red?', a: 'Con un modelo local, la inferencia se ejecuta en su red. Con uno externo, sale solo el texto de cada petición, sin recetas ni especificaciones completas; se revisa el contrato del proveedor (sin entrenamiento con sus datos y región UE). Los flujos de conectores, telemetría y enmascarado se validan con Sistemas.' },
-      { topic: 'Datos', q: '¿Sirve para la trazabilidad que exige la normativa alimentaria?', a: 'Ayuda a cumplirla: el Reglamento (CE) 178/2002 exige trazar un paso atrás y un paso adelante, y el agente lo hace en minutos con los datos de SAP, Brewmaxx y Mecalux. El registro oficial sigue en sus sistemas; Prodigy prepara la traza y el borrador de comunicación a la autoridad, que aprueba Calidad.' },
-      { topic: 'Modelo de lenguaje', q: '¿Qué modelo de lenguaje usa y se puede cambiar?', a: 'El que elijan: Azure OpenAI, Gemini, OpenAI, AWS Bedrock en la UE o un modelo local. El catálogo de Prodigy permite fijar un modelo por realm y cambiarlo por configuración, sin tocar los workflows.' },
+      { topic: 'Datos', q: '¿Sirve para la trazabilidad que exige la normativa alimentaria?', a: 'Ayuda a cumplirla: el Reglamento (CE) 178/2002 exige trazar un paso atrás y un paso adelante, y el agente lo hace en minutos con los datos de SAP, Brewmaxx y Mecalux. El registro oficial sigue en sus sistemas; Agentic Platform prepara la traza y el borrador de comunicación a la autoridad, que aprueba Calidad.' },
+      { topic: 'Modelo de lenguaje', q: '¿Qué modelo de lenguaje usa y se puede cambiar?', a: 'El que elijan: Azure OpenAI, Gemini, OpenAI, AWS Bedrock en la UE o un modelo local. El catálogo de Agentic Platform permite fijar un modelo por realm y cambiarlo por configuración, sin tocar los workflows.' },
       { topic: 'Modelo de lenguaje', q: '¿Y si el modelo se equivoca?', a: 'Cada respuesta cita su fuente (procedimiento, lectura del SCADA, análisis del LIMS) y, si no la encuentra, lo dice. Ninguna acción se aplica sin aprobación. En el piloto se mide la exactitud con 20–30 casos históricos.' },
       { topic: 'Integración', q: '¿Cuántos usuarios soporta?', a: 'La concurrencia se dimensiona y se verifica con pruebas de carga. Cada realm tiene límites de peticiones por minuto, de tokens al día y de presupuesto.' },
-      { topic: 'Coste', q: '¿Cuánto cuesta cada consulta?', a: 'Prodigy mide el coste de cada petición en USD por realm, usuario y caso, con presupuesto diario y mensual. Una alarma de fermentador son céntimos de modelo; el coste real se mide en el piloto.' },
+      { topic: 'Coste', q: '¿Cuánto cuesta cada consulta?', a: 'Agentic Platform mide el coste de cada petición en USD por realm, usuario y caso, con presupuesto diario y mensual. Una alarma de fermentador son céntimos de modelo; el coste real se mide en el piloto.' },
       { topic: 'Coste', q: '¿Licencia y precio?', a: 'Se concretan en la propuesta comercial (SOW).' },
-      { topic: 'Integración', q: '¿En qué idioma trabaja?', a: 'El chat y los agentes, en español; las respuestas a clientes e importadores, en su idioma (por ejemplo, en inglés para Northgate Beverages). La consola de administración de Prodigy está en inglés.' }
+      { topic: 'Integración', q: '¿En qué idioma trabaja?', a: 'El chat y los agentes, en español; las respuestas a clientes e importadores, en su idioma (por ejemplo, en inglés para Northgate Beverages). La consola de administración de Agentic Platform está en inglés.' }
     ],
     seen: [
       { scene: 'turno', label: 'Resumen del turno', icon: 'activity', title: 'Parte del turno de noche', text: 'Cocimiento, bodega, envasado y almacén de Arguedas; el agente prepara el parte diario de equipos y lo deja para revisar.', agents: ['Agente del turno'], approver: 'decider', outcome: 'parte' },
@@ -95,17 +95,17 @@ prodigyPack('cerveceria', {
       { scene: 'procedimientos', label: 'Procedimientos', icon: 'book-open', title: 'Preguntas con citas', text: 'APPCC, fermentación, retirada, vidrio y CIP: cada respuesta enlaza el apartado del procedimiento vigente y, si no hay fuente, lo dice.', agents: ['Procedimientos'] }
     ],
     honesty: [
-      { aspect: 'Consola, workflows (Routines) y editor', demo: 'Esta consola, en el navegador, con los workflows publicados en la sesión', pilot: 'Prodigy instalado en su infraestructura; Routines con editor visual, versiones y prueba en seco', origin: 'serie' },
-      { aspect: 'Workflow a partir de un procedimiento escrito', demo: 'Generador simulado en el navegador, con tres plantillas', pilot: 'Se integra en Prodigy y se valida con sus procedimientos; cada workflow se revisa antes de publicarlo', origin: 'demo' },
+      { aspect: 'Consola, workflows (Routines) y editor', demo: 'Esta consola, en el navegador, con los workflows publicados en la sesión', pilot: 'Agentic Platform instalado en su infraestructura; Routines con editor visual, versiones y prueba en seco', origin: 'serie' },
+      { aspect: 'Workflow a partir de un procedimiento escrito', demo: 'Generador simulado en el navegador, con tres plantillas', pilot: 'Se integra en Agentic Platform y se valida con sus procedimientos; cada workflow se revisa antes de publicarlo', origin: 'demo' },
       { aspect: 'Agentes de Cervecera Bardenas', demo: 'Bodega, calidad, trazabilidad, retirada, reclamaciones y parte diario, sobre datos sintéticos', pilot: 'Los del caso elegido, adaptados a sus datos y procedimientos', origin: 'demo' },
       { aspect: 'Conectores (SAP S/4HANA, Brewmaxx, SCADA bodega, LIMS LabWare, WMS Mecalux y GMAO Maximo)', demo: 'Simulados en el navegador', pilot: 'Lectura de 1–2 sistemas por API o réplica de base de datos de solo lectura. No hay conectores de serie para SAP, Brewmaxx, LabWare ni el SCADA', origin: 'piloto' },
-      { aspect: 'Disparo por alarma', demo: 'Al abrir la alarma del fermentador FV-12', pilot: 'Webhook desde el SCADA o su historian, o consulta periódica (cron): Prodigy no tiene planificador propio de agentes', origin: 'piloto' },
-      { aspect: 'Modelo de lenguaje', demo: 'Ninguna llamada: las respuestas están preparadas', pilot: 'El que elija Cervecera Bardenas (Azure OpenAI, Gemini o local), a través de la pasarela de Prodigy', origin: 'serie' },
+      { aspect: 'Disparo por alarma', demo: 'Al abrir la alarma del fermentador FV-12', pilot: 'Webhook desde el SCADA o su historian, o consulta periódica (cron): Agentic Platform no tiene planificador propio de agentes', origin: 'piloto' },
+      { aspect: 'Modelo de lenguaje', demo: 'Ninguna llamada: las respuestas están preparadas', pilot: 'El que elija Cervecera Bardenas (Azure OpenAI, Gemini o local), a través de la pasarela de Agentic Platform', origin: 'serie' },
       { aspect: 'Aprobación humana', demo: 'Tarjetas de aprobación; rechazar no aplica nada', pilot: 'Igual, con SSO y permisos por rol. En el piloto no se escribe en SAP: borradores y tickets que aprueba una persona', origin: 'serie' },
       { aspect: 'Procedimientos con citas', demo: '5 documentos sintéticos (APPCC-01, PR-FER-003, PR-CAL-006, PR-ENV-002 y PR-LIM-001)', pilot: 'Sus procedimientos vigentes, con permisos por realm; objetivo ≥90 % de citas correctas', origin: 'serie' },
-      { aspect: 'Registro de auditoría', demo: 'De esta sesión, guardado en el navegador y exportable a JSON o CSV', pilot: 'En la base de datos de Prodigy, de solo añadir, con la identidad SSO de cada persona; exportable a CSV', origin: 'serie' },
+      { aspect: 'Registro de auditoría', demo: 'De esta sesión, guardado en el navegador y exportable a JSON o CSV', pilot: 'En la base de datos de Agentic Platform, de solo añadir, con la identidad SSO de cada persona; exportable a CSV', origin: 'serie' },
       { aspect: 'Coste por petición', demo: 'Estimación mostrada al final de las ejecuciones', pilot: 'Medido por petición en USD, por realm y por caso, con presupuesto diario y mensual', origin: 'serie' },
-      { aspect: 'Datos y acciones', demo: 'Sintéticos y coherentes entre sí, preparados por Ciklum; las acciones no salen del navegador', pilot: 'Sus datos en modo lectura y 20–30 casos históricos, anonimizados si hace falta', origin: 'datos' }
+      { aspect: 'Datos y acciones', demo: 'Sintéticos y coherentes entre sí, preparados por MFM; las acciones no salen del navegador', pilot: 'Sus datos en modo lectura y 20–30 casos históricos, anonimizados si hace falta', origin: 'datos' }
     ],
     writes: 'Ninguna en SAP durante el piloto: borradores y tickets que aprueba una persona',
     cases: {
@@ -137,13 +137,13 @@ prodigyPack('cerveceria', {
     criteria: [
       { name: 'Tiempo', target: 'Traza y borrador en menos de 15 min', how: 'Cronometrado frente a la línea base de las semanas 1–2' },
       { name: 'Utilidad', target: 'Calidad acepta el borrador con ediciones menores en ≥70 % de los casos', how: 'Revisión de cada borrador por Calidad' },
-      { name: 'Citas', target: '≥90 % de 50 preguntas de referencia con la cita correcta', how: 'Herramienta de evaluación incluida en Prodigy' },
+      { name: 'Citas', target: '≥90 % de 50 preguntas de referencia con la cita correcta', how: 'Herramienta de evaluación incluida en Agentic Platform' },
       { name: 'Control', target: 'Ninguna acción sin aprobación; el 100 % en el registro de auditoría', how: 'Revisión del registro exportado' },
       { name: 'Coste', target: 'Coste del modelo por caso medido y dentro del presupuesto del realm', how: 'Informe de coste por realm (USD, estimación)' }
     ],
     gives: {
       client: ['Responsable en Calidad y contacto de Sistemas', 'Accesos de lectura a 1–2 sistemas', '20–30 casos históricos, anonimizados si hace falta', 'Procedimientos vigentes (APPCC, PR)', '2–3 h a la semana de Calidad y bodega'],
-      ciklum: ['Instalación en su infraestructura', 'Conectores de lectura', 'Agentes y workflow del caso', 'Formación de los usuarios', 'Informe final con los criterios medidos']
+      mfm: ['Instalación en su infraestructura', 'Conectores de lectura', 'Agentes y workflow del caso', 'Formación de los usuarios', 'Informe final con los criterios medidos']
     },
     pilot: {
       sub: 'Un caso, una fábrica (Arguedas), un realm (Calidad) y 5–10 usuarios, en su infraestructura y con su modelo',
@@ -164,16 +164,16 @@ prodigyPack('cerveceria', {
       ]
     },
     auditEmpty: 'Genera el parte del turno, publica un workflow o aprueba la retención del lote L2609-FV12: cada paso aparecerá aquí con su hora, su actor y su vista.',
-    auditPilot: 'El registro vive en la base de datos de Prodigy, identifica a cada persona por su SSO, se filtra por persona, acción y fecha y se exporta a CSV. En esta demo vive en este navegador y se borra con «Reiniciar demo».',
+    auditPilot: 'El registro vive en la base de datos de Agentic Platform, identifica a cada persona por su SSO, se filtra por persona, acción y fecha y se exporta a CSV. En esta demo vive en este navegador y se borra con «Reiniciar demo».',
     proposal: {
       code: 'PIL-ARG-2026-01',
-      filename: 'propuesta-piloto-prodigy-bardenas-arguedas',
-      objective: 'Medir, con un caso real y criterios firmados, cuánto tiempo de Calidad y bodega libera Prodigy y con qué exactitud, sin cambiar SAP S/4HANA, Brewmaxx, el SCADA de bodega, LIMS LabWare, WMS Mecalux ni GMAO Maximo. Prodigy lee de esos sistemas, razona con los procedimientos y propone; una persona aprueba antes de escribir.',
+      filename: 'propuesta-piloto-agentic-bardenas-arguedas',
+      objective: 'Medir, con un caso real y criterios firmados, cuánto tiempo de Calidad y bodega libera Agentic Platform y con qué exactitud, sin cambiar SAP S/4HANA, Brewmaxx, el SCADA de bodega, LIMS LabWare, WMS Mecalux ni GMAO Maximo. Agentic Platform lee de esos sistemas, razona con los procedimientos y propone; una persona aprueba antes de escribir.',
       signatures: [{ role: 'quality', note: 'Conforme con el alcance y los criterios' }, { role: 'brewmaster', note: 'Conforme con el caso de bodega' }, { role: 'Sistemas · Cervecera Bardenas', note: 'Conforme con los accesos y el despliegue' }]
     },
     presenter: {
       arquitectura: [
-        'Prodigy no sustituye nada: va encima de SAP, Brewmaxx, LabWare, Mecalux y Maximo. Lee, razona con vuestros procedimientos y propone; antes de escribir en un sistema, aprueba una persona.',
+        'Agentic Platform no sustituye nada: va encima de SAP, Brewmaxx, LabWare, Mecalux y Maximo. Lee, razona con vuestros procedimientos y propone; antes de escribir en un sistema, aprueba una persona.',
         'Se instala en vuestra infraestructura, con vuestro SSO de Microsoft Entra ID y el modelo que elijáis. Con un modelo local, la inferencia queda en vuestra red; Sistemas valida los demás flujos.',
         'Las líneas discontinuas en ámbar son las únicas escrituras, y siempre tras aprobación. El SCADA de bodega solo se lee: no se tocan válvulas ni consignas.'
       ],
@@ -184,7 +184,7 @@ prodigyPack('cerveceria', {
       ],
       horas: [
         'Preguntad cuántas reclamaciones, desviaciones de bodega o homologaciones tienen al mes y escribidlo: la calculadora es suya.',
-        '«Con Prodigy» incluye la revisión y la aprobación de una persona. Son horas de trabajo repetitivo que Calidad y bodega pueden dedicar a otras tareas.',
+        '«Con Agentic Platform» incluye la revisión y la aprobación de una persona. Son horas de trabajo repetitivo que Calidad y bodega pueden dedicar a otras tareas.',
         'Son supuestos para conversar: la línea base real se mide en las semanas 1–2 del piloto.'
       ],
       registro: [
@@ -200,7 +200,7 @@ prodigyPack('cerveceria', {
       }
     },
     tour: [
-      'Prodigy va encima de SAP, Brewmaxx, LabWare, Mecalux y Maximo: lee, prepara propuestas y una persona aprueba antes de escribir.',
+      'Agentic Platform va encima de SAP, Brewmaxx, LabWare, Mecalux y Maximo: lee, prepara propuestas y una persona aprueba antes de escribir.',
       'Con un modelo local, la inferencia entra en su infraestructura; los demás flujos se validan con Sistemas.',
       'Los casos de hoy, del fermentador FV-12 a la retirada del lote L2608-K14, y qué es de serie y qué se construye en el piloto.',
       'Piloto de 6–8 semanas: un caso, la fábrica de Arguedas, realm de Calidad y criterios de aceptación firmados en la semana 1.',

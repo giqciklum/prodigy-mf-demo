@@ -1,5 +1,5 @@
-/* Mercados Moncayo · cuestionario de preauditoría IFS Logistics v3 de la Plataforma de Plaza. Empresas ficticias; datos sintéticos (Ciklum). */
-prodigyPack('retail', {
+/* Mercados Moncayo · cuestionario de preauditoría IFS Logistics v3 de la Plataforma de Plaza. Empresas ficticias; datos sintéticos (MFM). */
+agenticPack('retail', {
   cuestionario: {
     agent: 'Cuestionarios de cliente',
     lang: 'es',
@@ -75,7 +75,7 @@ prodigyPack('retail', {
       before: [
         'La plataforma se certifica por primera vez en IFS Logistics v3 en noviembre, y la certificadora manda antes su cuestionario de preauditoría: preparar la evidencia de cada requisito es trabajo de fondo de Calidad.',
         'Son {total} preguntas sobre APPCC, temperaturas, almacén, trazabilidad e incidentes, y defensa de producto. Cada respuesta tiene que llevar su procedimiento o su registro.',
-        'Al pulsar, Prodigy busca en el manual, el plan APPCC y los procedimientos, y en los registros de los sensores de frío, el WMS, ServiceNow y el CRM, y redacta cada respuesta con su fuente.'
+        'Al pulsar, Agentic Platform busca en el manual, el plan APPCC y los procedimientos, y en los registros de los sensores de frío, el WMS, ServiceNow y el CRM, y redacta cada respuesta con su fuente.'
       ],
       during: [
         '{drafted} de {total} con borrador y cita, con documento y apartado; cada cita se comprueba contra el texto de la fuente. {flagged} quedan sin responder: defensa de producto, subcontratistas y control de vidrio. Sin documento, no se inventa nada.',

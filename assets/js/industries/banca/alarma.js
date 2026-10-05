@@ -1,5 +1,5 @@
 /* Banco Cierzo · alarma con aprobación: pico de fraude en compras sin tarjeta presente del BIN 454812.
- * Entidad ficticia; datos sintéticos de demostración (Ciklum). Las funciones reciben el contexto H de la escena
+ * Entidad ficticia; datos sintéticos de demostración (MFM). Las funciones reciben el contexto H de la escena
  * (W workflow, C condición evaluada, sc alcance vigente, ids generados al aprobar, fmt, fv, pl…). */
 (function () {
   'use strict';
@@ -52,7 +52,7 @@
   const clients = (sc) => sc.items.reduce((s, x) => s + x.clients, 0);
   const ops = (sc) => sc.items.reduce((s, x) => s + x.ops, 0);
 
-  prodigyPack('banca', {
+  agenticPack('banca', {
     alarma: {
       nav: 'Alarma BIN 454812',
       title: 'Alarma BIN 454812 en ejecución',
@@ -130,7 +130,7 @@
           const a = H.all;
           return [
             { lane: 'mon', system: 'Falcon Fraud', verb: 'Consultando', action: 'Lee la tasa de fraude CNP del BIN 454812 de 02:00 a 07:00, una medida cada 5 min', result: `${SERIES.length} medidas, sin huecos · ahora 2,2 % (07:00), ataque en curso`, ms: 1700, set: { volume: `${SERIES.length} medidas de la tasa` } },
-            { lane: 'mon', system: 'Prodigy', eval: true, ms: 90 },
+            { lane: 'mon', system: 'Agentic Platform', eval: true, ms: 90 },
             { lane: 'mon', system: 'Falcon Fraud', verb: 'Consultando', action: 'Cruza la anomalía con los motivos de puntuación y los comercios', result: 'Patrón de enumeración: cargos de 1–2 € seguidos de compras altas con exención de SCA: hipótesis para Prevención del Fraude', tone: 'warn', ms: 1500, set: { volume: `${SERIES.length} medidas · motivos de puntuación`, result: `Anomalía confirmada: ${H.C.above} min por encima · pico 3,6 %` } },
             { lane: 'traz', system: 'Falcon Fraud', verb: 'Consultando', action: 'Lista las operaciones sospechosas del BIN desde las 02:10', result: `${ops(a)} operaciones · ${H.fmt.eur(a.qty)} · ${a.count} tarjetas`, ms: 2300, set: { volume: `${ops(a)} operaciones` } },
             { lane: 'traz', system: 'Core bancario T24', verb: 'Consultando', action: 'Resuelve titular, producto y estado de cada tarjeta', result: `${a.count} tarjetas de ${clients(a)} clientes en ${a.items.length} segmentos de comercio`, ms: 2600, set: { volume: `${ops(a)} operaciones · ${a.count} tarjetas` }, reveal: 'lots' },
@@ -138,7 +138,7 @@
             { lane: 'traz', system: 'Redsys', verb: 'Consultando', action: 'Consulta qué operaciones están pendientes de compensación', result: `${a.holds.length} sesiones de compensación; la primera, ${H.first.id}, a las ${H.first.time}`, tone: 'warn', ms: 2000, set: { volume: `${ops(a)} operaciones · ${a.count} tarjetas · ${a.holds.length} sesiones`, result: `Primera compensación a las ${H.first.time}` }, milestone: 'traz', audit: { action: 'Operaciones, tarjetas y clientes identificados', detail: `${ops(a)} operaciones por ${H.fmt.eur(a.qty)} · ${a.count} tarjetas de ${clients(a)} clientes · ${a.holds.length} sesiones de compensación` } },
             { lane: 'fra', node: 'apr', system: 'Procedimientos', verb: 'Analizando', action: 'Aplica POL-FRA-003 y PR-TAR-007 a esta anomalía', result: 'Regla preventiva en el BIN, bloqueo y reemisión de las tarjetas comprometidas, contracargo y aviso al titular', ms: 1300 },
             { lane: 'fra', node: 'apr', system: 'Modelo de lenguaje', verb: 'Redactando', action: 'Redacta la propuesta y su motivo con las evidencias', result: `Propuesta: regla en Falcon, bloqueo y reemisión de ${a.count} tarjetas, contracargo de ${ops(a)} operaciones y aviso a ${clients(a)} clientes`, ms: 6600, set: { volume: `${a.count} tarjetas · ${ops(a)} operaciones` } },
-            { lane: 'fra', node: 'apr', system: 'Prodigy', verb: 'Evaluando', action: `Pide la aprobación de ${H.W.approver} antes de escribir en Falcon, T24 y Redsys`, result: 'Esperando la decisión de Prevención del Fraude', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Propuesta enviada a Prevención del Fraude' }, milestone: 'prop', audit: { action: 'Propuesta de bloqueo y reemisión enviada a aprobación', detail: `Regla preventiva en el BIN 454812 · ${a.count} tarjetas · aprueba ${H.W.approver}` } }
+            { lane: 'fra', node: 'apr', system: 'Agentic Platform', verb: 'Evaluando', action: `Pide la aprobación de ${H.W.approver} antes de escribir en Falcon, T24 y Redsys`, result: 'Esperando la decisión de Prevención del Fraude', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Propuesta enviada a Prevención del Fraude' }, milestone: 'prop', audit: { action: 'Propuesta de bloqueo y reemisión enviada a aprobación', detail: `Regla preventiva en el BIN 454812 · ${a.count} tarjetas · aprueba ${H.W.approver}` } }
           ];
         },
         p2: (H) => {

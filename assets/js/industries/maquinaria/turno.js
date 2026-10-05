@@ -1,5 +1,5 @@
-/* Hidromec Ebro · resumen del turno (escena «turno»). Datos sintéticos de demostración (Ciklum). */
-prodigyPack('maquinaria', {
+/* Hidromec Ebro · resumen del turno (escena «turno»). Datos sintéticos de demostración (MFM). */
+agenticPack('maquinaria', {
   turno: (function () {
     'use strict';
     const hhmm = (i) => `${String(Math.floor((i * 5) / 60)).padStart(2, '0')}:${String((i * 5) % 60).padStart(2, '0')}`;
@@ -66,11 +66,11 @@ prodigyPack('maquinaria', {
         title: 'Mapa de la planta · Zaragoza',
         sub: 'Lecturas del parte de las 06:00 y de IIoT Vibración a las 05:50 · pulsa un elemento para ver su ficha',
         icon: 'factory',
-        readonly: 'Prodigy lee IIoT Vibración, MES Opcenter, SAP S/4HANA y GMAO Maximo; no actúa sobre los CNC ni sobre los bancos de prueba',
+        readonly: 'Agentic Platform lee IIoT Vibración, MES Opcenter, SAP S/4HANA y GMAO Maximo; no actúa sobre los CNC ni sobre los bancos de prueba',
         zones: [
           { id: 'mec', title: 'Mecanizado', sub: 'Nave 1 · 6 máquinas', items: [
             { code: 'MC-04', name: 'DMU 65 · culatas', reading: '7,8 mm/s', status: 'crit', tags: ['CUL-2609-118'], go: 'alarma', goLabel: 'Abrir la alarma',
-              note: 'Vibración del husillo en zona D (ISO 10816-3) desde las 03:40. Prodigy propone parar la máquina, bloquear las 42 culatas en SAP QM y pasar la OF 4100872 a MC-02.',
+              note: 'Vibración del husillo en zona D (ISO 10816-3) desde las 03:40. Agentic Platform propone parar la máquina, bloquear las 42 culatas en SAP QM y pasar la OF 4100872 a MC-02.',
               kv: [['Orden de fabricación', 'OF 4100872 · lote CUL-2609-118'], ['Piezas en la ventana', '42 culatas (03:40–05:50)'], ['Pico', '8,4 mm/s RMS a las 05:32'], ['Horas del husillo', '11.840 h desde la última reparación']] },
             { code: 'MC-02', name: 'DMU 65 · bridas', reading: '2,0 mm/s', status: 'ok', note: 'Gemela de MC-04 (mismo programa CNC y utillaje). Capacidad libre a partir de las 08:00.', kv: [['OF en curso', 'OF 4100869 · bridas BR-80 (termina 07:55)'], ['Disponibilidad', '94 % esta semana']] },
             { code: 'MC-01', name: 'Variaxis · cuerpos', reading: '1,8 mm/s', status: 'ok', kv: [['OF en curso', 'OF 4100866 · cuerpos de válvula']] },
@@ -169,7 +169,7 @@ prodigyPack('maquinaria', {
         steps: [
           { agent: AGENT, system: 'MES Opcenter', action: 'Lee las lecturas de las 06:00 de 14 equipos (mecanizado, montaje, pruebas, pintura y servicios)', result: '14 lecturas recibidas, sin huecos', ms: 610 },
           { agent: AGENT, system: 'IIoT Vibración', action: 'Consulta la vibración de husillos y cabezales (MC-01 a MC-04 y TOR-01) de las últimas 6 h', result: 'MC-04 a 7,8 mm/s RMS (zona D desde las 03:40); el resto entre 1,6 y 2,4 mm/s', ms: 540, tone: 'crit' },
-          { agent: AGENT, system: 'Prodigy', action: 'Compara cada lectura con sus umbrales de planta (8 indicadores)', result: '2 críticos · 4 avisos · 8 sin incidencias', ms: 60, tone: 'crit' },
+          { agent: AGENT, system: 'Agentic Platform', action: 'Compara cada lectura con sus umbrales de planta (8 indicadores)', result: '2 críticos · 4 avisos · 8 sin incidencias', ms: 60, tone: 'crit' },
           { agent: AGENT, system: 'MES Opcenter', action: 'Cruza la ventana de vibración de MC-04 con las órdenes de fabricación', result: 'OF 4100872: 42 culatas del lote CUL-2609-118 mecanizadas entre las 03:40 y las 05:50', ms: 420, tone: 'warn' },
           { agent: AGENT, system: 'SAP S/4HANA', action: 'Revisa los resultados de prueba de BP-1 y BP-2 en QM', result: 'BP-1: rezume en PH250-26-0476 y PH250-26-0478 (MON-2608-11)', ms: 380, tone: 'crit' },
           { agent: AGENT, system: 'PLM Windchill', action: 'Abre la lista de materiales de las dos prensas con rezume', result: 'Juntas del cilindro principal del lote JNT-2607-031 · Sellados Ibéricos, S.A.', ms: 330 },
@@ -219,7 +219,7 @@ prodigyPack('maquinaria', {
         ],
         sayBefore: ['Generar parte diario: revisa 14 equipos, no duplica órdenes abiertas y crea los tickets. Fijaos en el tiempo.'],
         sayAfter: [
-          'Relación que encuentra Prodigy: las dos prensas con rezume en el banco BP-1 llevan juntas del mismo lote que la prensa reclamada. Nadie ha tenido que cruzar SAP, Windchill y Salesforce.',
+          'Relación que encuentra Agentic Platform: las dos prensas con rezume en el banco BP-1 llevan juntas del mismo lote que la prensa reclamada. Nadie ha tenido que cruzar SAP, Windchill y Salesforce.',
           'Y no duplica: dos órdenes ya abiertas se actualizan en lugar de abrir tickets nuevos.'
         ],
         next: 'Pulsar «Generar parte diario» y comentar el registro mientras se ejecuta.',

@@ -1,5 +1,5 @@
-/* Hidromec Ebro · datos generales. Empresa ficticia; datos sintéticos de demostración (Ciklum). */
-prodigyPack('maquinaria', {
+/* Hidromec Ebro · datos generales. Empresa ficticia; datos sintéticos de demostración (MFM). */
+agenticPack('maquinaria', {
   meta: {
     id: 'maquinaria',
     industry: 'Maquinaria industrial',

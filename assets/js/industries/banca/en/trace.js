@@ -1,7 +1,7 @@
 /* Banco Cierzo · trace records by case (BIN, common point of compromise, merchant and complaint), English.
  * Read by App.traceModal from CN_DATA.trace[code]. Card numbers always masked (PCI DSS).
- * Synthetic demo data (Ciklum). */
-prodigyPackEn('banca', {
+ * Synthetic demo data (MFM). */
+agenticPackEn('banca', {
   trace: (function () {
     'use strict';
 
@@ -80,7 +80,7 @@ prodigyPackEn('banca', {
           { key: 'status', label: 'Status', chip: true }
         ],
         rows: MERCHANTS,
-        note: { title: 'Prodigy proposal', body: 'Preventive rule in Falcon for high-risk e-commerce on the BIN (MCC 4899, 5732, 5815, 6051 without SCA), reissue of 214 cards and notice to customers by SMS and in the app. Requires approval from the Head of Fraud Prevention.', icon: 'shield' }
+        note: { title: 'Agentic Platform proposal', body: 'Preventive rule in Falcon for high-risk e-commerce on the BIN (MCC 4899, 5732, 5815, 6051 without SCA), reissue of 214 cards and notice to customers by SMS and in the app. Requires approval from the Head of Fraud Prevention.', icon: 'shield' }
       },
       units: { label: 'Cards (sample)', cols: CARD_COLS, rows: nightRows },
       quality: [

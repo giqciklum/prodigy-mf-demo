@@ -1,9 +1,9 @@
 /*
- * Escena «plataforma» · Cómo encaja Prodigy en la empresa, común a todas las industrias.
- * Misma estructura que la demo de referencia (giqciklum/prodigy-cn-demo):
+ * Escena «plataforma» · Cómo encaja Agentic Platform en la empresa, común a todas las industrias.
+ * Misma estructura que la demo de referencia:
  *  - Diagrama de arquitectura en SVG propio, con dos disposiciones (ancha y vertical, según el ancho disponible), que
  *    cambia con el despliegue y el modelo de lenguaje elegidos: con un modelo local, el modelo entra en su infraestructura.
- *    Sistemas del cliente (conectores) → Prodigy (agentes de la industria) → personas por rol.
+ *    Sistemas del cliente (conectores) → Agentic Platform (agentes de la industria) → personas por rol.
  *  - Decisiones de despliegue, modelo, acceso, aprobación y auditoría, coste por petición y límites; preguntas frecuentes.
  *  - «Lo que ha visto hoy»: resumen de los casos de las demás vistas, con enlace a cada una.
  *  - Tabla «Hoy en la demo · En un piloto» con el origen de cada pieza (de serie, construida para la demo, a construir).
@@ -40,19 +40,19 @@
   const CASES = P.cases;
   const PHASES = P.phases;
   const CLIENT_GIVES = P.gives.client;
-  const CIKLUM_GIVES = P.gives.ciklum;
+  const MFM_GIVES = P.gives.mfm;
   const FAQ = P.faq;
   const CALC = P.calc.rows;
   const SITE = P.site;
   const A = P.arch;
 
   const ORIGIN = {
-    serie: () => chip('ok', 'De serie en Prodigy'),
+    serie: () => chip('ok', 'De serie en Agentic Platform'),
     demo: () => chip({ tone: 'brand', label: 'Construido para esta demo' }),
     piloto: () => chip('pending', 'Se construye en el piloto'),
     datos: () => chip('neutral', 'Datos de la demo')
   };
-  const ORIGIN_TEXT = { serie: 'De serie en Prodigy', demo: 'Construido para esta demo', piloto: 'Se construye en el piloto', datos: 'Datos de la demo' };
+  const ORIGIN_TEXT = { serie: 'De serie en Agentic Platform', demo: 'Construido para esta demo', piloto: 'Se construye en el piloto', datos: 'Datos de la demo' };
 
   const weeksText = (p) => (p.from === p.to ? `Semana ${p.from}` : `Semanas ${p.from}–${p.to}`);
 
@@ -62,8 +62,8 @@
 
   /* ---------------------------------------------------------------- Calculadora de horas */
 
-  const CALC_KEYS = { n: 'Casos al mes', before: 'Hoy (min)', after: 'Con Prodigy (min)' };
-  const CALC_AUDIT = { n: 'casos al mes', before: 'minutos hoy', after: 'minutos con Prodigy' };
+  const CALC_KEYS = { n: 'Casos al mes', before: 'Hoy (min)', after: 'Con Agentic Platform (min)' };
+  const CALC_AUDIT = { n: 'casos al mes', before: 'minutos hoy', after: 'minutos con Agentic Platform' };
   const CALC_MAX = 10000;
 
   function calcValues(ctx) {
@@ -94,7 +94,7 @@
 
   /* ---------------------------------------------------------------- Registro de auditoría */
 
-  const isAgent = (a) => /^Prodigy\b/.test(String(a.actor || ''));
+  const isAgent = (a) => /^Agentic Platform\b/.test(String(a.actor || ''));
   /** Decisiones de personas: aprobaciones, rechazos y publicaciones que otras vistas dejan en el registro. */
   const isDecision = (a) => !isAgent(a) && /aprob|rechaz|publicad/i.test(String(a.action || ''));
   function sceneNav(id) { const s = App.scenes().find((x) => x.id === id); return s ? s.nav : '—'; }
@@ -183,12 +183,12 @@
   function ariaText(st) {
     const llm = LLM[st.llm];
     const dep = DEPLOY[st.deploy];
-    return `Arquitectura: las personas entran con SSO a Prodigy, instalado en ${dep.zone}. Módulos: ${MODULES.map((m) => m.title).join(', ')}. `
+    return `Arquitectura: las personas entran con SSO a Agentic Platform, instalado en ${dep.zone}. Módulos: ${MODULES.map((m) => m.title).join(', ')}. `
       + `Modelo de lenguaje: ${llm.name}, ${llm.local ? 'dentro de su infraestructura' : 'fuera de su infraestructura'}; ${llm.exit.toLowerCase()}. `
       + `Conectores de lectura con ${TILES.map((t) => t.name).join(', ')}; escritura solo tras aprobación en ${TILES.filter((t) => t.write).map((t) => t.name).join(', ')}.`;
   }
 
-  /** Disposición ancha (proyector y escritorio): personas arriba, Prodigy en su infraestructura con el modelo a la derecha, sistemas abajo. */
+  /** Disposición ancha (proyector y escritorio): personas arriba, Agentic Platform en su infraestructura con el modelo a la derecha, sistemas abajo. */
   function archWide(st) {
     const llm = LLM[st.llm];
     const dep = DEPLOY[st.deploy];
@@ -217,7 +217,7 @@
       o.push(svg.text(x + p.w / 2, y + 16, p.t, 'arch-pill-t', 'middle'));
     }));
 
-    // Prodigy (dentro de la infraestructura del cliente) y modelo de lenguaje
+    // Agentic Platform (dentro de la infraestructura del cliente) y modelo de lenguaje
     const lw = 190;
     const lx = W - P0 - 16 - lw;
     const px = P0 + 16;
@@ -238,10 +238,10 @@
     const rowH = Array.from({ length: nRows }, (_, r) => Math.max.apply(null, mods.slice(r * 4, r * 4 + 4).map((x) => x.h)));
     const rowY = rowH.map((_, r) => rowH.slice(0, r).reduce((s, h) => s + h + gap, 0));
     const ph = headH + 12 + rowH.reduce((s, h) => s + h, 0) + gap * (nRows - 1) + pad;
-    o.push(svg.rect(px, py, pw, ph, 'arch-prodigy', 10));
+    o.push(svg.rect(px, py, pw, ph, 'arch-agentic', 10));
     o.push(svg.mark(px + 14, py + 12, 22));
-    o.push(svg.text(px + 44, py + 28, 'Prodigy', 'arch-brand'));
-    o.push(svg.text(px + 44 + tw('Prodigy', 15, 700) + 12, py + 28, 'Capa de agentes encima de sus sistemas · no sustituye ninguno', 'arch-sub'));
+    o.push(svg.text(px + 44, py + 28, 'Agentic Platform', 'arch-brand'));
+    o.push(svg.text(px + 44 + tw('Agentic Platform', 15, 700) + 12, py + 28, 'Capa de agentes encima de sus sistemas · no sustituye ninguno', 'arch-sub'));
     o.push(svg.hline(px + 1, px + pw - 1, py + headH, 'arch-divider'));
     let gw = null;
     mods.forEach((x, i) => {
@@ -280,7 +280,7 @@
     back.push(svg.icon('server', P0 + 14, zoneY + 10, 15));
     back.push(svg.text(P0 + 36, zoneY + 22, dep.zone, 'arch-zone-t'));
 
-    // Personas ↔ Prodigy
+    // Personas ↔ Agentic Platform
     const ax = px + pw * 0.66;
     o.push(svg.vline(ax, by + bh + 1, py - 1, 'arch-read'));
     o.push(svg.head(ax, py - 1, 'down', 'arch-head'));
@@ -372,9 +372,9 @@
     const rowH = Math.max.apply(null, mods.map((x) => 12 + x.tl.length * 15 + 10));
     const nRows = Math.ceil(mods.length / 2);
     const ph = headH + nRows * rowH + (nRows - 1) * gap + pad;
-    o.push(svg.rect(px, py, pw, ph, 'arch-prodigy', 10));
+    o.push(svg.rect(px, py, pw, ph, 'arch-agentic', 10));
     o.push(svg.mark(px + 12, py + 11, 20));
-    o.push(svg.text(px + 40, py + 26, 'Prodigy', 'arch-brand'));
+    o.push(svg.text(px + 40, py + 26, 'Agentic Platform', 'arch-brand'));
     o.push(svg.lines(px + 14, py + 46, sub, 'arch-sub', 14));
     o.push(svg.hline(px + 1, px + pw - 1, py + headH - 4, 'arch-divider'));
     mods.forEach((x, i) => {
@@ -478,7 +478,7 @@
     </div>`;
   }
   function auditSub(c) {
-    return c.total ? `${fmt.num(c.persons)} de personas · ${fmt.num(c.agents)} de agentes de Prodigy` : 'Aún sin acciones en esta sesión';
+    return c.total ? `${fmt.num(c.persons)} de personas · ${fmt.num(c.agents)} de agentes de Agentic Platform` : 'Aún sin acciones en esta sesión';
   }
 
   function decisionCards(st) {
@@ -491,14 +491,14 @@
       { id: 'plat-dec-access', icon: 'key', title: 'Acceso y permisos', body: paras(Dc.access) },
       { id: 'plat-dec-hitl', icon: 'user-check', title: 'Aprobación humana y auditoría', body: html`<p>${Dc.hitl}</p><p>Registro de solo añadir, exportable a CSV. <button type="button" class="link-btn" data-action="open-registro">Ver el registro de esta sesión</button></p>` },
       { id: 'plat-dec-cost', icon: 'gauge', title: 'Coste por petición', body: costBody() },
-      { id: 'plat-dec-limits', icon: 'x-circle', title: 'Fuera del alcance de Prodigy', body: html`<ul class="plat-list is-limits">${Dc.limits.map((t) => html`<li>${icon('minus', 16)}<span>${t}</span></li>`)}</ul>` }
+      { id: 'plat-dec-limits', icon: 'x-circle', title: 'Fuera del alcance de Agentic Platform', body: html`<ul class="plat-list is-limits">${Dc.limits.map((t) => html`<li>${icon('minus', 16)}<span>${t}</span></li>`)}</ul>` }
     ];
     return html`${cards.map((c) => App.card({ id: c.id, title: c.title, icon: c.icon, class: 'plat-dec', body: c.body }))}`;
   }
 
   function costBody() {
     const e = sessionCost();
-    return html`<p>Prodigy anota en cada petición los tokens, el modelo y el coste estimado en USD, y lo suma por realm, usuario, modelo y capacidad.</p>
+    return html`<p>Agentic Platform anota en cada petición los tokens, el modelo y el coste estimado en USD, y lo suma por realm, usuario, modelo y capacidad.</p>
       <p>Presupuesto diario y mensual por realm, con aviso al ${fmt.pct(80)}; el bloqueo al superarlo es opcional. Es una estimación (tarifa × tokens) que se concilia con la factura del proveedor.</p>
       ${P.decisions.cost ? html`<p>${P.decisions.cost}</p>` : ''}
       ${e ? html`<p class="plat-session">${icon('history', 15)}<span>En esta sesión · ${e.action}: ${e.detail}</span></p>` : ''}`;
@@ -530,7 +530,7 @@
       ${App.card({
         id: 'plat-arch',
         title: A.title,
-        sub: 'Prodigy lee de sus sistemas y prepara propuestas con sus procedimientos; antes de escribir en un sistema, aprueba una persona.',
+        sub: 'Agentic Platform lee de sus sistemas y prepara propuestas con sus procedimientos; antes de escribir en un sistema, aprueba una persona.',
         icon: 'layers',
         body: html`<div class="arch-tools">
             <div class="arch-tool"><span class="label">Despliegue</span>${App.segmented({ name: 'plat-deploy', label: 'Despliegue', value: st.deploy, options: deployOpts })}</div>
@@ -624,8 +624,8 @@
   function pilotPanel(st) {
     const c = CASES[st.pilotCase] || CASES.A;
     return html`<div class="stack">
-      ${App.card({ id: 'plat-seen', title: 'Lo que ha visto hoy', sub: `${fmt.plural(P.seen.length, 'caso', 'casos')} de ${COMPANY} resueltos con agentes de Prodigy y aprobación humana; pulse cada uno para volver a la vista`, icon: 'presentation', body: seenCards() })}
-      ${App.card({ id: 'plat-honesty', title: 'Hoy en la demo · En un piloto', sub: 'Qué se ve en esta demo, qué es de serie en Prodigy y qué se construye en el piloto', icon: 'eye', flush: true, body: honestyTable() })}
+      ${App.card({ id: 'plat-seen', title: 'Lo que ha visto hoy', sub: `${fmt.plural(P.seen.length, 'caso', 'casos')} de ${COMPANY} resueltos con agentes de Agentic Platform y aprobación humana; pulse cada uno para volver a la vista`, icon: 'presentation', body: seenCards() })}
+      ${App.card({ id: 'plat-honesty', title: 'Hoy en la demo · En un piloto', sub: 'Qué se ve en esta demo, qué es de serie en Agentic Platform y qué se construye en el piloto', icon: 'eye', flush: true, body: honestyTable() })}
       ${App.card({
         id: 'plat-pilot',
         title: 'Piloto de 6–8 semanas',
@@ -639,7 +639,7 @@
       ${App.card({ id: 'plat-criteria', title: 'Criterios de aceptación', sub: 'Se firman en la semana 1 y se miden en la semana 8', icon: 'list-checks', flush: true, body: html`<div id="plat-criteria-table">${criteriaTable(c)}</div>` })}
       <div class="grid cols-2">
         ${App.card({ title: `${COMPANY} aporta`, icon: 'building', body: givesList(CLIENT_GIVES) })}
-        ${App.card({ title: 'Ciklum aporta', icon: 'workflow', body: givesList(CIKLUM_GIVES) })}
+        ${App.card({ title: 'MFM aporta', icon: 'workflow', body: givesList(MFM_GIVES) })}
       </div>
       ${App.callout({
         tone: 'brand',
@@ -653,7 +653,7 @@
 
   function calcOut(r, res, max) {
     if (res.state === 'invalid') return html`<span class="calc-msg t-crit">${icon('alert-circle', 15)}<span>Revisa el dato: de 0 a ${fmt.num(CALC_MAX)}</span></span>`;
-    if (res.state === 'slower') return html`<span class="calc-msg t-warn">${icon('alert-triangle', 15)}<span>Con Prodigy tardaría más: no suma</span></span>`;
+    if (res.state === 'slower') return html`<span class="calc-msg t-warn">${icon('alert-triangle', 15)}<span>Con Agentic Platform tardaría más: no suma</span></span>`;
     const pct = max > 0 ? Math.max(2, Math.round((res.hours / max) * 100)) : 0;
     return html`<span class="calc-bar" aria-hidden="true"><span style="width:${res.hours > 0 ? pct : 0}%"></span></span><span class="calc-h">${fmt.num(res.hours)} h</span>`;
   }
@@ -672,7 +672,7 @@
       { label: 'Jornadas de 8 h al año', value: fmt.num(t.days) },
       { label: `Equivalente a tiempo completo (${fmt.num(P.calc.fteHours || 1720)} h/año)`, value: fmt.num(t.fte) }
     ])}
-    <p class="calc-note">${t.excluded ? html`<span class="t-warn strong">${fmt.plural(t.excluded, 'caso no suma', 'casos no suman')} hasta corregir sus datos. </span>` : ''}${P.calc.note} «Con Prodigy» incluye la revisión y la aprobación humana. No incluye importes.</p>`;
+    <p class="calc-note">${t.excluded ? html`<span class="t-warn strong">${fmt.plural(t.excluded, 'caso no suma', 'casos no suman')} hasta corregir sus datos. </span>` : ''}${P.calc.note} «Con Agentic Platform» incluye la revisión y la aprobación humana. No incluye importes.</p>`;
   }
   function horasPanel(ctx) {
     const rows = calcValues(ctx);
@@ -687,7 +687,7 @@
         flush: true,
         actions: html`<button type="button" class="btn btn-ghost btn-sm" data-action="calc-reset">${icon('rotate-ccw', 15)}<span>Restablecer supuestos</span></button>`,
         body: html`<div class="calc" role="group" aria-label="Supuestos de la calculadora de horas">
-            <div class="calc-row calc-head" aria-hidden="true"><span>Caso</span><span class="right">Casos al mes</span><span class="right">Hoy (min)</span><span class="right">Con Prodigy (min)</span><span>Horas al mes</span></div>
+            <div class="calc-row calc-head" aria-hidden="true"><span>Caso</span><span class="right">Casos al mes</span><span class="right">Hoy (min)</span><span class="right">Con Agentic Platform (min)</span><span>Horas al mes</span></div>
             ${rows.map((r, i) => html`<div class="calc-row" data-calc-row="${r.id}">
               <div class="calc-case"><div class="strong">${r.label}</div><div class="calc-sub">${r.who}${r.scene ? html` · <button type="button" class="link-btn" data-go="${r.scene}">${r.seen}</button>` : ''}</div>${r.basis ? html`<div class="calc-sub calc-basis">${r.basis}</div>` : ''}</div>
               ${calcField(r, 'n')}${calcField(r, 'before')}${calcField(r, 'after')}
@@ -704,7 +704,7 @@
     return App.stats([
       { label: 'Acciones registradas', value: c.total },
       { label: 'De personas', value: c.persons },
-      { label: 'De agentes de Prodigy', value: c.agents },
+      { label: 'De agentes de Agentic Platform', value: c.agents },
       { label: 'Decisiones humanas', value: c.decisions }
     ]);
   }
@@ -713,7 +713,7 @@
     return App.segmented({ name: 'plat-audit-filter', label: 'Filtrar por actor', value: filter, options: [
       { value: 'all', label: 'Todas', count: c.total },
       { value: 'people', label: 'Personas', count: c.persons },
-      { value: 'agents', label: 'Agentes de Prodigy', count: c.agents },
+      { value: 'agents', label: 'Agentes de Agentic Platform', count: c.agents },
       { value: 'decisions', label: 'Decisiones', count: c.decisions }
     ] });
   }
@@ -821,7 +821,7 @@
       { label: 'Actor', key: 'actor' },
       { label: 'Vista', value: (r) => sceneNav(r.scene) }
     ] });
-    App.downloadFile(`registro-auditoria-prodigy-${META.id}.csv`, 'text/csv', content, { audit: false });
+    App.downloadFile(`registro-auditoria-agentic-${META.id}.csv`, 'text/csv', content, { audit: false });
     App.audit('Registro de auditoría exportado', `${fmt.plural(list.length, 'entrada', 'entradas')} · CSV`);
   }
 
@@ -834,7 +834,7 @@
     const t = calcTotals(rows);
     const PR = P.proposal;
     App.printableReport({
-      title: `Propuesta de piloto · Prodigy en ${COMPANY}`,
+      title: `Propuesta de piloto · Agentic Platform en ${COMPANY}`,
       subtitle: `${c.label} · ${c.title} · ${SITE.name} · 6–8 semanas`,
       kicker: 'Vista previa del documento',
       code: PR.code,
@@ -846,10 +846,10 @@
         { heading: '3. Arquitectura y despliegue', kv: [['Despliegue', dep.label], ['Modelo de lenguaje', `${llm.name} · ${llm.place}`], ['Datos fuera de su red', llm.exit], ['Acceso', `${A.ssoShort} (OIDC) o SAML 2.0; permisos por rol y realm`], ['Auditoría', 'Registro de solo añadir, exportable a CSV'], ['Coste', 'Estimación por petición en USD; presupuesto diario y mensual del realm']].concat(PR.extraArch || []) },
         { heading: '4. Plan de trabajo', table: { cols: [{ label: 'Semanas', render: (p) => html`<span style="white-space:nowrap">${weeksText(p)}</span>` }, { label: 'Trabajo', render: (p) => `${p.title}: ${p.detail.charAt(0).toLowerCase()}${p.detail.slice(1)}` }, { label: 'Resultado', key: 'result' }], rows: PHASES } },
         { heading: '5. Criterios de aceptación', table: { cols: [{ label: 'Criterio', key: 'name' }, { label: 'Umbral para aceptar', key: 'target' }, { label: 'Cómo se mide', key: 'how' }], rows: criteria(c) } },
-        { heading: '6. Qué aporta cada parte', kv: [[COMPANY, CLIENT_GIVES.join('; ')], ['Ciklum', CIKLUM_GIVES.join('; ')]] },
+        { heading: '6. Qué aporta cada parte', kv: [[COMPANY, CLIENT_GIVES.join('; ')], ['MFM', MFM_GIVES.join('; ')]] },
         { heading: '7. Qué es de serie y qué se construye', table: { cols: [{ label: 'Aspecto', key: 'aspect' }, { label: 'Hoy en la demo', key: 'demo' }, { label: 'En el piloto', key: 'pilot' }, { label: 'Origen', render: (r) => ORIGIN_TEXT[r.origin] }], rows: HONESTY } },
-        { heading: '8. Supuestos de horas para validar', table: { cols: [{ label: 'Caso', key: 'label' }, { label: 'Casos al mes', render: (r) => String(r.n), num: true }, { label: 'Hoy (min)', render: (r) => String(r.before), num: true }, { label: 'Con Prodigy (min)', render: (r) => String(r.after), num: true }, { label: 'Horas al mes', render: (r) => { const x = rowResult(r); return x.state === 'ok' ? fmt.num(x.hours) : 'No suma'; }, num: true }], rows } },
-        { heading: '', callout: `Total: ${fmt.num(t.month)} h al mes, ${fmt.num(t.year)} h al año (${fmt.num(t.days)} jornadas de 8 h; ${fmt.num(t.fte)} personas a tiempo completo). Son supuestos de la sesión, no mediciones: la línea base real se mide en las semanas 1–2 del piloto. «Con Prodigy» incluye la revisión y la aprobación humana.` }
+        { heading: '8. Supuestos de horas para validar', table: { cols: [{ label: 'Caso', key: 'label' }, { label: 'Casos al mes', render: (r) => String(r.n), num: true }, { label: 'Hoy (min)', render: (r) => String(r.before), num: true }, { label: 'Con Agentic Platform (min)', render: (r) => String(r.after), num: true }, { label: 'Horas al mes', render: (r) => { const x = rowResult(r); return x.state === 'ok' ? fmt.num(x.hours) : 'No suma'; }, num: true }], rows } },
+        { heading: '', callout: `Total: ${fmt.num(t.month)} h al mes, ${fmt.num(t.year)} h al año (${fmt.num(t.days)} jornadas de 8 h; ${fmt.num(t.fte)} personas a tiempo completo). Son supuestos de la sesión, no mediciones: la línea base real se mide en las semanas 1–2 del piloto. «Con Agentic Platform» incluye la revisión y la aprobación humana.` }
       ].concat(PR.compliance ? [{ heading: '9. Cumplimiento normativo', kv: PR.compliance }] : []).concat([
         { heading: PR.compliance ? '10. Siguiente paso' : '9. Siguiente paso', text: `${P.pilot.nextTitle.replace(/^Siguiente paso:\s*/i, '').replace(/^./, (m) => m.toUpperCase())}: ${P.pilot.nextBody.charAt(0).toLowerCase()}${P.pilot.nextBody.slice(1)}\n\n${P.pilot.after}` }
       ]),
@@ -911,7 +911,7 @@
       const counts = auditCounts();
       root.innerHTML = String(html`
         ${App.pageHead({
-          title: `Cómo encaja Prodigy en ${COMPANY}`,
+          title: `Cómo encaja Agentic Platform en ${COMPANY}`,
           meta: P.pageMeta,
           actions: html`<button type="button" class="btn btn-secondary" data-action="audit-json">${icon('download')}<span>Exportar registro (JSON)</span></button>
             <button type="button" class="btn btn-primary" data-action="proposal">${icon('printer')}<span>Descargar propuesta de piloto (PDF)</span></button>`
@@ -919,7 +919,7 @@
         ${kpis()}
         <div class="section" id="plat-tabs">${App.tabs({
           id: 'plat',
-          label: 'Cómo encaja Prodigy',
+          label: 'Cómo encaja Agentic Platform',
           active: TAB_IDS.includes(st.tab) ? st.tab : DEFAULTS.tab,
           tabs: [
             { id: 'arquitectura', label: 'Arquitectura', icon: 'layers', body: archPanel(st) },

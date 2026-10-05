@@ -1,5 +1,5 @@
 /* Mercados Moncayo · alarm with approval: dairy multideck MR-3 at store T-027 above 5 °C (English).
- * Fictitious company; synthetic demo data (Ciklum). The functions receive the scene context H
+ * Fictitious company; synthetic demo data (MFM). The functions receive the scene context H
  * (W workflow, C evaluated condition, sc current scope, ids generated on approval, fmt, fv, pl…). */
 (function () {
   'use strict';
@@ -35,7 +35,7 @@
   };
   const TEAMS = 'Stores · Huesca area';
 
-  prodigyPackEn('retail', {
+  agenticPackEn('retail', {
     alarma: {
       nav: 'T-027 alarm',
       title: 'T-027 alarm in progress',
@@ -113,7 +113,7 @@
           const a = H.all;
           return [
             { lane: 'mon', system: 'Sensores de frío', verb: 'Querying', action: 'Reads probe TS-T027-MR3 from 03:00 to 07:00, one reading every 5 min', result: `${SERIES.length} readings, no gaps · now 9.4 °C (07:00)`, ms: 1800, set: { volume: `${SERIES.length} temperature readings` } },
-            { lane: 'mon', system: 'Prodigy', eval: true, ms: 90 },
+            { lane: 'mon', system: 'Agentic Platform', eval: true, ms: 90 },
             { lane: 'mon', system: 'Sensores de frío', verb: 'Querying', action: 'Cross-checks the excursion against the fan current and refrigeration pack CF-T027', result: 'Fan VF-2 at 0 A since 03:40; pack and compressor running: hypothesis for Refrigeration Maintenance', tone: 'warn', ms: 1400, set: { volume: `${SERIES.length} readings · current draw`, result: `Excursion confirmed: ${H.C.above} min above · peak 9.8 °C` } },
             { lane: 'traz', system: 'SAP S/4 Retail', verb: 'Querying', action: 'Lists the MR-3 planogram range and stock by section', result: `${a.count} packs across ${UNITS.length} lines in ${a.items.length} sections`, ms: 2100, set: { volume: `${UNITS.length} lines` } },
             { lane: 'traz', system: 'SAP S/4 Retail', verb: 'Querying', action: 'Resolves the lot and use-by date of each line', result: `${new Set(UNITS.map((u) => u.lot)).size} Moncayo-brand lots · ${H.fmt.eur(a.value)} at retail price`, ms: 2300, set: { volume: `${a.count} packs · ${UNITS.length} lines` }, reveal: 'lots' },
@@ -121,7 +121,7 @@
             { lane: 'traz', system: 'TPV tiendas', verb: 'Querying', action: 'Checks expected sales and online orders for those lines', result: `${a.holds.length} sales channels; the first, ${H.first.id}, at ${H.first.time}`, tone: 'warn', ms: 1900, set: { volume: `${a.count} packs · ${a.holds.length} channels`, result: `First possible sale at ${H.first.time}` }, milestone: 'traz', audit: { action: 'Products and sales identified', detail: `${a.count} packs across ${UNITS.length} lines in ${a.items.length} MR-3 sections · ${a.holds.length} sales channels · ${a.elseTotal} packs outside the multideck` } },
             { lane: 'cal', node: 'apr', system: 'Procedimientos', verb: 'Analysing', action: 'Applies APPCC-TIE-01 and PR-CAL-010 to this excursion', result: 'Chilled product more than 2 h above 5 °C: block the sale, remove and destroy as waste; only Quality decides exceptions', ms: 1300 },
             { lane: 'cal', node: 'apr', system: 'Modelo de lenguaje', verb: 'Drafting', action: 'Drafts the proposal and its rationale with the evidence', result: `Proposal: block the sale of ${a.count} packs, move them to the waste cold room and open an urgent refrigeration incident`, ms: 6400, set: { volume: `${a.count} packs · ${a.holds.length} channels` } },
-            { lane: 'cal', node: 'apr', system: 'Prodigy', verb: 'Evaluating', action: `Requests approval from the ${H.W.approver} before writing to the POS, SAP and ServiceNow`, result: 'Awaiting the Quality decision', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Proposal sent to Quality' }, milestone: 'prop', audit: { action: 'Sales block proposal sent for approval', detail: `${a.count} packs in ${a.items.length} MR-3 sections · approver: ${H.W.approver}` } }
+            { lane: 'cal', node: 'apr', system: 'Agentic Platform', verb: 'Evaluating', action: `Requests approval from the ${H.W.approver} before writing to the POS, SAP and ServiceNow`, result: 'Awaiting the Quality decision', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Proposal sent to Quality' }, milestone: 'prop', audit: { action: 'Sales block proposal sent for approval', detail: `${a.count} packs in ${a.items.length} MR-3 sections · approver: ${H.W.approver}` } }
           ];
         },
         p2: (H) => {
@@ -292,7 +292,7 @@
           {
             icon: 'send', title: 'Notice to the store', systems: ['Microsoft Teams'], note: H.run.endAt ? `sent at ${H.fmt.time(H.run.endAt)}` : '',
             message: {
-              from: 'Prodigy · Store agent', channel: `“${TEAMS}” channel`, at: H.run.endAt ? H.fmt.time(H.run.endAt) : '',
+              from: 'Agentic Platform · Store agent', channel: `“${TEAMS}” channel`, at: H.run.endAt ? H.fmt.time(H.run.endAt) : '',
               paras: [
                 { to: ROLE.store_manager, text: `Before opening, please remove the following from multideck MR-3 (sale already blocked at the tills, ${H.ids.blq}, approved by ${H.decision.by}):` },
                 { to: ROLE.store_ops, text: `Incident ${H.ids.ot} raised for the refrigeration engineer, arriving 08:15. Restock from CF-1; urgent order on the 11:00 delivery. Details in ${H.ids.nc}.` }

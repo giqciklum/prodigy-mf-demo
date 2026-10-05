@@ -1,5 +1,5 @@
-/* Banco Cierzo · datos generales. Entidad ficticia; datos sintéticos de demostración (Ciklum). */
-prodigyPack('banca', {
+/* Banco Cierzo · datos generales. Entidad ficticia; datos sintéticos de demostración (MFM). */
+agenticPack('banca', {
   meta: {
     id: 'banca',
     industry: 'Banca y servicios financieros',

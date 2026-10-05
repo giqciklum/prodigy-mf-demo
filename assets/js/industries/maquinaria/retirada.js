@@ -3,7 +3,7 @@
  * 1.200 juntas recibidas → 24 desechadas en inspección, 72 en almacén y 1.104 montadas en 3 lotes de montaje
  * (MON-2607-22, MON-2608-03, MON-2608-11) → 26 equipos (20 PH-250 y 6 GH-55): 23 en campo en 11 clientes de
  * España, Portugal y Francia y 3 PH-250 en planta. Mismos equipos que CN_DATA.trace y la reclamación REC-2026-0187.
- * Datos sintéticos de demostración (Ciklum).
+ * Datos sintéticos de demostración (MFM).
  */
 (function () {
   'use strict';
@@ -295,7 +295,7 @@
       { agent: 'trace', system: 'SAP S/4HANA', action: 'Entregas, clientes y expediciones planificadas', result: `${field.length} equipos entregados a 11 clientes (España, Portugal y Francia) · EXP-26-3318 planificada hoy a las 11:00`, ms: 590, tone: 'warn', reveal: 4 },
       { agent: 'trace', system: 'Salesforce Service', action: 'Base instalada: emplazamiento final, contratos y contactos', result: `${field.length} equipos en ${places} emplazamientos · ${contracts} clientes con contrato de mantenimiento · ${finalsN} equipos en clientes finales de 2 distribuidores`, ms: 480, reveal: 5, mark: 'Clientes y emplazamientos identificados' },
       { agent: 'bal', system: 'SAP S/4HANA', action: 'Existencias, rechazos y consumos del lote', result: '72 juntas en C-14-03 (sin bloquear) · 24 desechadas · 1.104 consumidas en 3 órdenes de montaje', ms: 420 },
-      { agent: 'bal', system: 'Prodigy', action: 'Cuadre del lote: recibido frente a montado, desechado y en almacén', result: `Conciliado 100,0 % · 0 juntas sin justificar · ${UNITS.length} de ${UNITS.length} equipos localizados`, ms: 95, tone: 'ok', mark: 'Cuadre del lote cerrado' },
+      { agent: 'bal', system: 'Agentic Platform', action: 'Cuadre del lote: recibido frente a montado, desechado y en almacén', result: `Conciliado 100,0 % · 0 juntas sin justificar · ${UNITS.length} de ${UNITS.length} equipos localizados`, ms: 95, tone: 'ok', mark: 'Cuadre del lote cerrado' },
       { agent: 'rec', system: 'Salesforce Service', action: 'Abre la campaña de campo CC-2026-07 con una orden de servicio por equipo', result: `Campaña CC-2026-07 en borrador · ${field.length} órdenes de servicio sin liberar`, ms: 360 },
       { agent: 'rec', system: 'Outlook', action: 'Prepara los avisos sin enviar', result: '12 avisos (11 clientes en español, portugués y francés, y el proveedor) pendientes de aprobación', ms: 720, mark: 'Registro y avisos preparados' }
     ],
@@ -422,7 +422,7 @@
     ]
   };
 
-  prodigyPack('maquinaria', {
+  agenticPack('maquinaria', {
     retirada: {
       title: 'Simulacro de campaña de campo',
       nav: 'Simulacro de trazabilidad',
@@ -466,17 +466,17 @@
       report: { subtitle: 'Registro del ejercicio de trazabilidad y campaña de campo · ISO 9001 · PR-POS-005' },
       compare: {
         rows: [
-          { k: 'Personas implicadas', today: '3–4: Calidad, Posventa, Producción y Logística', prodigy: '1: {approver} revisa y aprueba' },
-          { k: 'Sistemas consultados', today: '5–6 abiertos a mano: SAP, Opcenter, Windchill, Salesforce, hojas de cálculo y correo', prodigy: '5 conectores consultados por los agentes: SAP S/4HANA, MES Opcenter, PLM Windchill, Salesforce Service y Outlook' },
-          { k: 'Pasos', today: '15–20 consultas, cruces por número de serie y cálculos manuales', prodigy: '{steps} pasos automáticos y 1 aprobación' },
-          { k: 'Cuadre del lote', today: 'Hoja de cálculo con consumos, existencias y rechazos', prodigy: 'Calculado por orden de montaje: {reconciled} conciliado' }
+          { k: 'Personas implicadas', today: '3–4: Calidad, Posventa, Producción y Logística', agentic: '1: {approver} revisa y aprueba' },
+          { k: 'Sistemas consultados', today: '5–6 abiertos a mano: SAP, Opcenter, Windchill, Salesforce, hojas de cálculo y correo', agentic: '5 conectores consultados por los agentes: SAP S/4HANA, MES Opcenter, PLM Windchill, Salesforce Service y Outlook' },
+          { k: 'Pasos', today: '15–20 consultas, cruces por número de serie y cálculos manuales', agentic: '{steps} pasos automáticos y 1 aprobación' },
+          { k: 'Cuadre del lote', today: 'Hoja de cálculo con consumos, existencias y rechazos', agentic: 'Calculado por orden de montaje: {reconciled} conciliado' }
         ]
       },
       presenter: {
         idle: [
           'Simulacro de campaña de campo con trazabilidad y cuadre del lote; en el piloto Calidad confirma el protocolo y medimos el tiempo real.',
           'Se elige el punto de partida: el lote de juntas JNT-2607-031 o el número de serie de la prensa que perdía aceite.',
-          'Prodigy recorre SAP, Opcenter, Windchill y Salesforce hacia atrás hasta el proveedor y hacia delante hasta cada número de serie y cliente, y cuadra el lote junta a junta.'
+          'Agentic Platform recorre SAP, Opcenter, Windchill y Salesforce hacia atrás hasta el proveedor y hacia delante hasta cada número de serie y cliente, y cuadra el lote junta a junta.'
         ],
         nextIdle: 'Pulsar «Iniciar simulacro» con el lote JNT-2607-031 (o elegir «N.º de serie PH250-26-0412»).',
         nextRun: 'Pulsar «Ver aviso» de un cliente portugués o francés y después «Aprobar y cerrar simulacro».',

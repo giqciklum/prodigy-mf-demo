@@ -1,7 +1,7 @@
 /* Banco Cierzo · registros de trazabilidad por expediente (BIN, punto común de compromiso, comercio y reclamación).
  * Los lee App.traceModal desde CN_DATA.trace[código]. Números de tarjeta siempre enmascarados (PCI DSS).
- * Datos sintéticos de demostración (Ciklum). */
-prodigyPack('banca', {
+ * Datos sintéticos de demostración (MFM). */
+agenticPack('banca', {
   trace: (function () {
     'use strict';
 
@@ -80,7 +80,7 @@ prodigyPack('banca', {
           { key: 'status', label: 'Estado', chip: true }
         ],
         rows: MERCHANTS,
-        note: { title: 'Propuesta de Prodigy', body: 'Regla preventiva en Falcon para comercio electrónico de riesgo alto en el BIN (MCC 4899, 5732, 5815, 6051 sin SCA), reemisión de 214 tarjetas y aviso a los clientes por SMS y en la app. Requiere la aprobación del Responsable de Prevención del Fraude.', icon: 'shield' }
+        note: { title: 'Propuesta de Agentic Platform', body: 'Regla preventiva en Falcon para comercio electrónico de riesgo alto en el BIN (MCC 4899, 5732, 5815, 6051 sin SCA), reemisión de 214 tarjetas y aviso a los clientes por SMS y en la app. Requiere la aprobación del Responsable de Prevención del Fraude.', icon: 'shield' }
       },
       units: { label: 'Tarjetas (muestra)', cols: CARD_COLS, rows: nightRows },
       quality: [

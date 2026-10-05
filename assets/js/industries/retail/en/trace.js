@@ -1,6 +1,6 @@
 /* Mercados Moncayo · traceability records (own-brand lots, manufacturer raw materials and the refrigerated
- * multideck in the alarm), English. Read by App.traceModal from CN_DATA.trace[code]. Synthetic demo data (Ciklum). */
-prodigyPackEn('retail', {
+ * multideck in the alarm), English. Read by App.traceModal from CN_DATA.trace[code]. Synthetic demo data (MFM). */
+agenticPackEn('retail', {
   trace: (function () {
     'use strict';
 

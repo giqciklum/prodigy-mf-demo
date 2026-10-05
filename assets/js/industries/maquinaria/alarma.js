@@ -1,5 +1,5 @@
 /* Hidromec Ebro · alarma con aprobación: vibración del husillo del centro de mecanizado MC-04.
- * Empresa ficticia; datos sintéticos de demostración (Ciklum). Las funciones reciben el contexto H de la escena
+ * Empresa ficticia; datos sintéticos de demostración (MFM). Las funciones reciben el contexto H de la escena
  * (W workflow, C condición evaluada, sc alcance vigente, ids generados al aprobar, fmt, fv, pl…). */
 (function () {
   'use strict';
@@ -37,7 +37,7 @@
   };
   const TEAMS = 'Mantenimiento · Planta de Zaragoza';
 
-  prodigyPack('maquinaria', {
+  agenticPack('maquinaria', {
     alarma: {
       nav: 'Alarma MC-04',
       title: 'Alarma MC-04 en ejecución',
@@ -115,7 +115,7 @@
           const a = H.all;
           return [
             { lane: 'mon', system: 'IIoT Vibración', verb: 'Consultando', action: 'Lee el sensor VS-MC04-01 de 03:20 a 06:20, una lectura cada 4 min', result: `${V.length} lecturas, sin huecos · ahora 0,4 mm/s (06:20), husillo parado desde las 05:52`, ms: 1850, set: { volume: `${V.length} lecturas de vibración` } },
-            { lane: 'mon', system: 'Prodigy', eval: true, ms: 90 },
+            { lane: 'mon', system: 'Agentic Platform', eval: true, ms: 90 },
             { lane: 'mon', system: 'IIoT Vibración', verb: 'Consultando', action: 'Cruza la anomalía con el espectro y la temperatura del rodamiento delantero', result: 'Frecuencia de defecto de pista exterior (BPFO) marcada desde las 03:40 y rodamiento a 61 °C: hipótesis para Mantenimiento', tone: 'warn', ms: 1400, set: { volume: `${V.length} lecturas · espectro · temperatura`, result: `Anomalía confirmada: ${H.C.above} min por encima · pico 8,4 mm/s` } },
             { lane: 'traz', system: 'MES Opcenter', verb: 'Consultando', action: `Lista las piezas mecanizadas en MC-04 entre ${H.C.start} y ${H.C.end}`, result: `${a.count} culatas con número de serie en ${a.items.length} contenedores`, ms: 2100, set: { volume: `${a.count} números de serie` } },
             { lane: 'traz', system: 'SAP S/4HANA', verb: 'Consultando', action: 'Resuelve lote, orden y material de cada número de serie', result: `Lote CUL-2609-118 · OF 4100872 (operación 30) · ${H.fmt.eur(a.value)} a coste estándar`, ms: 2400, set: { volume: `${a.count} culatas · 1 lote · 1 OF` }, reveal: 'lots' },
@@ -123,7 +123,7 @@
             { lane: 'traz', system: 'SAP S/4HANA', verb: 'Consultando', action: 'Consulta las órdenes y envíos que consumen esas culatas', result: `${a.holds.length} órdenes y envíos; la primera, ${H.first.id}, a las ${H.first.time} en la ${H.first.where.toLowerCase()}`, tone: 'warn', ms: 2200, set: { volume: `${a.count} culatas · ${a.holds.length} órdenes y envíos`, result: `Primera operación afectada a las ${H.first.time}` }, milestone: 'traz', audit: { action: 'Piezas y órdenes identificadas', detail: `${a.count} culatas del lote CUL-2609-118 en ${a.items.length} contenedores · ${a.holds.length} órdenes y envíos siguientes · ${a.elseTotal} culatas del mismo lote a evaluar` } },
             { lane: 'cal', node: 'apr', system: 'Procedimientos', verb: 'Analizando', action: 'Aplica PR-MAN-011 y PR-CAL-004 a esta anomalía', result: 'Parar y revisar el husillo; bloquear las piezas de la ventana y medirlas al 100 % en la CMM; solo Calidad libera', ms: 1300 },
             { lane: 'cal', node: 'apr', system: 'Modelo de lenguaje', verb: 'Redactando', action: 'Redacta la propuesta y su motivo con las evidencias', result: `Propuesta: bloquear ${a.count} culatas, retener ${a.holds.length} órdenes y envíos, OT de parada del husillo y pasar la OF 4100872 a MC-02`, ms: 6800, set: { volume: `${a.count} culatas · ${a.holds.length} órdenes` } },
-            { lane: 'cal', node: 'apr', system: 'Prodigy', verb: 'Evaluando', action: `Pide la aprobación de ${H.W.approver} antes de escribir en SAP QM, Maximo y SAP PP`, result: 'Esperando la decisión de Mantenimiento', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Propuesta enviada a Mantenimiento' }, milestone: 'prop', audit: { action: 'Propuesta de bloqueo y parada enviada a aprobación', detail: `${a.count} culatas en ${a.items.length} contenedores · OT de parada · OF 4100872 a MC-02 · aprueba ${H.W.approver}` } }
+            { lane: 'cal', node: 'apr', system: 'Agentic Platform', verb: 'Evaluando', action: `Pide la aprobación de ${H.W.approver} antes de escribir en SAP QM, Maximo y SAP PP`, result: 'Esperando la decisión de Mantenimiento', tone: 'warn', ms: 60, wait: 1500, set: { result: 'Propuesta enviada a Mantenimiento' }, milestone: 'prop', audit: { action: 'Propuesta de bloqueo y parada enviada a aprobación', detail: `${a.count} culatas en ${a.items.length} contenedores · OT de parada · OF 4100872 a MC-02 · aprueba ${H.W.approver}` } }
           ];
         },
         p2: (H) => {
@@ -298,7 +298,7 @@
           {
             icon: 'send', title: 'Aviso al equipo', systems: ['Microsoft Teams'], note: H.run.endAt ? `enviado a las ${H.fmt.time(H.run.endAt)}` : '',
             message: {
-              from: 'Prodigy · agente Mantenimiento', channel: `canal «${TEAMS}»`, at: H.run.endAt ? H.fmt.time(H.run.endAt) : '',
+              from: 'Agentic Platform · agente Mantenimiento', channel: `canal «${TEAMS}»`, at: H.run.endAt ? H.fmt.time(H.run.endAt) : '',
               paras: [
                 { to: 'Técnico de guardia', text: `${H.ids.ot} de prioridad 1 en MC-04, aprobada por ${H.decision.by}. Consignar según PR-SEG-002 y revisar el rodamiento delantero del husillo (BPFO en el espectro, 61 °C a las 05:32).` },
                 { to: ROLE.production, text: 'La OF 4100872 pasa a MC-02 desde las 07:30; el montaje de las 08:00 sale con culatas del lote CUL-2609-104.' },

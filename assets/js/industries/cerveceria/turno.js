@@ -1,5 +1,5 @@
-/* Cervecera Bardenas · resumen del turno (escena «turno»). Datos sintéticos de demostración (Ciklum). */
-prodigyPack('cerveceria', {
+/* Cervecera Bardenas · resumen del turno (escena «turno»). Datos sintéticos de demostración (MFM). */
+agenticPack('cerveceria', {
   turno: (function () {
     'use strict';
     const hhmm = (i) => `${String(Math.floor((i * 5) / 60)).padStart(2, '0')}:${String((i * 5) % 60).padStart(2, '0')}`;
@@ -65,7 +65,7 @@ prodigyPack('cerveceria', {
         title: 'Mapa de la fábrica · Arguedas',
         sub: 'Lecturas del parte de las 06:00 y del SCADA de bodega a las 05:50 · pulsa un elemento para ver su ficha',
         icon: 'factory',
-        readonly: 'Prodigy lee el SCADA de bodega, Brewmaxx, LIMS LabWare y WMS Mecalux; no actúa sobre válvulas ni consignas',
+        readonly: 'Agentic Platform lee el SCADA de bodega, Brewmaxx, LIMS LabWare y WMS Mecalux; no actúa sobre válvulas ni consignas',
         zones: [
           { id: 'coc', title: 'Cocimiento', sub: 'Sala de cocción', items: [
             { code: 'SC-1', name: 'Sala de cocción', reading: '97,8 %', status: 'ok', kv: [['Cocimientos ayer', '6 × 120 hl'], ['Próximo', 'C-2609-071 · 07:30']] },
@@ -74,7 +74,7 @@ prodigyPack('cerveceria', {
           ] },
           { id: 'bod', title: 'Bodega', sub: 'Fermentación y guarda', items: [
             { code: 'FV-12', name: 'Lager · día 3', reading: '16,8 °C', status: 'crit', tags: ['L2609-FV12'], go: 'alarma', goLabel: 'Abrir la alarma',
-              note: 'Válvula de glicol VG-12 bloqueada en cerrado. Prodigy propone OT de la válvula, retener el lote con análisis de diacetilo y acetaldehído, y reprogramar el trasiego.',
+              note: 'Válvula de glicol VG-12 bloqueada en cerrado. Agentic Platform propone OT de la válvula, retener el lote con análisis de diacetilo y acetaldehído, y reprogramar el trasiego.',
               kv: [['Lote', 'L2609-FV12 · 480 hl'], ['Por encima de 13,5 °C', 'desde las 02:30'], ['Pico', '17,1 °C a las 05:20'], ['Trasiego previsto', '06/10/2026']] },
             { code: 'FV-10', name: 'Tostada', reading: '13,9 °C', status: 'ok' },
             { code: 'FV-11', name: 'Lager · día 6', reading: '12,1 °C', status: 'ok', note: 'Gemelo de FV-12 en el mismo circuito de glicol: descarta un fallo general del circuito.' },
@@ -167,7 +167,7 @@ prodigyPack('cerveceria', {
         steps: [
           { agent: AGENT, system: 'Brewmaxx (MES)', action: 'Lee las lecturas de las 06:00 de 14 equipos (cocimiento, bodega, envasado, almacén y servicios)', result: '14 lecturas recibidas, sin huecos', ms: 600 },
           { agent: AGENT, system: 'SCADA bodega', action: 'Consulta temperaturas de fermentadores, válvulas de glicol y planta de frío', result: 'FV-12 a 16,8 °C con VG-12 sin abrir desde las 23:40; FV-11 en consigna', ms: 540, tone: 'crit' },
-          { agent: AGENT, system: 'Prodigy', action: 'Compara cada lectura con sus umbrales de proceso (11 indicadores)', result: '2 críticos · 4 avisos · 8 sin incidencias', ms: 60, tone: 'crit' },
+          { agent: AGENT, system: 'Agentic Platform', action: 'Compara cada lectura con sus umbrales de proceso (11 indicadores)', result: '2 críticos · 4 avisos · 8 sin incidencias', ms: 60, tone: 'crit' },
           { agent: AGENT, system: 'LIMS LabWare', action: 'Revisa los análisis de envasado de las últimas 24 h', result: 'LLB-1: O₂ disuelto de 78 ppb en el cabezal 3 (especificación ≤ 50 ppb)', ms: 450, tone: 'crit' },
           { agent: AGENT, system: 'LIMS LabWare', action: 'Busca el histórico de O₂ de LLB-1 en los lotes de barril con reclamación', result: 'L2608-K14 (18/08): 64 ppb, fuera de especificación, liberado con desviación', ms: 470, tone: 'warn' },
           { agent: AGENT, system: 'SAP S/4HANA', action: 'Cruza las alertas con las reclamaciones de clientes abiertas', result: 'REC-2026-0093: sabor oxidado en barriles del lote L2608-K14', ms: 360, tone: 'warn' },
@@ -212,12 +212,12 @@ prodigyPack('cerveceria', {
         say: [
           'Así empieza el turno la Jefa de producción en Arguedas: lo que pide una decisión, en una sola bandeja.',
           'Los datos llegan de sus sistemas: temperaturas del SCADA de bodega, lotes de Brewmaxx y SAP, análisis del LIMS, barriles del WMS y órdenes de Maximo. Aquí son sintéticos, pero coherentes entre sí.',
-          'El mapa resume la fábrica de un vistazo: gris lo normal, color lo que pide atención. FV-12 está en rojo; al pulsarlo se ve el lote, la válvula de glicol y lo que propone Prodigy.',
+          'El mapa resume la fábrica de un vistazo: gris lo normal, color lo que pide atención. FV-12 está en rojo; al pulsarlo se ve el lote, la válvula de glicol y lo que propone Agentic Platform.',
           'Tres asuntos: la temperatura de FV-12 de las 05:50 (480 hl de Bardenas Lager en día 3), la reclamación de barriles con sabor oxidado y el parte con 2 críticos.'
         ],
         sayBefore: ['Generar parte diario: revisa 14 equipos, no duplica órdenes abiertas y crea los tickets. Fijaos en el tiempo.'],
         sayAfter: [
-          'Relación que encuentra Prodigy: la llenadora de barriles mete oxígeno de más, y el lote reclamado se llenó allí con 64 ppb. Nadie ha tenido que cruzar el LIMS, SAP y el WMS.',
+          'Relación que encuentra Agentic Platform: la llenadora de barriles mete oxígeno de más, y el lote reclamado se llenó allí con 64 ppb. Nadie ha tenido que cruzar el LIMS, SAP y el WMS.',
           'Y no duplica: dos órdenes ya abiertas se actualizan en lugar de abrir tickets nuevos.'
         ],
         next: 'Pulsar «Generar parte diario» y comentar el registro mientras se ejecuta.',

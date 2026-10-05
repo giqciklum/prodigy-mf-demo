@@ -1,6 +1,6 @@
 /* Cervecera Bardenas · reclamación REC-2026-0093 (barriles de Bardenas Lager con sabor oxidado, lote L2608-K14).
- * Empresa, clientes y personas ficticios; datos sintéticos de demostración (Ciklum). */
-prodigyPack('cerveceria', {
+ * Empresa, clientes y personas ficticios; datos sintéticos de demostración (MFM). */
+agenticPack('cerveceria', {
   reclamacion: {
     code: 'REC-2026-0093',
     nav: 'Reclamación REC-2026-0093',
@@ -55,7 +55,7 @@ prodigyPack('cerveceria', {
     ].join('\n'),
     mail_extra: {
       label: 'Parte de cata del distribuidor',
-      note: 'Parte de cata que adjunta el distribuidor (PDF convertido a texto). Prodigy lo usa para contrastar el defecto con la cata de la muestra de retén.',
+      note: 'Parte de cata que adjunta el distribuidor (PDF convertido a texto). Agentic Platform lo usa para contrastar el defecto con la cata de la muestra de retén.',
       headers: { From: 'Distribuciones Hosteleras Ribera · Calidad', Subject: 'Parte de cata · INC-DHR-26-047 · barril sin abrir del lote L2608-K14', Date: 'lun, 28 sep 2026 09:30' },
       text: [
         'PARTE DE CATA · Distribuciones Hosteleras Ribera, S.L.',
@@ -140,7 +140,7 @@ prodigyPack('cerveceria', {
       label: 'Código de lote',
       systems: 'SAP S/4HANA, Brewmaxx y WMS Mecalux',
       systems_short: 'SAP y Brewmaxx',
-      fix_text: 'Si el distribuidor ha copiado mal el lote, escribe el correcto. Prodigy lo busca en SAP y Brewmaxx y comprueba que es de Bardenas Lager en barril y que se le expidió antes de cambiar nada.',
+      fix_text: 'Si el distribuidor ha copiado mal el lote, escribe el correcto. Agentic Platform lo busca en SAP y Brewmaxx y comprueba que es de Bardenas Lager en barril y que se le expidió antes de cambiar nada.',
       same_body: 'Existe en SAP: Bardenas Lager en barril de 30 l, envasado el 18/08/2026 en LLB-1; 168 barriles expedidos a Distribuciones Hosteleras Ribera. Sin cambios.',
       unknown_hint: 'Si el código es dudoso, compáralo con la foto de la etiqueta del barril que adjunta el distribuidor.',
       mismatch_body: 'El código existe en los sistemas, pero no es un lote de barril expedido a este cliente: no se cambia la ficha.',
@@ -152,7 +152,7 @@ prodigyPack('cerveceria', {
     },
     sheet: {
       sub: 'Datos extraídos del correo y comprobados en SAP, Brewmaxx y LIMS',
-      empty_text: 'Prodigy extraerá del correo el producto, el lote, el defecto, los bares, el stock del cliente y el plazo, y los comprobará en SAP y Brewmaxx antes de preparar el 8D y la respuesta.',
+      empty_text: 'Agentic Platform extraerá del correo el producto, el lote, el defecto, los bares, el stock del cliente y el plazo, y los comprobará en SAP y Brewmaxx antes de preparar el 8D y la respuesta.',
       rows: [
         { k: 'Referencia', v: 'INC-DHR-26-047', code: true, sub: 'Referencia del distribuidor · reclamación REC-2026-0093' },
         { k: 'Cliente', v: 'Distribuciones Hosteleras Ribera, S.L. (Tudela)', sub: 'Distribuidor de hostelería · bares afectados en Tudela, Cintruénigo y Castejón' },
@@ -281,7 +281,7 @@ prodigyPack('cerveceria', {
       control: {
         label: 'Resumen para quien aprueba',
         note: 'Resumen interno que acompaña a la aprobación; no se envía al distribuidor.',
-        edited_note: 'El resumen corresponde al borrador de Prodigy; la versión editada incluye cambios de Calidad en el texto que se envía.',
+        edited_note: 'El resumen corresponde al borrador de Agentic Platform; la versión editada incluye cambios de Calidad en el texto que se envía.',
         subject: 'Resumen interno · REC-2026-0093 · NC-2026-0141',
         text: [
           'Qué se aprueba:',
@@ -303,8 +303,8 @@ prodigyPack('cerveceria', {
       approver: 'Responsable de Calidad',
       policy: 'PR-CAL-006 · APPCC-01',
       summary: {
-        pending: 'Prodigy ha preparado la respuesta para calidad@dhribera.example, la reposición y recogida de 47 barriles, el abono y el bloqueo de los barriles del lote que siguen en fábrica. No se envía ni se bloquea nada hasta que Calidad lo apruebe.',
-        approved: 'Calidad ha aprobado la respuesta y la contención. Prodigy ha enviado el correo al distribuidor, ha bloqueado 96 barriles en CB-03, ha creado la reposición y el abono y ha actualizado NC-2026-0141.',
+        pending: 'Agentic Platform ha preparado la respuesta para calidad@dhribera.example, la reposición y recogida de 47 barriles, el abono y el bloqueo de los barriles del lote que siguen en fábrica. No se envía ni se bloquea nada hasta que Calidad lo apruebe.',
+        approved: 'Calidad ha aprobado la respuesta y la contención. Agentic Platform ha enviado el correo al distribuidor, ha bloqueado 96 barriles en CB-03, ha creado la reposición y el abono y ha actualizado NC-2026-0141.',
         rejected: 'Calidad ha rechazado la propuesta: no se ha enviado la respuesta, ni se ha bloqueado ningún barril, ni se ha programado la reposición.'
       },
       scope: [
@@ -330,7 +330,7 @@ prodigyPack('cerveceria', {
     compare: {
       rows: [
         { k: 'Personas que intervienen', hoy: '4: Calidad, Maestro cervecero, logística y atención al cliente', pro_strong: '1', pro: ': Calidad revisa, corrige si hace falta y aprueba' },
-        { k: 'Sistemas que hay que abrir', hoy: '6: Outlook, SAP, Brewmaxx, LIMS, WMS y Maximo', pro_strong: '1', pro: ': esta consola; Prodigy consulta los 6' }
+        { k: 'Sistemas que hay que abrir', hoy: '6: Outlook, SAP, Brewmaxx, LIMS, WMS y Maximo', pro_strong: '1', pro: ': esta consola; Agentic Platform consulta los 6' }
       ],
       steps_today: '12–15 búsquedas, cruces y redacciones a mano',
       time_label: 'Traza, 8D en borrador y respuesta',
@@ -403,7 +403,7 @@ prodigyPack('cerveceria', {
       },
       history_heading: 'Anexo C · Reclamaciones anteriores (12 meses)',
       approvals: [
-        { paso: 'Borradores 8D y respuesta', rol: 'Prodigy · agente Reclamaciones de cliente', kind: 'agent' },
+        { paso: 'Borradores 8D y respuesta', rol: 'Agentic Platform · agente Reclamaciones de cliente', kind: 'agent' },
         { paso: 'Respuesta al cliente y contención (D3)', rol: 'Responsable de Calidad', kind: 'reply' },
         { paso: 'Confirmación de la causa raíz (D4)', rol: 'Responsable de Calidad · Maestro cervecero', kind: 'pending' },
         { paso: 'Cierre del 8D (D8)', rol: 'Responsable de Calidad', kind: 'pending' }
@@ -414,10 +414,10 @@ prodigyPack('cerveceria', {
       running: 'Mientras corre: señalar la línea de Brewmaxx (64 ppb de O₂ al llenar, cabezal 3 a 91) y la de LIMS (la botella de la misma cerveza está bien). Si hace falta, «Acelerar».',
       idle: [
         'Correo de Distribuciones Hosteleras Ribera, nuestro mayor distribuidor de la Ribera: tres bares han devuelto barriles de Bardenas Lager por sabor a cartón, todos del lote L2608-K14. Llegó ayer a las 12:06 y su acuerdo pide respuesta en 48 horas.',
-        'En producción, Prodigy lo analiza en cuanto entra en el buzón de Calidad. Aquí lo lanzamos a mano para ver qué hace y qué sistemas consulta.'
+        'En producción, Agentic Platform lo analiza en cuanto entra en el buzón de Calidad. Aquí lo lanzamos a mano para ver qué hace y qué sistemas consulta.'
       ],
       pending: [
-        'Lo resaltado en el correo es lo que Prodigy ha extraído. Cada dato se comprueba en SAP: el lote existe, es barril de Lager y se le expidieron 168 barriles el 20/08.',
+        'Lo resaltado en el correo es lo que Agentic Platform ha extraído. Cada dato se comprueba en SAP: el lote existe, es barril de Lager y se le expidieron 168 barriles el 20/08.',
         'La traza: de la malta y la fermentación al llenado en LLB-1 y a los 14 clientes. 912 barriles fuera, 96 en nuestra cámara sin bloquear y 32 retenidos.',
         'El dato que cambia la investigación: el lote se llenó con 64 ppb de oxígeno, por encima de especificación, y se liberó con desviación porque la cata era buena. La botella de la misma cerveza está bien. Es una hipótesis, no la causa.',
         'Histórico: en octubre de 2025 pasó lo mismo por una junta de la misma llenadora. El 8D propone no liberar barril con O₂ alto y no aplazar el preventivo.',

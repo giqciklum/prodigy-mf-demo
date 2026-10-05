@@ -1,5 +1,5 @@
-/* Cerveceria Bardenas · Supplier Approval Questionnaire SAQ-3 by Northgate Beverages Ltd (British importer), English. Fictitious entities; synthetic data (Ciklum). */
-prodigyPackEn('cerveceria', {
+/* Cerveceria Bardenas · Supplier Approval Questionnaire SAQ-3 by Northgate Beverages Ltd (British importer), English. Fictitious entities; synthetic data (MFM). */
+agenticPackEn('cerveceria', {
   cuestionario: {
     agent: 'Customer questionnaires',
     lang: 'en',
@@ -63,7 +63,7 @@ prodigyPackEn('cerveceria', {
       { system: 'LIMS LabWare', action: 'Reviews lot release for September', result: '46 lots released with full analyses · 1 held (L2608-K14)', ms: 460 },
       { system: 'SAP S/4HANA', action: 'Rebuilds batch traceability and searches for complaints', result: 'L2608-K14: malt, hops and CO2 by lot · 1 open complaint', ms: 480, tone: 'warn' },
       { system: 'WMS Mecalux', action: 'Reads pallets and shipments for the batch', result: '1,040 kegs: 912 shipped to 14 customers, 96 in stock, 32 held', ms: 380 },
-      { system: 'SCADA cellar', action: 'Cross-checks the questionnaire with today\'s alarms', result: 'FV-12 at 16.8°C (setpoint 12°C) since 02:30 · batch L2609-FV12', ms: 320, tone: 'warn' }
+      { system: 'SCADA cellar', action: 'Cross-checks the questionnaire with today’s alarms', result: 'FV-12 at 16.8°C (setpoint 12°C) since 02:30 · batch L2609-FV12', ms: 320, tone: 'warn' }
     ],
     compare: {
       people: '2–3: Quality, Packaging and, depending on the question, Procurement or Logistics',
@@ -75,12 +75,12 @@ prodigyPackEn('cerveceria', {
       before: [
         'Before the first shipment to the UK, Northgate Beverages must approve our brewery. Their questionnaire decides whether the beer reaches the shelves in November.',
         '{total} questions in English on certification, glass, gluten, pasteurisation, traceability and UK labelling. The procedures are in Spanish; no problem.',
-        'When you press the button, Prodigy searches the IFS certificate, the HACCP plan, the procedures and the specifications, and in the records from Brewmaxx, LIMS, SAP, the WMS and the cellar SCADA, and drafts each answer with its source.'
+        'When you press the button, Agentic Platform searches the IFS certificate, the HACCP plan, the procedures and the specifications, and in the records from Brewmaxx, LIMS, SAP, the WMS and the cellar SCADA, and drafts each answer with its source.'
       ],
       during: [
         '{drafted} of {total} with draft and citation, in English and sourced; each citation is checked against the source text. {flagged} remain unanswered: food safety culture, food contact materials and packaging data for the UK EPR. Without a document, nothing is invented.',
-        'B1: the glass policy answers with the procedure and with this month\'s bottle inspector verifications.',
-        'C2 and D2: cross-check the questionnaire with today\'s FV-12 alarm and the open complaint about oxidised kegs. The questionnaire does not live isolated from the rest of the brewery.',
+        'B1: the glass policy answers with the procedure and with this month’s bottle inspector verifications.',
+        'C2 and D2: cross-check the questionnaire with today’s FV-12 alarm and the open complaint about oxidised kegs. The questionnaire does not live isolated from the rest of the brewery.',
         'Nothing goes out without approval: all high-confidence ones in batch; traceability and UK labelling reviewed one by one.'
       ],
       next_during: 'Show B1 (citations) and D2 (complaint alert), and E2 (no evidence). Then "Approve the {alta} high-confidence answers", approve {media_ids} one by one and "Assign the {flagged} with no source".'
@@ -221,7 +221,7 @@ prodigyPackEn('cerveceria', {
         qEn: 'Describe your food safety culture plan: how it is measured, the objectives set and the results of the last assessment.',
         flag: {
           reason: 'None of the {doc_count} indexed documents describe the food safety culture plan or its assessment.',
-          context: 'IFS Food version 8 requires a food safety culture plan with objectives and measurement, so it should exist in Quality. Prodigy does not describe its content or assume results.',
+          context: 'IFS Food version 8 requires a food safety culture plan with objectives and measurement, so it should exist in Quality. Agentic Platform does not describe its content or assume results.',
           partial: [],
           missing: ['Food safety culture plan with objectives', 'Measurement method (survey, indicators)', 'Result of the last assessment and actions']
         }
@@ -278,9 +278,9 @@ prodigyPackEn('cerveceria', {
           { src: 'PR-FER-003', q: 'If temperature exceeds the limit for more than 2 hours, the batch is held and diacetyl and acetaldehyde are tested in LIMS before transfer. Above 15°C the deviation is critical.' }
         ],
         note: {
-          tone: 'warn', icon: 'thermometer', title: 'Today\'s alarm on fermenter FV-12',
-          text: 'FV-12 (Bardenas Lager, wort batch L2609-FV12, 480 hl, day 3 of fermentation) is at 16.8°C since 02:30 due to failure of the glycol valve VG-12, with a peak of 17.1°C. The answer describes the procedure, not today\'s case.',
-          outcome: 'alarma', tone_done: 'brand', with: { approved: 'In the alarm: {label}.', any: 'In the alarm the agent\'s proposal was rejected.' },
+          tone: 'warn', icon: 'thermometer', title: 'Today’s alarm on fermenter FV-12',
+          text: 'FV-12 (Bardenas Lager, wort batch L2609-FV12, 480 hl, day 3 of fermentation) is at 16.8°C since 02:30 due to failure of the glycol valve VG-12, with a peak of 17.1°C. The answer describes the procedure, not today’s case.',
+          outcome: 'alarma', tone_done: 'brand', with: { approved: 'In the alarm: {label}.', any: 'In the alarm the agent’s proposal was rejected.' },
           without: 'Batch hold is decided in the alarm scene.',
           go: 'alarma', goLabel: 'Open the alarm'
         }
@@ -340,14 +340,14 @@ prodigyPackEn('cerveceria', {
           { src: 'ET-ETQ-UK', q: '"Alcohol free" is permitted in the UK for drinks of maximum 0.05% ABV.' },
           { src: 'ET-PT-003', q: 'Alcohol by volume: maximum 0.05%.' }
         ],
-        gap: 'The labelling specification does not include Northgate\'s name and UK address as importer, nor approval of designs by the customer. Confirm with Northgate before sending.'
+        gap: 'The labelling specification does not include Northgate’s name and UK address as importer, nor approval of designs by the customer. Confirm with Northgate before sending.'
       },
       {
         id: 'E2', ref: 'SAQ-3 5.2', sec: 'E', topic: 'Food contact materials', conf: 'none',
         qEn: 'Please provide declarations of compliance for all food contact packaging (bottles, cans and can coatings, crowns, kegs), including the status of bisphenol A in can coatings.',
         flag: {
           reason: 'Declarations of compliance from packaging suppliers are not among the {doc_count} indexed documents.',
-          context: 'Regulation (EU) 2024/3190 prohibits bisphenol A in food contact materials, with transition periods; that is why Northgate asks about can coatings. Prodigy does not assume each supplier\'s status.',
+          context: 'Regulation (EU) 2024/3190 prohibits bisphenol A in food contact materials, with transition periods; that is why Northgate asks about can coatings. Agentic Platform does not assume each supplier’s status.',
           partial: [],
           missing: ['Compliance declarations (Regulation (EC) 1935/2004 and Regulation (EU) 10/2011) for cans, coatings, crowns and gaskets', 'Confirmation that can coatings are bisphenol A-free', 'Effective date of each declaration']
         }
@@ -357,7 +357,7 @@ prodigyPackEn('cerveceria', {
         qEn: 'For UK extended producer responsibility for packaging (pEPR), please provide the weight and material of each packaging component and its recycled content.',
         flag: {
           reason: 'None of the {doc_count} indexed documents record packaging weights, materials or recycled content.',
-          context: 'Northgate, as importer, is the responsible producer in the UK and needs this data for declaration. Packaging Procurement has it; Prodigy does not estimate it.',
+          context: 'Northgate, as importer, is the responsible producer in the UK and needs this data for declaration. Packaging Procurement has it; Agentic Platform does not estimate it.',
           partial: [],
           missing: ['Weight and material of bottle, can, crown, label and secondary and tertiary packaging', 'Recycled content of glass and aluminium', 'Data by format: 33cl bottle, 33cl can and 30L keg']
         }

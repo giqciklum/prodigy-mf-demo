@@ -1,6 +1,6 @@
-/* Banco Cierzo · From words to workflow (English). Fictitious bank; synthetic demonstration data (Ciklum).
+/* Banco Cierzo · From words to workflow (English). Fictitious bank; synthetic demonstration data (MFM).
  * Same structure as ../workflow.js. Schema in the header of assets/js/scenes/workflow.js. Regex on folded text (lower case, no accents). */
-prodigyPackEn('banca', {
+agenticPackEn('banca', {
   workflow: {
     space: 'Operations · Madrid',
     author: 'decider',
@@ -29,7 +29,7 @@ prodigyPackEn('banca', {
         id: 'finanzas',
         re: '\\b(?:buy\\w*|bought|sell\\w*|sold|invest\\w*|trad(?:e|es|ing))\\b[^.;]{0,50}\\b(?:shares?|stocks?|equities|bitcoins?|crypto\\w*|currenc(?:y|ies)|forex|investment funds?)\\b|\\bbank transfers?\\b|\\b(?:transfer|wire) (?:money|funds)\\b',
         title: 'Financial transaction',
-        body: 'The text asks to buy or sell assets or to move money between accounts. No agent in the Operations · Madrid space trades on markets or orders transfers, and Prodigy does not create steps that no enabled agent can perform.'
+        body: 'The text asks to buy or sell assets or to move money between accounts. No agent in the Operations · Madrid space trades on markets or orders transfers, and Agentic Platform does not create steps that no enabled agent can perform.'
       },
       {
         id: 'personas',
@@ -41,7 +41,7 @@ prodigyPackEn('banca', {
         id: 'credito',
         re: '\\b(?:grant\\w*|approve|deny\\w*|declin\\w*|extend\\w*|increas\\w*|reduc\\w*|rais\\w*|lower\\w*)\\b[^.;]{0,40}\\b(?:loans?|mortgages?|credits?|credit limits?|credit scor\\w*|scoring)\\b',
         title: 'Credit decision',
-        body: 'The text asks to grant, deny or change credit. Credit risk decisions follow the bank’s credit approval process and are not automated in this space: Prodigy does not create steps that decide on a customer’s creditworthiness.'
+        body: 'The text asks to grant, deny or change credit. Credit risk decisions follow the bank’s credit approval process and are not automated in this space: Agentic Platform does not create steps that decide on a customer’s creditworthiness.'
       }
     ],
     idle: [
@@ -54,8 +54,8 @@ prodigyPackEn('banca', {
     presenter: {
       idle: [
         'This is how Operations writes a procedure: in plain English, as in its policy. Nothing to draw, nothing to program.',
-        'Prodigy turns it into a platform workflow: trigger, agents in order, human approval and outputs, each linked to its sentence.',
-        'To be clear: text-to-workflow generation is simulated here and its integration into Prodigy is validated in the pilot; workflows (Routines), the editor, approval and auditing are standard.'
+        'Agentic Platform turns it into a platform workflow: trigger, agents in order, human approval and outputs, each linked to its sentence.',
+        'To be clear: text-to-workflow generation is simulated here and its integration into Agentic Platform is validated in the pilot; workflows (Routines), the editor, approval and auditing are standard.'
       ],
       outOfScopeExample: 'Grant a pre-approved loan to customers whose salary is paid into their account'
     },

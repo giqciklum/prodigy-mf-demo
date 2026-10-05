@@ -1,6 +1,6 @@
 /* Cervecera Bardenas · traceability records (keg batches, fermentation batches and raw materials), English.
- * Read by App.traceModal from CN_DATA.trace[code]. Synthetic demo data (Ciklum). */
-prodigyPackEn('cerveceria', {
+ * Read by App.traceModal from CN_DATA.trace[code]. Synthetic demo data (MFM). */
+agenticPackEn('cerveceria', {
   trace: (function () {
     'use strict';
 

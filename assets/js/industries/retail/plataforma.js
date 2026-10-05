@@ -1,6 +1,6 @@
-/* Mercados Moncayo · «Cómo encaja Prodigy»: arquitectura, demo frente a piloto, calculadora de horas y preguntas.
- * Empresa ficticia; datos sintéticos de demostración (Ciklum). */
-prodigyPack('retail', {
+/* Mercados Moncayo · «Cómo encaja Agentic Platform»: arquitectura, demo frente a piloto, calculadora de horas y preguntas.
+ * Empresa ficticia; datos sintéticos de demostración (MFM). */
+agenticPack('retail', {
   plataforma: {
     nav: 'Cómo encaja en Moncayo',
     title: 'Cómo encaja en Mercados Moncayo',
@@ -29,8 +29,8 @@ prodigyPack('retail', {
       cloud: { seg: 'Nube propia', label: 'Nube de Mercados Moncayo (Azure, AWS o GCP)', zone: 'Suscripción en la nube de Mercados Moncayo (Azure, AWS o GCP)', text: 'La misma instalación en su suscripción de nube, en la región que elijan (UE).' }
     },
     llm: {
-      azure: { seg: 'Azure OpenAI', name: 'Azure OpenAI', local: false, place: 'Región UE, con el contrato de Mercados Moncayo', exit: 'Sale de su red solo el texto de cada petición', note: 'Conexión por la pasarela LiteLLM de Prodigy; se confirma en las semanas 1–2.' },
-      gemini: { seg: 'Gemini', name: 'Google Gemini', local: false, place: 'Con la cuenta y la región que contrate Mercados Moncayo', exit: 'Sale de su red solo el texto de cada petición', note: 'Proveedor incluido de serie en el catálogo de modelos de Prodigy.' },
+      azure: { seg: 'Azure OpenAI', name: 'Azure OpenAI', local: false, place: 'Región UE, con el contrato de Mercados Moncayo', exit: 'Sale de su red solo el texto de cada petición', note: 'Conexión por la pasarela LiteLLM de Agentic Platform; se confirma en las semanas 1–2.' },
+      gemini: { seg: 'Gemini', name: 'Google Gemini', local: false, place: 'Con la cuenta y la región que contrate Mercados Moncayo', exit: 'Sale de su red solo el texto de cada petición', note: 'Proveedor incluido de serie en el catálogo de modelos de Agentic Platform.' },
       local: { seg: 'Modelo local', name: 'Modelo local', local: true, place: 'Servidor con GPU en su CPD (Ollama, LM Studio o llama.cpp)', exit: 'La inferencia se ejecuta dentro de su red', note: 'La calidad y la velocidad se dimensionan con su servidor. Sistemas revisa también los flujos de conectores y telemetría.' }
     },
     people: ['quality', 'quality_shift', 'store_ops', 'maintenance', 'logistics', 'customer_service', 'supplier_quality'],
@@ -55,7 +55,7 @@ prodigyPack('retail', {
       { name: 'Microsoft 365', icon: 'mail', text: 'Avisos en Teams y borradores en Outlook. El envío se aprueba.', write: true }
     ],
     decisions: {
-      deploy: ['No depende de servicios de Ciklum en la nube. Lo opera su equipo de Sistemas o un servicio gestionado; las tiendas lo usan desde el navegador o la tableta de tienda, sin instalar nada.'],
+      deploy: ['No depende de servicios de MFM en la nube. Lo opera su equipo de Sistemas o un servicio gestionado; las tiendas lo usan desde el navegador o la tableta de tienda, sin instalar nada.'],
       llm: 'Se cambia de modelo por configuración, sin tocar los workflows; también admite OpenAI o AWS Bedrock en la UE.',
       access: [
         'SSO con Microsoft Entra ID (OIDC) o SAML 2.0. Permisos por rol y por realm: un jefe de zona ve sus tiendas; Calidad ve la plataforma y toda la red.',
@@ -72,18 +72,18 @@ prodigyPack('retail', {
     faqTitle: 'Preguntas habituales de Sistemas, Calidad y Dirección',
     faqSub: 'Respuestas cortas para la conversación con el equipo técnico',
     faq: [
-      { topic: 'Integración', q: '¿Dónde se instala?', a: 'En una máquina virtual de su CPD con Docker Compose o en Kubernetes con Helm, o en su suscripción de nube. No depende de servicios de Ciklum en la nube.' },
+      { topic: 'Integración', q: '¿Dónde se instala?', a: 'En una máquina virtual de su CPD con Docker Compose o en Kubernetes con Helm, o en su suscripción de nube. No depende de servicios de MFM en la nube.' },
       { topic: 'Integración', q: '¿Hay conectores de SAP, Manhattan o el TPV?', a: 'No de serie. En el piloto se construyen para 1–2 sistemas, por API (OData de SAP, REST de Manhattan) o réplica de base de datos de solo lectura; los sensores de frío suelen exponer API o MQTT. La lectura de bases de datos Postgres ya funciona.' },
       { topic: 'Integración', q: '¿Cómo lo usan las tiendas?', a: 'Desde el navegador de la tableta o el PC de tienda, o con avisos en Teams. La tarea de retirada llega con el lineal, las unidades y el procedimiento citado; el encargado la confirma y queda registrada.' },
       { topic: 'Seguridad', q: '¿Cómo entran los usuarios?', a: 'Con SSO de Microsoft Entra ID (OIDC) o SAML 2.0. Los permisos van por rol y por realm (zona, tienda o departamento). Las cuentas de servicio de los conectores son de solo lectura.' },
       { topic: 'Datos', q: '¿Qué datos salen de nuestra red?', a: 'Con un modelo local, la inferencia se ejecuta en su red. Con uno externo, sale solo el texto de cada petición, sin datos de socios en claro; se revisa el contrato del proveedor (sin entrenamiento con sus datos y región UE). Los flujos de conectores, telemetría y enmascarado se validan con Sistemas.' },
-      { topic: 'Datos', q: '¿Y el RGPD con los datos de fidelización?', a: 'Mercados Moncayo es responsable; Ciklum, encargado del tratamiento con contrato (art. 28). Avisar a quien compró un lote retirado se apoya en la protección de la salud del consumidor; antes de usar datos reales se revisa con el DPO. Minimización: el agente solo pide los campos que necesita.' },
-      { topic: 'Modelo de lenguaje', q: '¿Qué modelo de lenguaje usa y se puede cambiar?', a: 'El que elijan: Azure OpenAI, Gemini, OpenAI, AWS Bedrock en la UE o un modelo local. El catálogo de Prodigy permite fijar un modelo por realm y cambiarlo por configuración, sin tocar los workflows.' },
+      { topic: 'Datos', q: '¿Y el RGPD con los datos de fidelización?', a: 'Mercados Moncayo es responsable; MFM, encargado del tratamiento con contrato (art. 28). Avisar a quien compró un lote retirado se apoya en la protección de la salud del consumidor; antes de usar datos reales se revisa con el DPO. Minimización: el agente solo pide los campos que necesita.' },
+      { topic: 'Modelo de lenguaje', q: '¿Qué modelo de lenguaje usa y se puede cambiar?', a: 'El que elijan: Azure OpenAI, Gemini, OpenAI, AWS Bedrock en la UE o un modelo local. El catálogo de Agentic Platform permite fijar un modelo por realm y cambiarlo por configuración, sin tocar los workflows.' },
       { topic: 'Modelo de lenguaje', q: '¿Y si el modelo se equivoca?', a: 'Cada respuesta cita su fuente (procedimiento APPCC, lectura del sensor, movimiento de stock) y, si no la encuentra, lo dice. Ninguna acción se aplica sin aprobación. En el piloto se mide la exactitud con 20–30 casos históricos.' },
       { topic: 'Integración', q: '¿Cuántos usuarios soporta?', a: 'La concurrencia se dimensiona y se verifica con pruebas de carga: en una red de 64 tiendas, con picos de uso al abrir. Cada realm tiene límites de peticiones por minuto, de tokens al día y de presupuesto.' },
-      { topic: 'Coste', q: '¿Cuánto cuesta cada consulta?', a: 'Prodigy mide el coste de cada petición en USD por realm, usuario y caso, con presupuesto diario y mensual. Una alarma de frío son céntimos de modelo; el coste real se mide en el piloto.' },
+      { topic: 'Coste', q: '¿Cuánto cuesta cada consulta?', a: 'Agentic Platform mide el coste de cada petición en USD por realm, usuario y caso, con presupuesto diario y mensual. Una alarma de frío son céntimos de modelo; el coste real se mide en el piloto.' },
       { topic: 'Coste', q: '¿Licencia y precio?', a: 'Se concretan en la propuesta comercial (SOW).' },
-      { topic: 'Integración', q: '¿En qué idioma trabaja?', a: 'El chat y los agentes, en español; las respuestas a consumidores y proveedores, en su idioma. La consola de administración de Prodigy está en inglés.' }
+      { topic: 'Integración', q: '¿En qué idioma trabaja?', a: 'El chat y los agentes, en español; las respuestas a consumidores y proveedores, en su idioma. La consola de administración de Agentic Platform está en inglés.' }
     ],
     seen: [
       { scene: 'turno', label: 'Resumen del turno', icon: 'activity', title: 'Resumen del turno de noche', text: 'Plataforma de Plaza y 64 tiendas: recepción, preparación, expediciones y frío; el agente prepara el parte y lo deja para revisar.', agents: ['Agente del turno'], approver: 'decider', outcome: 'parte' },
@@ -95,17 +95,17 @@ prodigyPack('retail', {
       { scene: 'procedimientos', label: 'Procedimientos', icon: 'book-open', title: 'Preguntas con citas', text: 'APPCC de tienda, alertas, reclamaciones y proveedores de marca propia: cada respuesta enlaza el apartado vigente y, si no hay fuente, lo dice.', agents: ['Procedimientos'] }
     ],
     honesty: [
-      { aspect: 'Consola, workflows (Routines) y editor', demo: 'Esta consola, en el navegador, con los workflows publicados en la sesión', pilot: 'Prodigy instalado en su infraestructura; Routines con editor visual, versiones y prueba en seco', origin: 'serie' },
-      { aspect: 'Workflow a partir de un procedimiento escrito', demo: 'Generador simulado en el navegador, con tres plantillas', pilot: 'Se integra en Prodigy y se valida con sus procedimientos; cada workflow se revisa antes de publicarlo', origin: 'demo' },
+      { aspect: 'Consola, workflows (Routines) y editor', demo: 'Esta consola, en el navegador, con los workflows publicados en la sesión', pilot: 'Agentic Platform instalado en su infraestructura; Routines con editor visual, versiones y prueba en seco', origin: 'serie' },
+      { aspect: 'Workflow a partir de un procedimiento escrito', demo: 'Generador simulado en el navegador, con tres plantillas', pilot: 'Se integra en Agentic Platform y se valida con sus procedimientos; cada workflow se revisa antes de publicarlo', origin: 'demo' },
       { aspect: 'Agentes de Mercados Moncayo', demo: 'Cadena de frío, alertas, retiradas, consumidores, proveedores y parte del turno, sobre datos sintéticos', pilot: 'Los del caso elegido, adaptados a sus datos y procedimientos', origin: 'demo' },
       { aspect: 'Conectores (SAP S/4 Retail, WMS Manhattan, Sensores de frío, TPV de tiendas, CRM Fidelización y ServiceNow)', demo: 'Simulados en el navegador', pilot: 'Lectura de 1–2 sistemas por API o réplica de base de datos de solo lectura. No hay conectores de serie para SAP, Manhattan ni el TPV', origin: 'piloto' },
-      { aspect: 'Disparo por alarma', demo: 'Al abrir la alarma del mural MR-3 de T-027', pilot: 'Webhook desde la plataforma de sensores o consulta periódica (cron): Prodigy no tiene planificador propio de agentes', origin: 'piloto' },
-      { aspect: 'Modelo de lenguaje', demo: 'Ninguna llamada: las respuestas están preparadas', pilot: 'El que elija Mercados Moncayo (Azure OpenAI, Gemini o local), a través de la pasarela de Prodigy', origin: 'serie' },
+      { aspect: 'Disparo por alarma', demo: 'Al abrir la alarma del mural MR-3 de T-027', pilot: 'Webhook desde la plataforma de sensores o consulta periódica (cron): Agentic Platform no tiene planificador propio de agentes', origin: 'piloto' },
+      { aspect: 'Modelo de lenguaje', demo: 'Ninguna llamada: las respuestas están preparadas', pilot: 'El que elija Mercados Moncayo (Azure OpenAI, Gemini o local), a través de la pasarela de Agentic Platform', origin: 'serie' },
       { aspect: 'Aprobación humana', demo: 'Tarjetas de aprobación; rechazar no aplica nada', pilot: 'Igual, con SSO y permisos por rol. En el piloto no se escribe en SAP ni en el TPV: borradores y tareas que aprueba una persona', origin: 'serie' },
       { aspect: 'Procedimientos con citas', demo: '5 documentos sintéticos (APPCC-TIE-01, PR-CAL-010, PR-ATC-002, PR-PRO-006 e IT-TIE-014)', pilot: 'Sus procedimientos vigentes, con permisos por realm; objetivo ≥90 % de citas correctas', origin: 'serie' },
-      { aspect: 'Registro de auditoría', demo: 'De esta sesión, guardado en el navegador y exportable a JSON o CSV', pilot: 'En la base de datos de Prodigy, de solo añadir, con la identidad SSO de cada persona; exportable a CSV', origin: 'serie' },
+      { aspect: 'Registro de auditoría', demo: 'De esta sesión, guardado en el navegador y exportable a JSON o CSV', pilot: 'En la base de datos de Agentic Platform, de solo añadir, con la identidad SSO de cada persona; exportable a CSV', origin: 'serie' },
       { aspect: 'Coste por petición', demo: 'Estimación mostrada al final de las ejecuciones', pilot: 'Medido por petición en USD, por realm y por caso, con presupuesto diario y mensual', origin: 'serie' },
-      { aspect: 'Datos y acciones', demo: 'Sintéticos y coherentes entre sí, preparados por Ciklum; las acciones no salen del navegador', pilot: 'Sus datos en modo lectura y 20–30 casos históricos, anonimizados si hace falta', origin: 'datos' }
+      { aspect: 'Datos y acciones', demo: 'Sintéticos y coherentes entre sí, preparados por MFM; las acciones no salen del navegador', pilot: 'Sus datos en modo lectura y 20–30 casos históricos, anonimizados si hace falta', origin: 'datos' }
     ],
     writes: 'Ninguna en SAP ni en el TPV durante el piloto: borradores y tareas que aprueba una persona',
     cases: {
@@ -137,13 +137,13 @@ prodigyPack('retail', {
     criteria: [
       { name: 'Tiempo', target: 'Traza y borrador en menos de 15 min; tarea a tienda en menos de 10 min desde la alarma', how: 'Cronometrado frente a la línea base de las semanas 1–2' },
       { name: 'Utilidad', target: 'Calidad acepta el borrador con ediciones menores en ≥70 % de los casos', how: 'Revisión de cada borrador por Calidad' },
-      { name: 'Citas', target: '≥90 % de 50 preguntas de referencia con la cita correcta', how: 'Herramienta de evaluación incluida en Prodigy' },
+      { name: 'Citas', target: '≥90 % de 50 preguntas de referencia con la cita correcta', how: 'Herramienta de evaluación incluida en Agentic Platform' },
       { name: 'Control', target: 'Ninguna acción sin aprobación; el 100 % en el registro de auditoría', how: 'Revisión del registro exportado' },
       { name: 'Coste', target: 'Coste del modelo por caso medido y dentro del presupuesto del realm', how: 'Informe de coste por realm (USD, estimación)' }
     ],
     gives: {
       client: ['Responsable en Calidad y contacto de Sistemas', 'Accesos de lectura a 1–2 sistemas', '10 tiendas piloto y sus jefes de zona', '20–30 casos históricos, anonimizados si hace falta', 'Procedimientos APPCC vigentes', '2–3 h a la semana de Calidad'],
-      ciklum: ['Instalación en su infraestructura', 'Conectores de lectura', 'Agentes y workflow del caso', 'Formación de Calidad y de las tiendas piloto', 'Informe final con los criterios medidos']
+      mfm: ['Instalación en su infraestructura', 'Conectores de lectura', 'Agentes y workflow del caso', 'Formación de Calidad y de las tiendas piloto', 'Informe final con los criterios medidos']
     },
     pilot: {
       sub: 'Un caso, la plataforma y 10 tiendas, un realm (Calidad) y 5–10 usuarios, en su infraestructura y con su modelo',
@@ -164,16 +164,16 @@ prodigyPack('retail', {
       ]
     },
     auditEmpty: 'Genera el resumen del turno, publica un workflow o aprueba el bloqueo de venta de T-027: cada paso aparecerá aquí con su hora, su actor y su vista.',
-    auditPilot: 'El registro vive en la base de datos de Prodigy, identifica a cada persona por su SSO, se filtra por persona, acción, tienda y fecha y se exporta a CSV. En esta demo vive en este navegador y se borra con «Reiniciar demo».',
+    auditPilot: 'El registro vive en la base de datos de Agentic Platform, identifica a cada persona por su SSO, se filtra por persona, acción, tienda y fecha y se exporta a CSV. En esta demo vive en este navegador y se borra con «Reiniciar demo».',
     proposal: {
       code: 'PIL-PLZ-2026-01',
-      filename: 'propuesta-piloto-prodigy-mercados-moncayo',
-      objective: 'Medir, con un caso real y criterios firmados, cuánto tiempo de Calidad y de las tiendas libera Prodigy y con qué exactitud, sin cambiar SAP S/4 Retail, WMS Manhattan, los sensores de frío, el TPV, el CRM de fidelización ni ServiceNow. Prodigy lee de esos sistemas, razona con los procedimientos APPCC y propone; una persona aprueba antes de escribir.',
+      filename: 'propuesta-piloto-agentic-mercados-moncayo',
+      objective: 'Medir, con un caso real y criterios firmados, cuánto tiempo de Calidad y de las tiendas libera Agentic Platform y con qué exactitud, sin cambiar SAP S/4 Retail, WMS Manhattan, los sensores de frío, el TPV, el CRM de fidelización ni ServiceNow. Agentic Platform lee de esos sistemas, razona con los procedimientos APPCC y propone; una persona aprueba antes de escribir.',
       signatures: [{ role: 'quality', note: 'Conforme con el alcance y los criterios' }, { role: 'Sistemas · Mercados Moncayo', note: 'Conforme con los accesos y el despliegue' }]
     },
     presenter: {
       arquitectura: [
-        'Prodigy no sustituye nada: va encima de SAP Retail, Manhattan, el TPV, el CRM y ServiceNow. Lee, razona con vuestros procedimientos APPCC y propone; antes de escribir en un sistema, aprueba una persona.',
+        'Agentic Platform no sustituye nada: va encima de SAP Retail, Manhattan, el TPV, el CRM y ServiceNow. Lee, razona con vuestros procedimientos APPCC y propone; antes de escribir en un sistema, aprueba una persona.',
         'Se instala en vuestra infraestructura, con vuestro SSO de Microsoft Entra ID y el modelo que elijáis. Con un modelo local, la inferencia queda en vuestra red; Sistemas valida los demás flujos.',
         'Las líneas discontinuas en ámbar son las únicas escrituras, y siempre tras aprobación. Los sensores de frío solo se leen: no se tocan los equipos.'
       ],
@@ -184,7 +184,7 @@ prodigyPack('retail', {
       ],
       horas: [
         'Preguntad cuántas reclamaciones, alarmas de frío o alertas de proveedor tienen al mes y escribidlo: la calculadora es suya.',
-        '«Con Prodigy» incluye la revisión y la aprobación de una persona. Son horas de trabajo repetitivo que Calidad y las tiendas pueden dedicar a otras tareas.',
+        '«Con Agentic Platform» incluye la revisión y la aprobación de una persona. Son horas de trabajo repetitivo que Calidad y las tiendas pueden dedicar a otras tareas.',
         'Son supuestos para conversar: la línea base real se mide en las semanas 1–2 del piloto.'
       ],
       registro: [
@@ -200,7 +200,7 @@ prodigyPack('retail', {
       }
     },
     tour: [
-      'Prodigy va encima de SAP Retail, Manhattan, el TPV, el CRM y ServiceNow: lee, prepara propuestas y una persona aprueba antes de escribir.',
+      'Agentic Platform va encima de SAP Retail, Manhattan, el TPV, el CRM y ServiceNow: lee, prepara propuestas y una persona aprueba antes de escribir.',
       'Con un modelo local, la inferencia entra en su infraestructura; los demás flujos se validan con Sistemas.',
       'Los casos de hoy, del mural de T-027 a la retirada del lote L26214, y qué es de serie y qué se construye en el piloto.',
       'Piloto de 6–8 semanas: un caso, la plataforma y 10 tiendas, realm de Calidad y criterios de aceptación firmados en la semana 1.',

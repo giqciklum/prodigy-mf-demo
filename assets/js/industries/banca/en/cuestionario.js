@@ -1,5 +1,5 @@
-/* Banco Cierzo · Wolfsberg CBDDQ v1.4 requested by Nordbank AG (correspondent bank), English. Fictitious entities; synthetic data (Ciklum). */
-prodigyPackEn('banca', {
+/* Banco Cierzo · Wolfsberg CBDDQ v1.4 requested by Nordbank AG (correspondent bank), English. Fictitious entities; synthetic data (MFM). */
+agenticPackEn('banca', {
   cuestionario: {
     agent: 'Customer questionnaires',
     lang: 'en',
@@ -75,7 +75,7 @@ prodigyPackEn('banca', {
       before: [
         'Every correspondent asks for the Wolfsberg CBDDQ at its periodic review. If it is not delivered on time, the relationship is escalated and may end up being closed: this is Compliance work that cannot slip.',
         'This one comes from Nordbank AG: {total} questions on ownership, the AML/CFT programme, due diligence, sanctions and audit.',
-        'When you press the button, Prodigy searches the AML/CFT manual, the policies, the risk assessment and the annual accounts, plus the records in T24, Archer, Falcon and Redsys, and drafts each answer with its source.'
+        'When you press the button, Agentic Platform searches the AML/CFT manual, the policies, the risk assessment and the annual accounts, plus the records in T24, Archer, Falcon and Redsys, and drafts each answer with its source.'
       ],
       during: [
         '{drafted} of {total} have a cited draft; every citation is checked against the source text. {flagged} are left unanswered: virtual assets, anti-bribery and corruption, and regulatory enforcement history. No document, nothing invented.',
@@ -211,7 +211,7 @@ prodigyPackEn('banca', {
         qEn: 'Does the Entity offer services to virtual asset service providers (VASPs) or hold or transact in virtual assets? If so, describe the controls applied.',
         flag: {
           reason: 'None of the {doc_count} indexed documents deals with virtual assets or relationships with crypto-asset service providers.',
-          context: 'Since Regulation (EU) 2023/1114 (MiCA) and Regulation (EU) 2023/1113, correspondents always ask about VASPs. Prodigy does not answer “No” because documents are missing: Compliance has to confirm it with the Business.',
+          context: 'Since Regulation (EU) 2023/1114 (MiCA) and Regulation (EU) 2023/1113, correspondents always ask about VASPs. Agentic Platform does not answer “No” because documents are missing: Compliance has to confirm it with the Business.',
           partial: [],
           missing: ['Policy on customers that are crypto-asset service providers (CASP/VASP)', 'Confirmation of whether the Entity holds or transacts in virtual assets', 'Enhanced controls applied, if any']
         }
@@ -242,7 +242,7 @@ prodigyPackEn('banca', {
         qEn: 'Does the Entity have a documented anti-bribery and corruption (ABC) policy and programme, including a risk assessment and training? When was it last reviewed?',
         flag: {
           reason: 'The anti-corruption policy and the criminal compliance model are not among the {doc_count} indexed documents.',
-          context: 'Under Article 31 bis of the Spanish Criminal Code, Spanish institutions usually have a crime prevention model covering bribery and private-sector corruption. It should exist within Criminal Compliance; Prodigy does not describe its content or assume a review date.',
+          context: 'Under Article 31 bis of the Spanish Criminal Code, Spanish institutions usually have a crime prevention model covering bribery and private-sector corruption. It should exist within Criminal Compliance; Agentic Platform does not describe its content or assume a review date.',
           partial: [],
           missing: ['Anti-bribery and corruption policy', 'Corruption risk assessment and date of the last review', 'Specific training and its coverage']
         }

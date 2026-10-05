@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#344E45">
-  <title>Prodigy · Consola por industria</title>
-  <meta name="description" content="Consola de Prodigy configurada por industria: maquinaria industrial, banca, retail y cervecera. Demostración con datos sintéticos preparada por Ciklum.">
+  <title>Agentic Platform · Consola por industria</title>
+  <meta name="description" content="Consola de Agentic Platform configurada por industria: maquinaria industrial, banca, retail, cervecera y despacho de abogados. Demostración con datos sintéticos preparada por MFM.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect width='26' height='26' rx='6' fill='%23344E45'/%3E%3Cpath d='M8.5 8.5 17.5 13 8.5 17.5' fill='none' stroke='%23EEF3F1' stroke-width='1.6'/%3E%3Ccircle cx='8.5' cy='8.5' r='2.6' fill='%23EEF3F1'/%3E%3Ccircle cx='17.5' cy='13' r='2.6' fill='%23EEF3F1'/%3E%3Ccircle cx='8.5' cy='17.5' r='2.6' fill='%23EEF3F1'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,6 +63,16 @@
   <script src="assets/js/industries/cerveceria/cuestionario.js"></script>
   <script src="assets/js/industries/cerveceria/procedimientos.js"></script>
   <script src="assets/js/industries/cerveceria/plataforma.js"></script>
+  <script src="assets/js/industries/abogados/meta.js"></script>
+  <script src="assets/js/industries/abogados/turno.js"></script>
+  <script src="assets/js/industries/abogados/trace.js"></script>
+  <script src="assets/js/industries/abogados/workflow.js"></script>
+  <script src="assets/js/industries/abogados/alarma.js"></script>
+  <script src="assets/js/industries/abogados/reclamacion.js"></script>
+  <script src="assets/js/industries/abogados/retirada.js"></script>
+  <script src="assets/js/industries/abogados/cuestionario.js"></script>
+  <script src="assets/js/industries/abogados/procedimientos.js"></script>
+  <script src="assets/js/industries/abogados/plataforma.js"></script>
   <script src="assets/js/industries/maquinaria/en/meta.js"></script>
   <script src="assets/js/industries/maquinaria/en/turno.js"></script>
   <script src="assets/js/industries/maquinaria/en/trace.js"></script>
@@ -103,6 +113,16 @@
   <script src="assets/js/industries/cerveceria/en/cuestionario.js"></script>
   <script src="assets/js/industries/cerveceria/en/procedimientos.js"></script>
   <script src="assets/js/industries/cerveceria/en/plataforma.js"></script>
+  <script src="assets/js/industries/abogados/en/meta.js"></script>
+  <script src="assets/js/industries/abogados/en/turno.js"></script>
+  <script src="assets/js/industries/abogados/en/trace.js"></script>
+  <script src="assets/js/industries/abogados/en/workflow.js"></script>
+  <script src="assets/js/industries/abogados/en/alarma.js"></script>
+  <script src="assets/js/industries/abogados/en/reclamacion.js"></script>
+  <script src="assets/js/industries/abogados/en/retirada.js"></script>
+  <script src="assets/js/industries/abogados/en/cuestionario.js"></script>
+  <script src="assets/js/industries/abogados/en/procedimientos.js"></script>
+  <script src="assets/js/industries/abogados/en/plataforma.js"></script>
   <script src="assets/i18n/en.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/boot.js"></script>
@@ -113,7 +133,7 @@
   <div class="app">
     <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
       <div class="sidebar-inner">
-        <a class="brand" href="#turno" aria-label="Prodigy · inicio">
+        <a class="brand" href="#turno" aria-label="Agentic Platform · inicio">
           <svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" focusable="false">
             <rect class="bm-bg" width="26" height="26" rx="6"/>
             <path class="bm-line" d="M8.5 8.5 17.5 13 8.5 17.5"/>
@@ -121,7 +141,7 @@
             <circle class="bm-dot" cx="17.5" cy="13" r="2.6"/>
             <circle class="bm-dot" cx="8.5" cy="17.5" r="2.6"/>
           </svg>
-          <span class="brand-name">Prodigy</span>
+          <span class="brand-name">Agentic Platform</span>
         </a>
 
         <details class="ws ws-switch" id="ws-switch">
@@ -164,6 +184,7 @@
           <div class="language-switch model-switch" role="group" aria-label="Modelo de la demo">
             <button type="button" data-model="frontier" aria-pressed="true" title="Respuestas simuladas, sin modelo de lenguaje">Frontera</button>
             <button type="button" data-model="local" aria-pressed="false" title="Modelo servido por LiteLLM">Local</button>
+            <button type="button" data-model="prodigy" aria-pressed="false" title="Los agentes llaman al orquestador de Prodigy">Prodigy</button>
           </div>
           <button type="button" class="model-name" id="model-name" hidden title="Cambiar la conexión del modelo local"></button>
           <div class="language-switch" role="group" aria-label="Idioma / Language">
@@ -181,7 +202,7 @@
 
       <footer class="footer">
         <div class="footer-inner">
-          <span>Demostración con datos sintéticos · acciones simuladas · preparado por Ciklum</span>
+          <span>Demostración con datos sintéticos · acciones simuladas · preparado por MFM</span>
           <button type="button" class="link-btn" id="about-btn">Acerca de esta demo</button>
         </div>
       </footer>
@@ -232,7 +253,6 @@
   <noscript><p style="padding:24px">Esta demostración necesita JavaScript activado.</p></noscript>
 
   <script src="assets/js/core.js"></script>
-  <!-- Configure the optional model connection through the Local button. -->
   <script src="assets/js/llm.js"></script>
   <script src="assets/js/opsmap.js"></script>
   <script src="assets/js/scenes/turno.js"></script>

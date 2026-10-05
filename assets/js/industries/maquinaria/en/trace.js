@@ -1,6 +1,6 @@
 /* Hidromec Ebro · traceability records (component batches, assembly batches, serial numbers and production
- * batches), English. App.traceModal reads them from CN_DATA.trace[code]. Synthetic demonstration data (Ciklum). */
-prodigyPackEn('maquinaria', {
+ * batches), English. App.traceModal reads them from CN_DATA.trace[code]. Synthetic demonstration data (MFM). */
+agenticPackEn('maquinaria', {
   trace: (function () {
     'use strict';
 

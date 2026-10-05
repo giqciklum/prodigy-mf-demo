@@ -3,7 +3,7 @@
  * TPV 3 de Gasolinera Ronda Norte (comercio 334512987, adquirente Banco Cierzo) entre el 10 y el 22/09/2026 →
  * 3.912 operaciones (3.844 liquidadas) con 1.284 tarjetas: 1.107 de Banco Cierzo y 177 de otros emisores
  * (121 Visa y 56 Mastercard) → bloqueo, reemisión y avisos a clientes, redes, comercio y supervisores.
- * Marco: PCI DSS, PSD2 y DORA. Datos sintéticos de demostración (Ciklum).
+ * Marco: PCI DSS, PSD2 y DORA. Datos sintéticos de demostración (MFM).
  */
 (function () {
   'use strict';
@@ -231,7 +231,7 @@
       id: 'aepd', label: 'Agencia Española de Protección de Datos', icon: 'lock', notify: false, chip: 'Evaluar con el DPD',
       channel: 'Sede electrónica de la AEPD (si procede)',
       meta: ['Brecha de datos personales', 'Plazo: 72 h (RGPD art. 33)', 'Aviso en español'],
-      body: 'El delegado de protección de datos evalúa si la exposición de datos de tarjeta de clientes es notificable; Prodigy deja preparado el borrador con el número de interesados y las medidas.',
+      body: 'El delegado de protección de datos evalúa si la exposición de datos de tarjeta de clientes es notificable; Agentic Platform deja preparado el borrador con el número de interesados y las medidas.',
       refs: 'INC-2026-0412', qtyText: '801 interesados', action: 'Evaluación del DPD y, si procede, notificación',
       notice: {
         lang: 'Español',
@@ -330,7 +330,7 @@
       { agent: 'trace', system: 'Salesforce FSC', action: 'Titulares, canal preferente y datos de contacto verificados', result: '801 clientes con 838 tarjetas activas · 774 con app activa · 801 con móvil verificado · 37 con débito y crédito', ms: 560, reveal: 5, mark: 'Titulares y destinatarios identificados' },
       { agent: 'trace', system: 'Falcon Fraud', action: 'Fraude posterior en las tarjetas del punto común', result: '186 operaciones sospechosas por 41.230 € en 152 tarjetas, todas del BIN 454812 (alarma de las 05:50)', ms: 380, tone: 'warn' },
       { agent: 'bal', system: 'Redsys', action: 'Depuración de operaciones de la ventana', result: '68 excluidas (46 anuladas el mismo día y 22 preautorizaciones sin completar) · 3.844 liquidadas', ms: 330 },
-      { agent: 'bal', system: 'Prodigy', action: 'Cuadre de tarjetas por emisor y situación', result: 'Conciliado 100,0 % · 0 tarjetas sin asignar · 1.284 de 1.284 tarjetas clasificadas', ms: 90, tone: 'ok', mark: 'Cuadre de tarjetas cerrado' },
+      { agent: 'bal', system: 'Agentic Platform', action: 'Cuadre de tarjetas por emisor y situación', result: 'Conciliado 100,0 % · 0 tarjetas sin asignar · 1.284 de 1.284 tarjetas clasificadas', ms: 90, tone: 'ok', mark: 'Cuadre de tarjetas cerrado' },
       { agent: 'rec', system: 'GRC Archer', action: 'Abre el incidente y la evaluación de clasificación DORA', result: 'INC-2026-0412 en borrador · clasificación pendiente de validar por Riesgo tecnológico', ms: 410 },
       { agent: 'rec', system: 'Outlook', action: 'Prepara los avisos sin enviar', result: '8 borradores: titulares (SMS, app y correo), clientes ya avisados, Visa, Mastercard, comercio, Redsys, Banco de España y AEPD', ms: 780, mark: 'Registro y avisos preparados' }
     ],
@@ -471,7 +471,7 @@
     ]
   };
 
-  prodigyPack('banca', {
+  agenticPack('banca', {
     retirada: {
       title: 'Simulacro de punto común de compromiso',
       nav: 'Simulacro de trazabilidad',
@@ -515,17 +515,17 @@
       report: { subtitle: 'Registro del ejercicio de punto común de compromiso · PCI DSS · PSD2 · DORA', approvedText: 'Avisos guardados como borrador con la marca SIMULACRO; no se ha enviado ninguno ni se ha bloqueado ninguna tarjeta.' },
       compare: {
         rows: [
-          { k: 'Personas implicadas', today: '4–5: Fraude, Medios de Pago, Adquirencia, Atención al Cliente y Riesgo tecnológico', prodigy: '1: {approver} revisa y aprueba' },
-          { k: 'Sistemas consultados', today: '6–7 abiertos a mano: Falcon, Redsys, T24, Salesforce, Archer, hojas de cálculo y correo', prodigy: '6 conectores consultados por los agentes: Falcon Fraud, Redsys, T24, Salesforce FSC, GRC Archer y Outlook' },
-          { k: 'Pasos', today: '15–20 consultas, cruces de PAN por BIN y ficheros para las marcas', prodigy: '{steps} pasos automáticos y 1 aprobación' },
-          { k: 'Cuadre', today: 'Hoja de cálculo con extracciones de Redsys y T24', prodigy: 'Calculado por emisor y situación: {reconciled} conciliado' }
+          { k: 'Personas implicadas', today: '4–5: Fraude, Medios de Pago, Adquirencia, Atención al Cliente y Riesgo tecnológico', agentic: '1: {approver} revisa y aprueba' },
+          { k: 'Sistemas consultados', today: '6–7 abiertos a mano: Falcon, Redsys, T24, Salesforce, Archer, hojas de cálculo y correo', agentic: '6 conectores consultados por los agentes: Falcon Fraud, Redsys, T24, Salesforce FSC, GRC Archer y Outlook' },
+          { k: 'Pasos', today: '15–20 consultas, cruces de PAN por BIN y ficheros para las marcas', agentic: '{steps} pasos automáticos y 1 aprobación' },
+          { k: 'Cuadre', today: 'Hoja de cálculo con extracciones de Redsys y T24', agentic: 'Calculado por emisor y situación: {reconciled} conciliado' }
         ]
       },
       presenter: {
         idle: [
           'Simulacro de punto común de compromiso: la trazabilidad de la banca va del comercio a cada tarjeta y titular.',
           'Se elige el punto de partida: el expediente CPP-2609-07 o el código del comercio.',
-          'Prodigy recorre Falcon, Redsys, T24 y Salesforce: terminal, ventana, operaciones, emisor por BIN, situación de cada tarjeta y canal de cada titular, y cuadra las 1.284 tarjetas.'
+          'Agentic Platform recorre Falcon, Redsys, T24 y Salesforce: terminal, ventana, operaciones, emisor por BIN, situación de cada tarjeta y canal de cada titular, y cuadra las 1.284 tarjetas.'
         ],
         nextIdle: 'Pulsar «Iniciar simulacro» con el expediente CPP-2609-07 (o elegir «Comercio 334512987»).',
         nextRun: 'Pulsar «Ver aviso» de los titulares o de Visa y después «Aprobar y cerrar simulacro».',

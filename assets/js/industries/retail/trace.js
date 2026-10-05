@@ -1,6 +1,6 @@
 /* Mercados Moncayo · registros de trazabilidad (lotes de marca propia, materias primas del fabricante y mural
- * refrigerado de la alarma). Los lee App.traceModal desde CN_DATA.trace[código]. Datos sintéticos de demostración (Ciklum). */
-prodigyPack('retail', {
+ * refrigerado de la alarma). Los lee App.traceModal desde CN_DATA.trace[código]. Datos sintéticos de demostración (MFM). */
+agenticPack('retail', {
   trace: (function () {
     'use strict';
 

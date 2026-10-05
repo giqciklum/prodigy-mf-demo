@@ -1,5 +1,5 @@
 /* Mercados Moncayo · procedure Q&A with citations (English). Fictitious documents, consistent with HISTORIAS.md. */
-prodigyPackEn('retail', {
+agenticPackEn('retail', {
   procedimientos: {
     section: 'Calidad',
     nav: 'Procedures',
@@ -605,7 +605,7 @@ prodigyPackEn('retail', {
 /* Canonical summary by code (CN_DATA.procedures): filled in without overwriting what other files may have set. */
 (function (id) {
   'use strict';
-  const pack = window.PRODIGY_INDUSTRIES_EN[id];
+  const pack = window.AGENTIC_INDUSTRIES_EN[id];
   const procs = pack.procedures = pack.procedures || {};
   pack.procedimientos.docs.forEach((d) => {
     const cur = procs[d.code] = procs[d.code] || {};

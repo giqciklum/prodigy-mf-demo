@@ -1,6 +1,6 @@
-/* Mercados Moncayo · From words to workflow (English). Fictitious company; synthetic demonstration data (Ciklum).
+/* Mercados Moncayo · From words to workflow (English). Fictitious company; synthetic demonstration data (MFM).
  * Same structure as ../workflow.js. Schema in the header of assets/js/scenes/workflow.js. Regex on folded text (lower case, no accents). */
-prodigyPackEn('retail', {
+agenticPackEn('retail', {
   workflow: {
     space: 'Quality · Stores and distribution centre',
     author: 'quality',
@@ -31,7 +31,7 @@ prodigyPackEn('retail', {
         id: 'finanzas',
         re: '\\b(?:buy\\w*|bought|sell\\w*|sold|invest\\w*|trad(?:e|es|ing))\\b[^.;]{0,50}\\b(?:shares?|stocks?|equities|bitcoins?|crypto\\w*|currenc(?:y|ies)|forex|investment funds?)\\b|\\bbank transfers?\\b|\\b(?:transfer|wire) (?:money|funds)\\b',
         title: 'Financial transaction',
-        body: 'The text asks to buy or sell shares or to move money. No agent in the Quality · Stores and distribution centre space trades on markets or makes payments, and Prodigy does not create steps that no enabled agent can perform.'
+        body: 'The text asks to buy or sell shares or to move money. No agent in the Quality · Stores and distribution centre space trades on markets or makes payments, and Agentic Platform does not create steps that no enabled agent can perform.'
       },
       {
         id: 'personas',
@@ -56,8 +56,8 @@ prodigyPackEn('retail', {
     presenter: {
       idle: [
         'This is how Quality writes a procedure: in plain English, as in its HACCP plan. Nothing to draw, nothing to program.',
-        'Prodigy turns it into a platform workflow: trigger, agents in order, human approval and outputs, each linked to its sentence.',
-        'To be clear: text-to-workflow generation is simulated here and its integration into Prodigy is validated in the pilot; workflows (Routines), the editor, approval and auditing are standard.'
+        'Agentic Platform turns it into a platform workflow: trigger, agents in order, human approval and outputs, each linked to its sentence.',
+        'To be clear: text-to-workflow generation is simulated here and its integration into Agentic Platform is validated in the pilot; workflows (Routines), the editor, approval and auditing are standard.'
       ],
       outOfScopeExample: 'Cut the price of yoghurts that expire tomorrow in every store'
     },

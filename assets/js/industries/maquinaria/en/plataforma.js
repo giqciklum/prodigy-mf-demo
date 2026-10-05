@@ -1,6 +1,6 @@
-/* Hidromec Ebro · "How Prodigy fits": architecture, demo versus pilot, hours calculator and questions (English).
- * Fictitious company; synthetic demonstration data (Ciklum). */
-prodigyPackEn('maquinaria', {
+/* Hidromec Ebro · "How Agentic Platform fits": architecture, demo versus pilot, hours calculator and questions (English).
+ * Fictitious company; synthetic demonstration data (MFM). */
+agenticPackEn('maquinaria', {
   plataforma: {
     nav: 'How it fits at Hidromec',
     title: 'How it fits at Hidromec Ebro',
@@ -29,8 +29,8 @@ prodigyPackEn('maquinaria', {
       cloud: { seg: 'Own cloud', label: 'Hidromec Ebro cloud (Azure, AWS or GCP)', zone: 'Hidromec Ebro cloud subscription (Azure, AWS or GCP)', text: 'The same installation in your cloud subscription, in the region of your choice (EU).' }
     },
     llm: {
-      azure: { seg: 'Azure OpenAI', name: 'Azure OpenAI', local: false, place: 'EU region, under the Hidromec Ebro contract', exit: 'Only the text of each request leaves your network', note: 'Connected through the Prodigy LiteLLM gateway; confirmed in weeks 1–2.' },
-      gemini: { seg: 'Gemini', name: 'Google Gemini', local: false, place: 'With the account and region Hidromec Ebro contracts', exit: 'Only the text of each request leaves your network', note: 'Provider included as standard in the Prodigy model catalogue.' },
+      azure: { seg: 'Azure OpenAI', name: 'Azure OpenAI', local: false, place: 'EU region, under the Hidromec Ebro contract', exit: 'Only the text of each request leaves your network', note: 'Connected through the Agentic Platform LiteLLM gateway; confirmed in weeks 1–2.' },
+      gemini: { seg: 'Gemini', name: 'Google Gemini', local: false, place: 'With the account and region Hidromec Ebro contracts', exit: 'Only the text of each request leaves your network', note: 'Provider included as standard in the Agentic Platform model catalogue.' },
       local: { seg: 'Local model', name: 'Local model', local: true, place: 'GPU server in your data centre (Ollama, LM Studio or llama.cpp)', exit: 'Inference runs inside your network', note: 'Quality and speed are sized to your server. IT also reviews the connector and telemetry flows.' }
     },
     people: ['quality', 'quality_shift', 'maintenance', 'production', 'after_sales', 'purchasing'],
@@ -55,7 +55,7 @@ prodigyPackEn('maquinaria', {
       { name: 'Microsoft 365', icon: 'mail', text: 'Alerts in Teams and drafts in Outlook. Sending to the customer is approved.', write: true }
     ],
     decisions: {
-      deploy: ['It does not depend on Ciklum cloud services. Your IT team or a managed service runs it. The plant (OT) network is not opened up: the IIoT is read from the industrial DMZ.'],
+      deploy: ['It does not depend on MFM cloud services. Your IT team or a managed service runs it. The plant (OT) network is not opened up: the IIoT is read from the industrial DMZ.'],
       llm: 'The model is switched by configuration, without touching the workflows; OpenAI or AWS Bedrock in the EU are also supported.',
       access: [
         'SSO with Microsoft Entra ID (OIDC) or SAML 2.0. Permissions by role and by realm: the “Quality · Zaragoza” realm only sees its own procedures and data.',
@@ -72,18 +72,18 @@ prodigyPackEn('maquinaria', {
     faqTitle: 'Common questions from IT, Quality and Management',
     faqSub: 'Short answers for the conversation with the technical team',
     faq: [
-      { topic: 'Integration', q: 'Where is it installed?', a: 'On a virtual machine in your data centre with Docker Compose, on Kubernetes with Helm, or in your cloud subscription. It does not depend on Ciklum cloud services.' },
+      { topic: 'Integration', q: 'Where is it installed?', a: 'On a virtual machine in your data centre with Docker Compose, on Kubernetes with Helm, or in your cloud subscription. It does not depend on MFM cloud services.' },
       { topic: 'Security', q: 'How do users sign in?', a: 'With Microsoft Entra ID SSO (OIDC) or SAML 2.0. Permissions are by role and by realm (plant or department). The connectors’ service accounts are read-only.' },
-      { topic: 'Security', q: 'Does it touch the plant network or the machines?', a: 'No. The vibration IIoT is read from the industrial DMZ, with IEC 62443 zone and conduit segmentation; Prodigy does not write to PLCs, CNCs or SCADA. Any shutdown is decided and carried out by Maintenance.' },
+      { topic: 'Security', q: 'Does it touch the plant network or the machines?', a: 'No. The vibration IIoT is read from the industrial DMZ, with IEC 62443 zone and conduit segmentation; Agentic Platform does not write to PLCs, CNCs or SCADA. Any shutdown is decided and carried out by Maintenance.' },
       { topic: 'Data', q: 'What data leaves our network?', a: 'With a local model, inference runs inside your network. With an external one, only the text of each request leaves, with no drawings or CAD files; the provider’s contract is reviewed (no training on your data and an EU region). The connector, telemetry and masking flows are validated with IT.' },
-      { topic: 'Data', q: 'Who owns the data and the agents?', a: 'Hidromec Ebro. The data, the indexed procedures and the workflows live in your database and can be exported. Ciklum receives no copy unless agreed for support.' },
-      { topic: 'Language model', q: 'Which language model does it use, and can it be changed?', a: 'Whichever you choose: Azure OpenAI, Gemini, OpenAI, AWS Bedrock in the EU or a local model. The Prodigy catalogue lets you pin a model per realm and change it by configuration, without touching the workflows.' },
+      { topic: 'Data', q: 'Who owns the data and the agents?', a: 'Hidromec Ebro. The data, the indexed procedures and the workflows live in your database and can be exported. MFM receives no copy unless agreed for support.' },
+      { topic: 'Language model', q: 'Which language model does it use, and can it be changed?', a: 'Whichever you choose: Azure OpenAI, Gemini, OpenAI, AWS Bedrock in the EU or a local model. The Agentic Platform catalogue lets you pin a model per realm and change it by configuration, without touching the workflows.' },
       { topic: 'Language model', q: 'What if the model gets it wrong?', a: 'Every answer cites its source (procedure, order, sensor reading) and, if it cannot find one, says so. No action is applied without approval. In the pilot, accuracy is measured on 20–30 historical cases before live use.' },
       { topic: 'Integration', q: 'Are there connectors for SAP, Opcenter, Maximo or Windchill?', a: 'Not as standard. In the pilot they are built for 1–2 systems, via API (SAP OData, Maximo and Windchill REST) or a read-only database replica; reading Postgres databases already works.' },
       { topic: 'Integration', q: 'How many users does it support?', a: 'Concurrency is sized and verified with load tests. Each realm has limits on requests per minute, tokens per day and budget.' },
-      { topic: 'Cost', q: 'How much does each query cost?', a: 'Prodigy measures the cost of each request in USD by realm, user and use case, with a daily and monthly budget. A case like the MC-04 alarm costs cents in model usage; the real cost is measured in the pilot.' },
+      { topic: 'Cost', q: 'How much does each query cost?', a: 'Agentic Platform measures the cost of each request in USD by realm, user and use case, with a daily and monthly budget. A case like the MC-04 alarm costs cents in model usage; the real cost is measured in the pilot.' },
       { topic: 'Cost', q: 'Licence and price?', a: 'Set out in the commercial proposal (SOW).' },
-      { topic: 'Integration', q: 'What language does it work in?', a: 'The chat and the agents work in Spanish; replies to customers go out in their own language (the 11 customers in the campaign are in Spain, Portugal and France). The Prodigy administration console is in English.' }
+      { topic: 'Integration', q: 'What language does it work in?', a: 'The chat and the agents work in Spanish; replies to customers go out in their own language (the 11 customers in the campaign are in Spain, Portugal and France). The Agentic Platform administration console is in English.' }
     ],
     seen: [
       { scene: 'turno', label: 'Shift summary', icon: 'activity', title: 'Night shift report', text: 'Status of machining, assembly, test bench and dispatch; the agent prepares the daily machine report and leaves it for review.', agents: ['Shift agent'], approver: 'production', outcome: 'parte' },
@@ -95,17 +95,17 @@ prodigyPackEn('maquinaria', {
       { scene: 'procedimientos', label: 'Procedures', icon: 'book-open', title: 'Questions with citations', text: 'Maintenance, 8D, LOTO and field campaigns: every answer links the section of the current procedure and, if there is no source, says so.', agents: ['Procedures'] }
     ],
     honesty: [
-      { aspect: 'Console, workflows (Routines) and editor', demo: 'This console, in the browser, with the workflows published during the session', pilot: 'Prodigy installed on your infrastructure; Routines with visual editor, versions and dry run', origin: 'serie' },
-      { aspect: 'Workflow from a written procedure', demo: 'Simulated generator in the browser, with three templates', pilot: 'Integrated into Prodigy and validated with your procedures; every workflow is reviewed before it is published', origin: 'demo' },
+      { aspect: 'Console, workflows (Routines) and editor', demo: 'This console, in the browser, with the workflows published during the session', pilot: 'Agentic Platform installed on your infrastructure; Routines with visual editor, versions and dry run', origin: 'serie' },
+      { aspect: 'Workflow from a written procedure', demo: 'Simulated generator in the browser, with three templates', pilot: 'Integrated into Agentic Platform and validated with your procedures; every workflow is reviewed before it is published', origin: 'demo' },
       { aspect: 'Hidromec Ebro agents', demo: 'Maintenance, quality, planning, traceability, after-sales and daily report, on synthetic data', pilot: 'Those for the chosen use case, adapted to your data and procedures', origin: 'demo' },
       { aspect: 'Connectors (SAP S/4HANA, MES Opcenter, IIoT Vibración, GMAO Maximo, PLM Windchill and Salesforce Service)', demo: 'Simulated in the browser', pilot: 'Reading 1–2 systems via API or read-only database replica. There are no standard connectors for SAP, Opcenter, Maximo or Windchill', origin: 'piloto' },
-      { aspect: 'Alarm trigger', demo: 'When the MC-04 vibration alarm is opened', pilot: 'Webhook from the IIoT platform or periodic polling (cron): Prodigy has no agent scheduler of its own', origin: 'piloto' },
-      { aspect: 'Language model', demo: 'No calls: the answers are prepared', pilot: 'Whichever Hidromec Ebro chooses (Azure OpenAI, Gemini or local), through the Prodigy gateway', origin: 'serie' },
+      { aspect: 'Alarm trigger', demo: 'When the MC-04 vibration alarm is opened', pilot: 'Webhook from the IIoT platform or periodic polling (cron): Agentic Platform has no agent scheduler of its own', origin: 'piloto' },
+      { aspect: 'Language model', demo: 'No calls: the answers are prepared', pilot: 'Whichever Hidromec Ebro chooses (Azure OpenAI, Gemini or local), through the Agentic Platform gateway', origin: 'serie' },
       { aspect: 'Human approval', demo: 'Approval cards; rejecting applies nothing', pilot: 'The same, with SSO and permissions by role. Nothing is written to SAP in the pilot: drafts and tickets approved by a person', origin: 'serie' },
       { aspect: 'Procedures with citations', demo: '6 synthetic documents (PR-MAN-011, IT-MEC-021, PR-CAL-004, PR-CAL-008, PR-SEG-002 and PR-POS-005)', pilot: 'Your current procedures and work instructions, with permissions by realm; target ≥90% correct citations', origin: 'serie' },
-      { aspect: 'Audit log', demo: 'For this session, stored in the browser and exportable to JSON or CSV', pilot: 'In the Prodigy database, append-only, with each person’s SSO identity; exportable to CSV', origin: 'serie' },
+      { aspect: 'Audit log', demo: 'For this session, stored in the browser and exportable to JSON or CSV', pilot: 'In the Agentic Platform database, append-only, with each person’s SSO identity; exportable to CSV', origin: 'serie' },
       { aspect: 'Cost per request', demo: 'Estimate shown at the end of each run', pilot: 'Measured per request in USD, by realm and use case, with a daily and monthly budget', origin: 'serie' },
-      { aspect: 'Data and actions', demo: 'Synthetic and consistent throughout, prepared by Ciklum; the actions never leave the browser', pilot: 'Your data in read-only mode and 20–30 historical cases, anonymised if necessary', origin: 'datos' }
+      { aspect: 'Data and actions', demo: 'Synthetic and consistent throughout, prepared by MFM; the actions never leave the browser', pilot: 'Your data in read-only mode and 20–30 historical cases, anonymised if necessary', origin: 'datos' }
     ],
     writes: 'None in SAP during the pilot: drafts and tickets approved by a person',
     cases: {
@@ -137,13 +137,13 @@ prodigyPackEn('maquinaria', {
     criteria: [
       { name: 'Time', target: 'Trace and draft in under 15 min', how: 'Timed against the baseline from weeks 1–2' },
       { name: 'Usefulness', target: 'Quality accepts the draft with minor edits in ≥70% of cases', how: 'Quality reviews every draft' },
-      { name: 'Citations', target: '≥90% of 50 reference questions with the correct citation', how: 'Evaluation tool included in Prodigy' },
+      { name: 'Citations', target: '≥90% of 50 reference questions with the correct citation', how: 'Evaluation tool included in Agentic Platform' },
       { name: 'Control', target: 'No action without approval; 100% in the audit log', how: 'Review of the exported log' },
       { name: 'Cost', target: 'Model cost per case measured and within the realm budget', how: 'Cost report by realm (USD, estimate)' }
     ],
     gives: {
       client: ['Quality lead and IT contact', 'Read access to 1–2 systems', '20–30 historical cases, anonymised if necessary', 'Current procedures and work instructions', '2–3 h a week from Quality and Maintenance'],
-      ciklum: ['Installation on your infrastructure', 'Read connectors', 'Agents and workflow for the use case', 'User training', 'Final report with the measured criteria']
+      mfm: ['Installation on your infrastructure', 'Read connectors', 'Agents and workflow for the use case', 'User training', 'Final report with the measured criteria']
     },
     pilot: {
       sub: 'One use case, one plant (Zaragoza), one realm (Quality) and 5–10 users, on your infrastructure and with your model',
@@ -164,27 +164,27 @@ prodigyPackEn('maquinaria', {
       ]
     },
     auditEmpty: 'Generate the shift report, publish a workflow or approve the MC-04 block: each step will appear here with its time, actor and view.',
-    auditPilot: 'The log lives in the Prodigy database, identifies each person by their SSO, can be filtered by person, action and date, and exports to CSV. In this demo it lives in this browser and is cleared with “Reset demo”.',
+    auditPilot: 'The log lives in the Agentic Platform database, identifies each person by their SSO, can be filtered by person, action and date, and exports to CSV. In this demo it lives in this browser and is cleared with “Reset demo”.',
     proposal: {
       code: 'PIL-PLAZA-2026-01',
-      filename: 'prodigy-pilot-proposal-hidromec-zaragoza',
-      objective: 'To measure, with a real use case and signed-off criteria, how much Quality, Maintenance and after-sales time Prodigy frees up and how accurately, without changing SAP S/4HANA, MES Opcenter, IIoT Vibración, GMAO Maximo, PLM Windchill or Salesforce Service. Prodigy reads from those systems, reasons with the procedures and proposes; a person approves before anything is written.',
+      filename: 'agentic-pilot-proposal-hidromec-zaragoza',
+      objective: 'To measure, with a real use case and signed-off criteria, how much Quality, Maintenance and after-sales time Agentic Platform frees up and how accurately, without changing SAP S/4HANA, MES Opcenter, IIoT Vibración, GMAO Maximo, PLM Windchill or Salesforce Service. Agentic Platform reads from those systems, reasons with the procedures and proposes; a person approves before anything is written.',
       signatures: [{ role: 'quality', note: 'Agrees with the scope and criteria' }, { role: 'IT · Hidromec Ebro', note: 'Agrees with the access and deployment' }]
     },
     presenter: {
       arquitectura: [
-        'Prodigy replaces nothing: it sits on top of SAP, Opcenter, Maximo, Windchill and Salesforce. It reads, reasons with your procedures and proposes; before writing to a system, a person approves.',
+        'Agentic Platform replaces nothing: it sits on top of SAP, Opcenter, Maximo, Windchill and Salesforce. It reads, reasons with your procedures and proposes; before writing to a system, a person approves.',
         'It is installed on your infrastructure, with your Microsoft Entra ID SSO and the model you choose. With a local model, inference stays in your network; IT validates the other flows.',
         'The dashed amber lines are the only writes, and always after approval. The vibration IIoT is read-only: neither the CNC nor the plant network is touched.'
       ],
       piloto: [
         'This is what you have seen today: seven plant use cases, each with its agents and its approver. Click any of them to go back to it.',
-        'To be honest: today’s data is synthetic and the demo does not call any model. Standard in Prodigy: Routines, human approval, audit, citations and cost per request. The SAP, Opcenter or Maximo connectors are built in the pilot, in read-only mode.',
+        'To be honest: today’s data is synthetic and the demo does not call any model. Standard in Agentic Platform: Routines, human approval, audit, citations and cost per request. The SAP, Opcenter or Maximo connectors are built in the pilot, in read-only mode.',
         '6–8 week pilot: one use case, Zaragoza, Quality realm, 5–10 users. The acceptance criteria are signed off in week 1 and measured in week 8.'
       ],
       horas: [
         'Ask how many complaints, machine alarms or OEM questionnaires they handle per month and type them in: the calculator is theirs.',
-        '“With Prodigy” includes a person’s review and approval. These are hours of repetitive work that Quality and Maintenance can spend on other tasks.',
+        '“With Agentic Platform” includes a person’s review and approval. These are hours of repetitive work that Quality and Maintenance can spend on other tasks.',
         'These are assumptions to discuss: the real baseline is measured in weeks 1–2 of the pilot.'
       ],
       registro: [
@@ -200,7 +200,7 @@ prodigyPackEn('maquinaria', {
       }
     },
     tour: [
-      'Prodigy sits on top of SAP, Opcenter, Maximo, Windchill and Salesforce: it reads, prepares proposals and a person approves before anything is written.',
+      'Agentic Platform sits on top of SAP, Opcenter, Maximo, Windchill and Salesforce: it reads, prepares proposals and a person approves before anything is written.',
       'With a local model, inference runs inside your infrastructure; the other flows are validated with IT.',
       'Today’s use cases, from the MC-04 alarm to the JNT-2607-031 seal campaign, and what is standard versus what is built in the pilot.',
       '6–8 week pilot: one use case, the Zaragoza plant, Quality realm and acceptance criteria signed off in week 1.',

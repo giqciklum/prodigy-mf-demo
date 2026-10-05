@@ -1,5 +1,5 @@
-/* Cervecera Bardenas · general data (English). Fictitious company; synthetic demo data (Ciklum). */
-prodigyPackEn('cerveceria', {
+/* Cervecera Bardenas · general data (English). Fictitious company; synthetic demo data (MFM). */
+agenticPackEn('cerveceria', {
   meta: {
     id: 'cerveceria',
     industry: 'Brewing and beverages',

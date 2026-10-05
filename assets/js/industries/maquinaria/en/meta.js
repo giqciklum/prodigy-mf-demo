@@ -1,5 +1,5 @@
-/* Hidromec Ebro · general data (English). Fictitious company; synthetic demonstration data (Ciklum). */
-prodigyPackEn('maquinaria', {
+/* Hidromec Ebro · general data (English). Fictitious company; synthetic demonstration data (MFM). */
+agenticPackEn('maquinaria', {
   meta: {
     id: 'maquinaria',
     industry: 'Industrial machinery',
